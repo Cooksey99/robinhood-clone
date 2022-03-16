@@ -6,6 +6,8 @@ import SignupFormPage from './components/SignupFormPage';
 import * as sessionActions from './store/session';
 import Navigation from './components/Navigation';
 import { Modal } from './context/Modal';
+import { Portfolio } from './Portfolio/Portfolio';
+import { Sidebar } from './components/Sidebar/Sidebar';
 function App() {
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);
@@ -24,14 +26,21 @@ function App() {
         </Modal>
       )}
       {isLoaded && (
-        <Switch>
-          {/* <Route path="/login" >
-            <LoginFormPage />
-          </Route> */}
-          <Route path='/signup'>
-            <SignupFormPage />
-          </Route>
-        </Switch>
+        <div id='app'>
+          <Switch>
+            {/* <Route path="/login" >
+              <LoginFormPage />
+            </Route> */}
+            <Route path='/signup'>
+              <SignupFormPage />
+            </Route>
+            <Route path='/'>
+              <Portfolio />
+              <Sidebar />
+            </Route>
+
+          </Switch>
+        </div>
       )}
     </>
   );

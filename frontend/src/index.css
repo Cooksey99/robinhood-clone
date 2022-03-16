@@ -1,1 +1,17 @@
 /* TODO Add site wide styles */
+* {
+    background-color: black;
+    color: white;
+    --sp-border-color: rgb(64, 73, 78);
+}
+#app {
+    width: 1024px;
+    height: 100%;
+    background-color: coral;
+    margin: auto;
+}
+input {
+    border: 1px solid white;
+    border-radius: 5px;
+    border: 1px solid var(--sp-border-color);
+}

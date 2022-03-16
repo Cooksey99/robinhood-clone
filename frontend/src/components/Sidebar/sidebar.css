@@ -1,0 +1,8 @@
+#sidebar {
+    width: 276px;
+    height: 692px;
+    background: #1e2124;
+    border: 2px solid var(--sp-border-color);
+    border-radius: 10px;
+    float: right;
+}
