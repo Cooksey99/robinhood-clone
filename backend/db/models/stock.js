@@ -1,4 +1,7 @@
 'use strict';
+
+const watchlist = require("./watchlist");
+
 module.exports = (sequelize, DataTypes) => {
   const Stock = sequelize.define('Stock', {
     ticker: DataTypes.STRING,
@@ -7,6 +10,8 @@ module.exports = (sequelize, DataTypes) => {
   }, {});
   Stock.associate = function(models) {
     // associations can be defined here
+    Stock.belongsTo(models.Watchlist, {foreignKey: 'stock_id'});
+    Stock.belongsTo(models.Asset, {foreignKey: 'stock_id'});
   };
   return Stock;
 };

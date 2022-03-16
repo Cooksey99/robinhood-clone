@@ -8,6 +8,8 @@ module.exports = (sequelize, DataTypes) => {
   }, {});
   Asset.associate = function(models) {
     // associations can be defined here
+    Asset.belongsTo(models.User, {foreignKey: 'user_id'});
+    Asset.hasMany(models.Stock, {foreignKey: 'stock_id'})
   };
   return Asset;
 };
