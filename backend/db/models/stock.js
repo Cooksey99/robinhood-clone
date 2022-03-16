@@ -7,6 +7,8 @@ module.exports = (sequelize, DataTypes) => {
   }, {});
   Stock.associate = function(models) {
     // associations can be defined here
+    Stock.belongsTo(models.Watchlist, {foreignKey: 'stock_id'});
+    Stock.belongsTo(models.Asset, {foreignKey: 'stock_id'});
   };
   return Stock;
 };

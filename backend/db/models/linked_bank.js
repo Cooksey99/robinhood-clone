@@ -8,6 +8,7 @@ module.exports = (sequelize, DataTypes) => {
   }, {});
   Linked_bank.associate = function(models) {
     // associations can be defined here
+    Linked_bank.belongsTo(models.User, {foreignKey: 'user_id'});
   };
   return Linked_bank;
 };
