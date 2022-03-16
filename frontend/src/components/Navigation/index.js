@@ -34,7 +34,7 @@ function Navigation({ isLoaded }) {
         </div>
         <div className='divider'></div>
         <div className='divider'>
-          {sessionLinks}
+          {isLoaded && sessionLinks}
         </div>
       </div>
     </>

@@ -1,3 +1,4 @@
+import { redirect } from "express/lib/response";
 import React, { useState, useEffect } from "react";
 import { useDispatch } from 'react-redux';
 import * as sessionActions from '../../store/session';
@@ -26,6 +27,7 @@ function ProfileButton({ user }) {
   const logout = (e) => {
     e.preventDefault();
     dispatch(sessionActions.logout());
+    redirect('/login')
   };
 
   return (
