@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import * as sessionActions from "../../store/session";
 import { useDispatch, useSelector } from "react-redux";
-import { Redirect } from "react-router-dom";
+import { Redirect, useHistory } from "react-router-dom";
 import './LoginForm.css';
 
 export function LoginFormPage() {
   const dispatch = useDispatch();
+  const history = useHistory();
   const sessionUser = useSelector((state) => state.session.user);
   const [credential, setCredential] = useState("");
   const [password, setPassword] = useState("");
@@ -21,6 +22,14 @@ export function LoginFormPage() {
         const data = await res.json();
         if (data && data.errors) setErrors(data.errors);
       });
+  };
+
+  const demo = async (e) => {
+    e.preventDefault();
+    const credential = "demo@user.io";
+    const password = "password";
+    await dispatch(sessionActions.login({credential, password}));
+    return history.push("/portfolio")
   };
 
   return (
@@ -60,6 +69,7 @@ export function LoginFormPage() {
               </div>
             </div>
             <button type="submit">Log In</button>
+            <button type="submit" onClick={demo}>Demo User</button>
           </form>
         </div>
       </div>
