@@ -1,0 +1,42 @@
+#login-image {
+    width: 50%;
+    height: 100%;
+    object-fit: cover;
+}
+#login-form {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+}
+#login-form h1 {
+    height: 40px;
+}
+#login-form ul {
+    height: 40px;
+}
+#login-page {
+    display: flex;
+    align-items: center;
+    height: 100%;
+}
+.form-no-button {
+    height: 100px;
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+form button {
+    height: 40px;
+    margin: auto;
+    display: flex;
+    margin-top: 20px;
+}
+.label-input-pair {
+    display: flex;
+    flex-direction: column;
+    width: 371px;
+}
+.label-input-pair input {
+    height: 34px;
+}

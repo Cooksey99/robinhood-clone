@@ -1,14 +1,20 @@
 /* TODO Add site wide styles */
 * {
-    background-color: black;
-    color: white;
+    margin: 0;
+    padding: 0;
+    /* height: 100%; */
     --sp-border-color: rgb(64, 73, 78);
 }
 #app {
     width: 1024px;
     height: 100%;
-    background-color: coral;
+    /* background-color: coral; */
     margin: auto;
+    background-color: black;
+    color: white;
+}
+#logged-out-app {
+    background-color: white;
 }
 input {
     border: 1px solid white;

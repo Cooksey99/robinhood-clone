@@ -8,10 +8,13 @@ import Navigation from './components/Navigation';
 import { Modal } from './context/Modal';
 import { Portfolio } from './Portfolio/Portfolio';
 import { Sidebar } from './components/Sidebar/Sidebar';
+import LoginForm from './components/LoginFormModal/LoginForm';
+import LoginFormPage from './components/LoginFormPage';
+import { SplashPage } from './components/SplashPage/SplashPage';
 function App() {
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);
-  const [showModal, setShowModal] = useState(false);
+  // const [showModal, setShowModal] = useState(false);
   useEffect(() => {
     dispatch(sessionActions.restoreUser()).then(() => setIsLoaded(true));
   }, [dispatch]);
@@ -19,29 +22,35 @@ function App() {
   return (
     <>
       <Navigation isLoaded={isLoaded} />
-      <button onClick={() => setShowModal(true)}>Modal</button>
-      {showModal && (
+      {/* <button onClick={() => setShowModal(true)}>Modal</button> */}
+      {/* {showModal && (
         <Modal onClose={() => setShowModal(false)}>
           <h1>Hello I am a Modal</h1>
         </Modal>
-      )}
+      )} */}
+      <Route path='/' exact>
+        <SplashPage />
+      </Route>
       {isLoaded && (
-        <div id='app'>
-          <Switch>
-            {/* <Route path="/login" >
+        <Switch>
+          <div id='logged-out-app'>
+            <Route path="/login">
               <LoginFormPage />
-            </Route> */}
+            </Route>
             <Route path='/signup'>
               <SignupFormPage />
             </Route>
-            <Route path='/'>
+          </div>
+          <div id='app'>
+            <Route path='/portfolio'>
               <Portfolio />
               <Sidebar />
             </Route>
+          </div>
 
-          </Switch>
-        </div>
-      )}
+        </Switch>
+      )
+      }
     </>
   );
 }

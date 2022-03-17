@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Redirect } from "react-router-dom";
 import './LoginForm.css';
 
-function LoginFormPage() {
+export function LoginFormPage() {
   const dispatch = useDispatch();
   const sessionUser = useSelector((state) => state.session.user);
   const [credential, setCredential] = useState("");
@@ -25,33 +25,44 @@ function LoginFormPage() {
 
   return (
     <>
-      <h1>Log In</h1>
-      <form onSubmit={handleSubmit}>
-        <ul>
-          {errors.map((error, idx) => (
-            <li key={idx}>{error}</li>
-          ))}
-        </ul>
-        <label>
-          Username or Email
-          <input
-            type="text"
-            value={credential}
-            onChange={(e) => setCredential(e.target.value)}
-            required
-          />
-        </label>
-        <label>
-          Password
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-        </label>
-        <button type="submit">Log In</button>
-      </form>
+      <div id="login-page">
+        <img id='login-image' src="https://cdn.robinhood.com/assets/generated_assets/web-bundle-lazy-route-prod-experiment/member/632fcb3e7ed928b2a960f3e003d10b44.jpg" />
+        <div id="login-form">
+          <h1>Log in to Robbinghood</h1>
+          <form onSubmit={handleSubmit}>
+            <div className="form-no-button">
+              <ul>
+                {errors.map((error, idx) => (
+                  <li key={idx}>{error}</li>
+                ))}
+              </ul>
+              <div className="label-input-pair">
+                <label>
+                  Username or Email
+                </label>
+                  <input
+                    type="text"
+                    value={credential}
+                    onChange={(e) => setCredential(e.target.value)}
+                    required
+                  />
+              </div>
+              <div className="label-input-pair">
+                <label>
+                  Password
+                </label>
+                  <input
+                    type="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    required
+                  />
+              </div>
+            </div>
+            <button type="submit">Log In</button>
+          </form>
+        </div>
+      </div>
     </>
   );
 }

@@ -1,5 +1,5 @@
-import React from 'react';
-import { NavLink } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { Link, NavLink, useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import ProfileButton from './ProfileButton';
 import LoginFormModal from '../LoginFormModal';
@@ -8,6 +8,17 @@ import { Search } from './Search';
 
 function Navigation({ isLoaded }) {
   const sessionUser = useSelector(state => state.session.user);
+  const [hideNav, setHideNav] = useState(false);
+
+  const url = useLocation();
+  const path = url.pathname;
+
+  useEffect(() => {
+    console.log(path)
+    if (path === '/login' || path === '/signup') setHideNav(true);
+    else setHideNav(false);
+
+  })
 
   let sessionLinks;
   if (sessionUser) {
@@ -25,18 +36,27 @@ function Navigation({ isLoaded }) {
 
   return (
     <>
-      <div id='nav'>
+      {!sessionUser && !hideNav && (
+        <div id='nav'>
+          <Link to='/'>Robinhood</Link>
+          {sessionLinks}
+        </div>
+      )}
+
+      {sessionUser && !hideNav && (
+        <div id='nav'>
         <div className='divider'>
-          <NavLink exact to="/">Home</NavLink>
+          <NavLink exact to="/portfolio">Home</NavLink>
         </div>
         <div className='divider'>
           <Search />
         </div>
         <div className='divider'></div>
         <div className='divider'>
-          {sessionLinks}
+          {isLoaded && sessionLinks}
         </div>
       </div>
+      )}
     </>
   );
 }

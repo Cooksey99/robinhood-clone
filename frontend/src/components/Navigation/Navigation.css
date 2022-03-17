@@ -4,7 +4,7 @@
 }
 
 #nav {
-  background-color: coral;
+  /* background-color: coral; */
   height:64px;
   display: flex;
   justify-content: space-around;
