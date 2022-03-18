@@ -1,3 +1,4 @@
+import { Chart } from './Chart'
 import './portfolio.css'
 
 export const Portfolio = () => {
@@ -8,13 +9,15 @@ export const Portfolio = () => {
     // api_key.apiKey = "c8obubqad3iddfsarfeg"
     // const finnhubClient = new finnhub.DefaultApi()
 
-    // finnhubClient.symbolSearch('AAPL', (error, data, response) => {
+    // finnhubClient.quote('AAPL', (error, data, response) => {
     //   console.log(data)
     // });
 
     return (
         <>
-            <div id="main-info-container"></div>
+            <div id="main-info-container">
+                <Chart />
+            </div>
         </>
     )
 }

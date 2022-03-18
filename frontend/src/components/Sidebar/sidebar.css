@@ -6,3 +6,23 @@
     border-radius: 10px;
     float: right;
 }
+.stock-tab {
+    display: flex;
+}
+
+.vertical-pair {
+    width: 33.33%;
+}
+.mini-chart {
+    width: 33.33%;
+}
+.left-side {
+    float: left;
+}
+.right-side {
+    float: right;
+}
+.new-list {
+    display: flex;
+    justify-content: space-between;
+}

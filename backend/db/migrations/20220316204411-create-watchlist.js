@@ -13,11 +13,11 @@ module.exports = {
         allowNull: false
       },
       stock_id: {
-        type: Sequelize.INTEGER,
-        allowNull: false
+        type: Sequelize.INTEGER
       },
       list_name: {
-        type: Sequelize.STRING(30)
+        type: Sequelize.STRING(30),
+        allowNull: false
       },
       createdAt: {
         allowNull: false,

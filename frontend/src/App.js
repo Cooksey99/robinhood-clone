@@ -11,6 +11,7 @@ import { Sidebar } from './components/Sidebar/Sidebar';
 import LoginForm from './components/LoginFormModal/LoginForm';
 import LoginFormPage from './components/LoginFormPage';
 import { SplashPage } from './components/SplashPage/SplashPage';
+import { StockPage } from './components/StockPage/StockPage';
 function App() {
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);
@@ -32,23 +33,26 @@ function App() {
         <SplashPage />
       </Route>
       {isLoaded && (
-        <Switch>
-          <div id='logged-out-app'>
-            <Route path="/login">
-              <LoginFormPage />
-            </Route>
-            <Route path='/signup'>
-              <SignupFormPage />
-            </Route>
-          </div>
+        <>
           <div id='app'>
-            <Route path='/portfolio'>
-              <Portfolio />
-              <Sidebar />
-            </Route>
-          </div>
+            <Switch>
+              <Route path="/login">
+                <LoginFormPage />
+              </Route>
+              <Route path='/signup'>
+                <SignupFormPage />
+              </Route>
+              <Route path='/portfolio'>
+                <Portfolio />
+                <Sidebar />
+              </Route>
+              <Route path='/stocks/:stockId'>
+                <StockPage />
+              </Route>
 
-        </Switch>
+            </Switch>
+          </div>
+        </>
       )
       }
     </>
