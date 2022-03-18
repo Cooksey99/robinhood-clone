@@ -6,12 +6,12 @@ import SignupFormPage from './components/SignupFormPage';
 import * as sessionActions from './store/session';
 import Navigation from './components/Navigation';
 import { Modal } from './context/Modal';
-import { Portfolio } from './Portfolio/Portfolio';
 import { Sidebar } from './components/Sidebar/Sidebar';
 import LoginForm from './components/LoginFormModal/LoginForm';
 import LoginFormPage from './components/LoginFormPage';
 import { SplashPage } from './components/SplashPage/SplashPage';
 import { StockPage } from './components/StockPage/StockPage';
+import { Portfolio } from './components/Portfolio/Portfolio';
 function App() {
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);
