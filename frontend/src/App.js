@@ -49,7 +49,6 @@ function App() {
               <Route path='/stocks/:stockId'>
                 <StockPage />
               </Route>
-
             </Switch>
           </div>
         </>

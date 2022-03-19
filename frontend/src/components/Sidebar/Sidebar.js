@@ -1,5 +1,7 @@
-import { useState } from 'react'
-import { useSelector } from 'react-redux';
+import { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux';
+import { createNewList } from '../../store/watchlist';
+
 import './sidebar.css'
 import { SidebarStock } from './SidebarStock'
 
@@ -8,18 +10,20 @@ export const Sidebar = () => {
 
     const [newList, setNewList] = useState(false);
     const [list_name, setList_name] = useState('');
+    const dispatch = useDispatch();
 
     const sessionUser = useSelector(state => state.session.user);
     const handleSubmit = async(e) => {
         e.preventDefault();
 
         const user_id = sessionUser.id
-
-        const watchlistData = {
-            user_id,
-            list_name
-        }
+        console.log('handling submit')
+        dispatch(createNewList({ user_id, list_name }))
     }
+
+    // useEffect(() => {
+
+    // }, [])
 
     return (
         <>
@@ -30,14 +34,16 @@ export const Sidebar = () => {
                     <h2>Lists</h2>
                     <button onClick={() => setNewList(true)}>+</button>
                 </div>
+
+                {/* watchlist function */}
                 {newList && (
                     <form onSubmit={handleSubmit}>
                     <input value={list_name}
                     required
                     onChange={(e) => setList_name(e.target.value)}
                     placeholder='List Name'></input>
-                    <button onClick={() => setNewList(false)}>Cancel</button>
-                    <button>Create List</button>
+                    <button type='button' onClick={() => setNewList(false)}>Cancel</button>
+                    <button type='submit'>Create List</button>
                 </form>
                 )}
             </div>
