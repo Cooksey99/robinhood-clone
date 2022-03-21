@@ -1,15 +1,17 @@
 const express = require("express");
 const expressAsyncHandler = require("express-async-handler");
-const { Watchlist } = require("../../db/models");
+const { Watchlist, User } = require("../../db/models");
 const { restoreUser } = require("../../utils/auth");
 
 const router = express.Router();
 
-// router.get('/list', expressAsyncHandler(async(req, res) => {
-//     const lists = await Watchlist.findAll();
-//     console.log('in the backend')
-//     res.json(lists);
-// }));
+router.get('/lists', restoreUser,
+expressAsyncHandler(async(req, res) => {
+    // const id = req.params.id;
+    const lists = await Watchlist.findAll();
+    const response = lists.map(list => list)
+    res.json(response);
+}));
 
 router.post('/list',
 expressAsyncHandler(async(req, res) => {

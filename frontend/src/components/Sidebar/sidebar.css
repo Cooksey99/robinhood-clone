@@ -5,6 +5,7 @@
     border: 2px solid var(--sp-border-color);
     border-radius: 10px;
     float: right;
+    overflow-y: scroll;
 }
 .stock-tab {
     display: flex;

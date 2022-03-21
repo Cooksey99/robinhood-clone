@@ -3,27 +3,31 @@ import { csrfFetch } from "./csrf";
 
 const CREATE_LIST = 'session/CREATE_LIST';
 const GET_LISTS = 'session/GET_LISTS';
+const EDIT_LIST = 'session/EDIT_LIST';
 
-
-const createList = (data) => {
+const create_list = (data) => {
     return {
         type: CREATE_LIST,
         data
     }
 }
-const getLists = (lists) => {
+const get_list = (lists) => {
     return {
         type: GET_LISTS,
         lists
     }
 }
+const edit_list = (list) => {
+    return {
+        type: EDIT_LIST,
+        list
+    }
+}
 
-export const fetchLists = async (dispatch) => {
+export const fetchLists = () => async (dispatch) => {
     const response = await csrfFetch('/api/portfolio/lists')
     const data = await response.json();
-
-    dispatch(getLists(data));
-    return data;
+    dispatch(get_list(data));
 }
 
 export const createNewList = ({ user_id, list_name }) => async (dispatch) => {
@@ -38,21 +42,23 @@ export const createNewList = ({ user_id, list_name }) => async (dispatch) => {
     });
     if (response.ok) {
         const data = await response.json();
-        dispatch(createList(data));
+        dispatch(create_list(data));
     }
+}
+
+export const editList = (list) => {
+
 }
 
 const initialState = { lists: {} }
 
 export default function listReducer( state = initialState, action) {
-    let newState;
+    let newState = initialState;
     switch (action.type) {
         case GET_LISTS:
             newState.lists = action.lists;
             return newState;
         case CREATE_LIST:
-            // console.log('testing', action.data)
-            newState = initialState;
             newState.lists[action.data.id] = action.data;
             return newState;
         default:

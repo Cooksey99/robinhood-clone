@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { createNewList } from '../../store/watchlist';
+import { createNewList, fetchLists } from '../../store/watchlist';
 
 import './sidebar.css'
 import { SidebarStock } from './SidebarStock'
@@ -13,7 +13,9 @@ export const Sidebar = () => {
     const dispatch = useDispatch();
 
     const sessionUser = useSelector(state => state.session.user);
-    const handleSubmit = async(e) => {
+    const allLists = useSelector(state => state.listReducer.lists)
+
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
         const user_id = sessionUser.id
@@ -21,9 +23,13 @@ export const Sidebar = () => {
         dispatch(createNewList({ user_id, list_name }))
     }
 
-    // useEffect(() => {
+    const editList = () => {
+        
+    }
 
-    // }, [])
+    useEffect(() => {
+        dispatch(fetchLists());
+    }, [])
 
     return (
         <>
@@ -38,13 +44,21 @@ export const Sidebar = () => {
                 {/* watchlist function */}
                 {newList && (
                     <form onSubmit={handleSubmit}>
-                    <input value={list_name}
-                    required
-                    onChange={(e) => setList_name(e.target.value)}
-                    placeholder='List Name'></input>
-                    <button type='button' onClick={() => setNewList(false)}>Cancel</button>
-                    <button type='submit'>Create List</button>
-                </form>
+                        <input value={list_name}
+                            required
+                            onChange={(e) => setList_name(e.target.value)}
+                            placeholder='List Name'></input>
+                        <button type='button' onClick={() => setNewList(false)}>Cancel</button>
+                        <button type='submit'>Create List</button>
+                    </form>
+                )}
+                {allLists && (
+                    allLists.map(list => (
+                        <>
+                            <h2>{list.list_name}</h2>
+                            <button onClick={editList}>edit</button>
+                        </>
+                    ))
                 )}
             </div>
         </>
