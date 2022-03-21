@@ -21,8 +21,10 @@ expressAsyncHandler(async(req, res) => {
 
 router.put('/list/:id',
 expressAsyncHandler(async(req, res) => {
-    const id = req.params.id;
-    const list = await Watchlist.findBy(id);
+    // console.log('backend route')
+    const listId = req.params.id;
+    console.log('checking id:       ', listId)
+    const list = await Watchlist.findByPk(listId);
 
     list.set(req.body);
     await list.save();
@@ -32,8 +34,8 @@ expressAsyncHandler(async(req, res) => {
 router.delete('/list/:id',
 expressAsyncHandler(async(req, res) => {
     const id = req.params.id;
-    const list = await Watchlist.findBy(id);
+    const list = await Watchlist.findByPk(id);
     await list.destroy();
-}))
+}));
 
 module.exports = router;

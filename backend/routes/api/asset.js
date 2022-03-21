@@ -3,9 +3,12 @@ const asyncHandler = require("express-async-handler");
 
 const router = express.Router();
 
-// router.get('/:ticker', asyncHandler(async(req, res) => {
-//     const ticker =
-// }))
+// ticker will be APPL
+// /asset/APPL
+router.get('/:ticker', asyncHandler(async(req, res) => {
+
+
+}))
 
 
 module.exports = router;

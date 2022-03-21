@@ -36,17 +36,17 @@ function App() {
         <>
           <div id='app'>
             <Switch>
-              <Route path="/login">
+              <Route path="/login" exact>
                 <LoginFormPage />
               </Route>
-              <Route path='/signup'>
+              <Route path='/signup' exact>
                 <SignupFormPage />
               </Route>
-              <Route path='/portfolio'>
+              <Route path='/portfolio' exact>
                 <Portfolio />
                 <Sidebar />
               </Route>
-              <Route path='/stocks/:stockId'>
+              <Route path='/stocks/:stockId' exact>
                 <StockPage />
               </Route>
             </Switch>
