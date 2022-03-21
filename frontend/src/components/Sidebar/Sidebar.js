@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { createNewList, fetchLists } from '../../store/watchlist';
+import { createNewList, editList, fetchLists } from '../../store/watchlist';
 
 import './sidebar.css'
 import { SidebarStock } from './SidebarStock'
@@ -9,22 +9,34 @@ import { SidebarStock } from './SidebarStock'
 export const Sidebar = () => {
 
     const [newList, setNewList] = useState(false);
-    const [list_name, setList_name] = useState('');
+    const [list, setList] = useState({});
+    const [listName, setListName] = useState('');
+    const [edit, setEdit] = useState(false);
     const dispatch = useDispatch();
 
-    const sessionUser = useSelector(state => state.session.user);
-    const allLists = useSelector(state => state.listReducer.lists)
+    const sessionUser = useSelector(state => state?.session?.user);
+    const allLists = useSelector(state => state?.listReducer?.lists)
+    const user_id = sessionUser.id
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        const user_id = sessionUser.id
-        console.log('handling submit')
-        dispatch(createNewList({ user_id, list_name }))
+        // console.log('handling submit')
+        dispatch(createNewList({ user_id, listName }))
     }
 
-    const editList = () => {
-        
+    const editForm = (list) => async (e) => {
+        setEdit(true);
+        setList(list)
+        setListName(list.list_name)
+        // console.log(list)
+
+    }
+
+    const submitEdit = async (e) => {
+        e.preventDefault();
+
+        dispatch(editList(list));
     }
 
     useEffect(() => {
@@ -44,9 +56,9 @@ export const Sidebar = () => {
                 {/* watchlist function */}
                 {newList && (
                     <form onSubmit={handleSubmit}>
-                        <input value={list_name}
+                        <input value={listName}
                             required
-                            onChange={(e) => setList_name(e.target.value)}
+                            onChange={(e) => setListName(e.target.value)}
                             placeholder='List Name'></input>
                         <button type='button' onClick={() => setNewList(false)}>Cancel</button>
                         <button type='submit'>Create List</button>
@@ -56,9 +68,25 @@ export const Sidebar = () => {
                     allLists.map(list => (
                         <>
                             <h2>{list.list_name}</h2>
-                            <button onClick={editList}>edit</button>
+                            <button onClick={editForm(list)}>edit</button>
                         </>
                     ))
+                )}
+                {edit && (
+                    <>
+                        <div className='editList'>
+                            <form onSubmit={submitEdit}>
+                                <h2>Edit List</h2>
+                                <input
+                                required
+                                value={listName}
+                                onChange={(e) => setListName(e.target.value)}></input>
+                                <button type='submit'>Save</button>
+                                <button type='button'
+                                onClick={() => setEdit(false)}>X</button>
+                            </form>
+                        </div>
+                    </>
                 )}
             </div>
         </>

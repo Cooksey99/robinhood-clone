@@ -19,4 +19,21 @@ expressAsyncHandler(async(req, res) => {
     res.json(list);
 }))
 
+router.put('/list/:id',
+expressAsyncHandler(async(req, res) => {
+    const id = req.params.id;
+    const list = await Watchlist.findBy(id);
+
+    list.set(req.body);
+    await list.save();
+    res.json(list);
+}));
+
+router.delete('/list/:id',
+expressAsyncHandler(async(req, res) => {
+    const id = req.params.id;
+    const list = await Watchlist.findBy(id);
+    await list.destroy();
+}))
+
 module.exports = router;

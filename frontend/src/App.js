@@ -5,7 +5,7 @@ import SignupFormPage from './components/SignupFormPage';
 // import LoginFormPage from "./components/LoginFormPage";
 import * as sessionActions from './store/session';
 import Navigation from './components/Navigation';
-import { Modal } from './context/Modal';
+// import { Modal } from './context/Modal';
 import { Sidebar } from './components/Sidebar/Sidebar';
 import LoginForm from './components/LoginFormModal/LoginForm';
 import LoginFormPage from './components/LoginFormPage';
