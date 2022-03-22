@@ -39,3 +39,24 @@
     width: 300px;
     height: 250px;
 }
+
+
+/* StockSidebar starts here */
+
+#stock-sidebar {
+    float: right;
+}
+
+#order-tab {
+    width: 276px;
+    height: 350px;
+    border: 2px solid var(--sp-border-color);
+}
+.order-type, .amount, .quantity {
+    display: flex;
+    justify-content: space-around;
+}
+
+#add-to-lists {
+    
+}
