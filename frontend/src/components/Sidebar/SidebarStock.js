@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 // import { finnhubFetch } from "../finnhubSetup";
-
+import { finnhubClient } from "../finnhubSetup"
 
 
 
@@ -15,14 +15,18 @@ export const SidebarStock = (stock) => {
     api_key.apiKey = "c8obubqad3iddfsarfeg";
     const finnhubClient = new finnhub.DefaultApi()
 
-
     useEffect(() => {
 
         finnhubClient.quote("AAPL", (error, data, response) => {
             // console.log(data)
             setStockInfo(data)
         });
-        console.log(stockInfo)
+
+        finnhubClient.symbolSearch("AAPL", (error, data, response) => {
+            // console.log(data)
+            console.log('testing stock info', data)
+
+        });
 
     }, [])
 

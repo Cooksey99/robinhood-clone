@@ -1,4 +1,5 @@
-import { Chart } from './Chart'
+
+import { StockChart } from './StockChart'
 import './portfolio.css'
 
 export const Portfolio = () => {
@@ -16,7 +17,7 @@ export const Portfolio = () => {
     return (
         <>
             <div id="main-info-container">
-                <Chart />
+                <StockChart option='portfolio'/>
             </div>
         </>
     )

@@ -5,6 +5,7 @@
     border: 2px solid var(--sp-border-color);
     border-radius: 10px;
     float: right;
+    overflow-y: scroll;
 }
 .stock-tab {
     display: flex;
@@ -25,4 +26,37 @@
 .new-list {
     display: flex;
     justify-content: space-between;
+}
+
+.editList {
+    position: absolute;
+    transform: translateX(-50%);
+    left: 50%;
+    transform: translateY(-50%);
+    bottom: 50%;
+    background: black;
+    border: 1px white solid;
+    width: 300px;
+    height: 250px;
+}
+
+
+/* StockSidebar starts here */
+
+#stock-sidebar {
+    float: right;
+}
+
+#order-tab {
+    width: 276px;
+    height: 350px;
+    border: 2px solid var(--sp-border-color);
+}
+.order-type, .amount, .quantity {
+    display: flex;
+    justify-content: space-around;
+}
+
+#add-to-lists {
+    
 }
