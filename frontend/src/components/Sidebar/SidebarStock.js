@@ -15,7 +15,7 @@ export const SidebarStock = (stock) => {
     api_key.apiKey = "c8obubqad3iddfsarfeg";
     const finnhubClient = new finnhub.DefaultApi()
 
-
+    process.env.
     useEffect(() => {
 
         finnhubClient.quote("AAPL", (error, data, response) => {

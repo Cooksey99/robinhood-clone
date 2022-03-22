@@ -46,7 +46,7 @@ function App() {
                 <Portfolio />
                 <Sidebar />
               </Route>
-              <Route path='/stocks/:stockId' exact>
+              <Route path='/asset/:symbol' exact>
                 <StockPage />
               </Route>
             </Switch>

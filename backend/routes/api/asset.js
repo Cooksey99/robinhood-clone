@@ -3,10 +3,26 @@ const asyncHandler = require("express-async-handler");
 
 const router = express.Router();
 
+
+
+
 // ticker will be APPL
 // /asset/APPL
-router.get('/:ticker', asyncHandler(async(req, res) => {
+router.get('/:symbol', asyncHandler(async (req, res) => {
+    // console.log('==========')
+    const symbol = req.params;
+    symbol = symbol.toUpper();
+    let assetData = {}
 
+    const finnhub = require('finnhub');
+
+    const api_key = finnhub.ApiClient.instance.authentications['api_key'];
+    api_key.apiKey = "c8obubqad3iddfsarfeg"
+    const finnhubClient = new finnhub.DefaultApi()
+
+    await finnhubClient.quote(symbol, (error, data, response) => (assetData = data));
+
+    return res.json(assetData);
 
 }))
 
