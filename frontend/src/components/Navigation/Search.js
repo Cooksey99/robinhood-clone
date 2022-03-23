@@ -13,7 +13,7 @@ export const Search = () => {
     const finnhubClient = new finnhub.DefaultApi()
 
     useEffect(() => {
-        finnhubClient.symbolSearch('S&P500', (error, data, response) => {
+        finnhubClient.symbolSearch('AAPL', (error, data, response) => {
               console.log(data)
             // setReturnVal(data)
             // console.log(returnVal)

@@ -20,7 +20,6 @@ export const StockChart = ({ option }) => {
         timeObj.now = Math.round((new Date()));
         timeObj.yesterday = Math.round((new Date()))
         setUnixTimes(timeObj)
-        console.log(timeObj)
     }
 
 

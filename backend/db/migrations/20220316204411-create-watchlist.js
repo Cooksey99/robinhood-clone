@@ -12,9 +12,6 @@ module.exports = {
         type: Sequelize.INTEGER,
         allowNull: false
       },
-      stock_id: {
-        type: Sequelize.INTEGER
-      },
       list_name: {
         type: Sequelize.STRING(30),
         allowNull: false

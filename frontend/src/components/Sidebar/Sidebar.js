@@ -26,6 +26,7 @@ export const Sidebar = () => {
         // console.log('handling submit')
         let list_name = listName;
         dispatch(createNewList({ user_id, list_name }))
+        dispatch(fetchLists())
     }
 
     const editForm = (list) => async (e) => {
@@ -47,12 +48,12 @@ export const Sidebar = () => {
     const submitDelete = (listId) => async (e) => {
         e.preventDefault();
         dispatch(deleteList(listId))
-        // dispatch(fetchLists());
+        dispatch(fetchLists());
     }
 
     useEffect(() => {
         dispatch(fetchLists());
-        console.log(allLists)
+        // console.log(allLists)
     }, [dispatch])
 
     return (
