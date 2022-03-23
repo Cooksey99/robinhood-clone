@@ -1,10 +1,19 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
+import { useDispatch, useSelector } from "react-redux";
+import { fetchLists } from "../../store/watchlist";
 
 
 export const StockSideBar = ({ symbol, stockInfo }) => {
 
+    const dispatch = useDispatch();
+
     const [quantity, setQuantity] = useState(0);
     const [addToList, setAddToList] = useState(false);
+    const lists = useSelector(state => state?.listReducer?.lists)
+
+    useEffect(() => {
+        dispatch(fetchLists())
+    }, [dispatch, addToList])
 
     return (
         <>
@@ -39,9 +48,31 @@ export const StockSideBar = ({ symbol, stockInfo }) => {
                     </div>
                 </div>
                 <button id='add-to-lists'
-                onClick={() => setAddToList(true)}>Add to Lists</button>
+                    onClick={() => setAddToList(true)}>Add to Lists</button>
             </div>
-            
+            {addToList && (
+                <>
+                    <div id="add-to-list-popup">
+                        <div id="list-popup-top">
+                            <h2>Add {symbol} to Your Lists</h2>
+                            <button
+                                className="exit-button"
+                                onClick={() => setAddToList(false)}>X</button>
+                        </div>
+                        <br />
+                        {lists && (
+                            lists?.map(list => (
+                                <div key={list.id}>
+                                    {/* <img src="https://png.pngtree.com/png-vector/20201208/ourmid/pngtree-flat-light-bulb-shine-bright-isolated-vector-png-image_2531330.jpg" alt="lightbulb"/> */}
+                                    <br />
+                                    <h3>{list.list_name}</h3>
+                                    <br />
+                                </div>
+                            ))
+                        )}
+                    </div>
+                </>
+            )}
         </>
     )
 }

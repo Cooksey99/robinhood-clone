@@ -30,7 +30,7 @@ export const StockPage = () => {
         <>
             <div id="main-info-container">
                 <h1>{symbol}</h1>
-                <h3>daily change: {stockInfo.dp}</h3>
+                <h3>daily change: {stockInfo.dp}%</h3>
                 <h3>current: {stockInfo.c}</h3>
                 <StockChart option='asset'/>
                 <h3>high: {stockInfo.h}</h3>

@@ -88,6 +88,7 @@ export default function listReducer( state = initialState, action) {
             newState.lists = action.lists;
             return newState;
         case CREATE_LIST:
+            newState = {...state};
             newState.lists[action.data.id] = action.data;
             return newState;
         case EDIT_LIST:
@@ -96,7 +97,6 @@ export default function listReducer( state = initialState, action) {
             return newState;
         case DELETE_LIST:
             newState = {...state};
-            console.log('newState:      ', newState);
             delete newState.lists[action.id];
             return newState;
         default:

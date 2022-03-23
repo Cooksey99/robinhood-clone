@@ -14,6 +14,7 @@ function ProfileButton({ user }) {
   };
 
   useEffect(() => {
+
     if (!showMenu) return;
 
     const closeMenu = () => {
@@ -38,11 +39,13 @@ function ProfileButton({ user }) {
       </button>
       {showMenu && (
         <ul className="profile-dropdown">
-          <li>{user.username}</li>
-          <li>{user.email}</li>
-          <li>
+          <p>{user.first_name} {user.last_name}</p>
+          <p>${user.buyingPower}</p>
+          <p>{user.username}</p>
+          <p>{user.email}</p>
+          <p>
             <button onClick={logout}>Log Out</button>
-          </li>
+          </p>
         </ul>
       )}
     </>

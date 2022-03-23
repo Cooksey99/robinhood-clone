@@ -7,6 +7,7 @@
     float: right;
     overflow-y: scroll;
 }
+
 .stock-tab {
     display: flex;
 }
@@ -14,15 +15,19 @@
 .vertical-pair {
     width: 33.33%;
 }
+
 .mini-chart {
     width: 33.33%;
 }
+
 .left-side {
     float: left;
 }
+
 .right-side {
     float: right;
 }
+
 .new-list {
     display: flex;
     justify-content: space-between;
@@ -52,11 +57,49 @@
     height: 350px;
     border: 2px solid var(--sp-border-color);
 }
+
 .order-type, .amount, .quantity {
     display: flex;
     justify-content: space-around;
 }
 
-#add-to-lists {
-    
+#add-to-lists {}
+
+#add-to-list-popup {
+    width: 408px;
+    height: 525px;
+    background-color: rgb(30, 33, 36);
+    position: absolute;
+    transform: translateX(-50%);
+    right: 30%;
+    transform: translateY(-50%);
+    top: 50%;
+    border-radius: 5px;
+    padding: 15px;
+}
+
+#add-to-list-popup h3, #add-to-list-popup h2 {
+    background-color: rgb(30, 33, 36);
+}
+#add-to-list-popup img {
+    width: 25px;
+}
+#list-popup-top {
+    display: flex;
+    justify-content: space-around;
+    background-color: rgb(30, 33, 36);
+}
+#list-popup-top h2 {
+    padding-top: 10px;
+}
+.exit-button {
+    all: unset;
+    padding: 10px 15px;
+    border-radius: 5px;
+}
+.exit-button:hover {
+    background: rgb(84, 93, 97);
+}
+br {
+    background-color: rgb(30, 33, 36);
 }
