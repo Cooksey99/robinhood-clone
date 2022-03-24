@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { createNewList, deleteList, editList, fetchLists } from '../../store/watchlist';
 
 import './sidebar.css'
@@ -26,7 +27,7 @@ export const Sidebar = () => {
         // console.log('handling submit')
         let list_name = listName;
         dispatch(createNewList({ user_id, list_name }))
-        dispatch(fetchLists())
+        dispatch(fetchLists(sessionUser.id))
     }
 
     const editForm = (list) => async (e) => {
@@ -48,18 +49,18 @@ export const Sidebar = () => {
     const submitDelete = (listId) => async (e) => {
         e.preventDefault();
         dispatch(deleteList(listId))
-        dispatch(fetchLists());
+        dispatch(fetchLists(sessionUser.id));
     }
 
     useEffect(() => {
-        dispatch(fetchLists());
+        dispatch(fetchLists(sessionUser.id));
         // console.log(allLists)
     }, [dispatch])
 
     return (
         <>
             <div id="sidebar">
-                <h2>Stocks</h2>
+                <h2 className='stock-header'>Stocks</h2>
                 <SidebarStock />
                 <div className='new-list'>
                     <h2>Lists</h2>
@@ -79,11 +80,13 @@ export const Sidebar = () => {
                 )}
                 {allLists.length > 0 && (
                     allLists.map(list => (
-                            <div key={list.id}>
+                            <Link key={list.id}
+                            to={`/list/${list.id}`}
+                            id='list-select'>
                                 <h2>{list.list_name}</h2>
                                 <button onClick={editForm(list)}>edit</button>
                                 <button onClick={submitDelete(list.id)}>delete</button>
-                            </div>
+                            </Link>
 
                     ))
                 )}

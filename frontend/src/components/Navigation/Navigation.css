@@ -1,4 +1,11 @@
 /* Account menu styling starts here */
+#nav-component {
+  background-color: black;
+  color: white;
+}
+#nav-component input {
+  background-color: black;
+}
 .profile-dropdown {
   position: absolute;
   background-color: rgb(30,33,36);

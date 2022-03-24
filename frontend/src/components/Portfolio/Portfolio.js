@@ -14,7 +14,7 @@ export const Portfolio = () => {
 
     return (
         <>
-            <div id="main-info-container">
+            <div className="main-info-container">
                 <h2>${user.buyingPower}</h2>
                 <StockChart option='portfolio'/>
             </div>

@@ -1,0 +1,9 @@
+.heart {
+    width: 60px;
+}
+
+.stock-tab {
+    display: flex;
+    justify-content: space-around;
+}
+

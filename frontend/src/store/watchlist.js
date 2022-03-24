@@ -33,8 +33,8 @@ const delete_list = (listId) => {
     }
 }
 
-export const fetchLists = () => async (dispatch) => {
-    const response = await csrfFetch('/api/portfolio/lists')
+export const fetchLists = (id) => async (dispatch) => {
+    const response = await csrfFetch(`/api/portfolio/lists/${id}`)
     const data = await response.json();
     dispatch(get_list(data));
 }

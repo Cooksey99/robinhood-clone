@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux";
+import { restoreUser } from "../../store/session";
+import { addStockToList } from "../../store/stock";
 import { fetchLists } from "../../store/watchlist";
 
 
@@ -9,10 +11,17 @@ export const StockSideBar = ({ symbol, stockInfo }) => {
 
     const [quantity, setQuantity] = useState(0);
     const [addToList, setAddToList] = useState(false);
+    const [inList, setInList] = useState(false);
     const lists = useSelector(state => state?.listReducer?.lists)
+    const sessionUser = useSelector(state => state?.session?.user);
+
+    // const checkUniqueInList = (list) => {
+    //     if (stock)
+    // }
 
     useEffect(() => {
-        dispatch(fetchLists())
+        dispatch(restoreUser())
+        dispatch(fetchLists(sessionUser.id))
     }, [dispatch, addToList])
 
     return (
@@ -62,9 +71,12 @@ export const StockSideBar = ({ symbol, stockInfo }) => {
                         <br />
                         {lists && (
                             lists?.map(list => (
-                                <div key={list.id}>
+                                <div key={list.id}
+                                onClick={() => dispatch(addStockToList(list.id, symbol))}>
                                     {/* <img src="https://png.pngtree.com/png-vector/20201208/ourmid/pngtree-flat-light-bulb-shine-bright-isolated-vector-png-image_2531330.jpg" alt="lightbulb"/> */}
                                     <br />
+                                    {inList && <input type="checkbox" checked/>}
+                                    {!inList && <input type="checkbox" />}
                                     <h3>{list.list_name}</h3>
                                     <br />
                                 </div>

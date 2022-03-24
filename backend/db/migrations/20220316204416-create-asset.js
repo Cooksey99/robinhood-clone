@@ -12,10 +12,6 @@ module.exports = {
         type: Sequelize.INTEGER,
         allowNull: false
       },
-      stock_id: {
-        type: Sequelize.INTEGER,
-        allowNull: false
-      },
       quantity: {
         type: Sequelize.DECIMAL,
         allowNull: false

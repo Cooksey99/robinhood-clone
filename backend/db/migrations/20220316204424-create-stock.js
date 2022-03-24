@@ -9,7 +9,9 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       watchlist_id: {
-        allowNull: false,
+        type: Sequelize.INTEGER
+      },
+      asset_id: {
         type: Sequelize.INTEGER
       },
       ticker: {

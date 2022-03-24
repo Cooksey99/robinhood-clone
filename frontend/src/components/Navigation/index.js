@@ -36,27 +36,29 @@ function Navigation({ isLoaded }) {
 
   return (
     <>
-      {!sessionUser && !hideNav && (
-        <div id='nav'>
-          <Link to='/'>Robinhood</Link>
-          {sessionLinks}
-        </div>
-      )}
+      <div id='nav-component'>
+        {!sessionUser && !hideNav && (
+          <div id='nav'>
+            <Link to='/'>Robinhood</Link>
+            {sessionLinks}
+          </div>
+        )}
 
-      {sessionUser && !hideNav && (
-        <div id='nav'>
-        <div className='divider'>
-          <NavLink exact to="/portfolio">Home</NavLink>
-        </div>
-        <div className='divider'>
-          <Search />
-        </div>
-        <div className='divider'></div>
-        <div className='divider'>
-          {isLoaded && sessionLinks}
-        </div>
+        {sessionUser && !hideNav && (
+          <div id='nav'>
+            <div className='divider'>
+              <NavLink exact to="/portfolio">Home</NavLink>
+            </div>
+            <div className='divider'>
+              <Search />
+            </div>
+            <div className='divider'></div>
+            <div className='divider'>
+              {isLoaded && sessionLinks}
+            </div>
+          </div>
+        )}
       </div>
-      )}
     </>
   );
 }

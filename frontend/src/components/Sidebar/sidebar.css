@@ -2,12 +2,15 @@
     width: 276px;
     height: 692px;
     background: #1e2124;
-    border: 2px solid var(--sp-border-color);
+    border: 1px solid var(--sp-border-color);
     border-radius: 10px;
     float: right;
     overflow-y: scroll;
 }
-
+.stock-header {
+    border-bottom: 1px solid var(--sp-border-color);
+    padding-bottom: 20px;
+}
 .stock-tab {
     display: flex;
 }
@@ -31,6 +34,9 @@
 .new-list {
     display: flex;
     justify-content: space-between;
+}
+.new-list:hover {
+    background: rgb(84, 93, 97);
 }
 
 .editList {
@@ -101,5 +107,14 @@
     background: rgb(84, 93, 97);
 }
 br {
+    /* background-color: rgb(30, 33, 36); */
+}
+#list-select {
+    padding: 10px 2px;
     background-color: rgb(30, 33, 36);
+    display: flex;
+    justify-content: space-around;
+}
+#list-select:hover {
+    background-color: rgb(84, 93, 97);
 }

@@ -1,5 +1,8 @@
 /* TODO Add site wide styles */
 * {
+    text-decoration: none;
+}
+html {
     margin: 0;
     padding: 0;
     /* height: 100%; */

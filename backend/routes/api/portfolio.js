@@ -5,10 +5,12 @@ const { restoreUser } = require("../../utils/auth");
 
 const router = express.Router();
 
-router.get('/lists', restoreUser,
+router.get('/lists/:id', restoreUser,
 expressAsyncHandler(async(req, res) => {
-    // const id = req.params.id;
-    const lists = await Watchlist.findAll();
+    const id = req.params.id;
+    const lists = await Watchlist.findAll({
+        where: {user_id: id}
+    });
     const response = lists.map(list => list)
     res.json(response);
 }));

@@ -22,11 +22,11 @@ export const SidebarStock = (stock) => {
             setStockInfo(data)
         });
 
-        finnhubClient.symbolSearch("AAPL", (error, data, response) => {
-            // console.log(data)
-            console.log('testing stock info', data)
+        // finnhubClient.symbolSearch("AAPL", (error, data, response) => {
+        //     // console.log(data)
+        //     console.log('testing stock info', data)
 
-        });
+        // });
 
     }, [])
 

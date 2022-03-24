@@ -12,6 +12,7 @@ import LoginFormPage from './components/LoginFormPage';
 import { SplashPage } from './components/SplashPage/SplashPage';
 import { StockPage } from './components/StockPage/StockPage';
 import { Portfolio } from './components/Portfolio/Portfolio';
+import { WatchlistPage } from './components/WatchlistPage/WatchlistPage';
 function App() {
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);
@@ -48,6 +49,10 @@ function App() {
               </Route>
               <Route path='/asset/:symbol' exact>
                 <StockPage />
+              </Route>
+              <Route path='/list/:id' exact>
+                <WatchlistPage />
+                <Sidebar />
               </Route>
             </Switch>
           </div>
