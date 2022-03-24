@@ -60,13 +60,18 @@
 
 #order-tab {
     width: 276px;
-    height: 350px;
+    height: 450px;
     border: 2px solid var(--sp-border-color);
 }
 
 .order-type, .amount, .quantity {
     display: flex;
     justify-content: space-around;
+    align-items: center;
+    height: 30px;
+}
+#review-order {
+
 }
 
 #add-to-lists {}

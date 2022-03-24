@@ -33,9 +33,15 @@ router.post(
   '/',
   validateSignup,
   asyncHandler(async (req, res) => {
-    
+
     const { email, first_name, last_name, password, buyingPower } = req.body;
     const user = await User.signup({ email, first_name, last_name, password, buyingPower });
+
+    // create asset/portfolio table to match user
+    console.log('\n\n\n' + user.id + '\n\n\n')
+    const portfolio = {
+      user_id: user.id
+    }
 
     await setTokenCookie(res, user);
 
@@ -44,5 +50,18 @@ router.post(
     });
   }),
 );
+
+router.put('/:id/buyingPower', asyncHandler(async (req, res) => {
+  const id = req.params.id;
+  let user = await User.findByPk(id);
+  let { buyingPower } = req.body;
+
+  user.buyingPower = parseInt(buyingPower) + parseInt(user.buyingPower);
+  user.set(user);
+  await user.save();
+  res.json(user)
+  // console.log('\n\n\n' + buyingPower + '\n\n\n')
+
+}));
 
 module.exports = router;

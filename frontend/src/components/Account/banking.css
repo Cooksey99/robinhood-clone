@@ -2,3 +2,35 @@
     display: flex;
     justify-content: space-around;
 }
+
+
+/* Add bank form starts here */
+#add-bank-div {
+    position: absolute;
+    transform: translateX(-50%);
+    left: 50%;
+    width: 500px;
+    height: 300px;
+    background-color: coral;
+}
+#add-bank-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 0 20px;
+}
+.top-align{
+    display: flex;
+    justify-content: space-between;
+    padding-top: 5px;
+}
+.top-align label {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: flex-end;
+}
+.top-align button {
+    all:unset;
+    font-size: large;
+}

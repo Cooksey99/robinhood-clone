@@ -39,7 +39,7 @@ module.exports = (sequelize, DataTypes) => {
     };
     static associate(models) {
       // define association here
-      User.hasMany(models.Asset, {foreignKey: 'user_id'});
+      User.hasOne(models.Asset, {foreignKey: 'user_id'});
       User.hasMany(models.Watchlist, {foreignKey: 'user_id'});
       User.hasMany(models.Transaction, {foreignKey: 'user_id'});
       User.hasMany(models.Linked_bank, {foreignKey: 'user_id'});

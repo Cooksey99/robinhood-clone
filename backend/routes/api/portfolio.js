@@ -25,7 +25,7 @@ router.put('/list/:id',
     expressAsyncHandler(async (req, res) => {
         // console.log('backend route')
         const listId = req.params.id;
-        console.log('checking id:       ', listId)
+        // console.log('checking id:       ', listId)
         const list = await Watchlist.findByPk(listId);
 
         list.set(req.body);

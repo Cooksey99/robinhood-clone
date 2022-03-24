@@ -15,6 +15,7 @@ function ProfileButton({ user }) {
 
   useEffect(() => {
 
+    dispatch(sessionActions.restoreUser())
     if (!showMenu) return;
 
     const closeMenu = () => {

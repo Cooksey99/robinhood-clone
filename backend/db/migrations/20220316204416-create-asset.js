@@ -13,12 +13,10 @@ module.exports = {
         allowNull: false
       },
       quantity: {
-        type: Sequelize.DECIMAL,
-        allowNull: false
+        type: Sequelize.DECIMAL
       },
       avg_price: {
-        type: Sequelize.DECIMAL,
-        allowNull: false
+        type: Sequelize.DECIMAL
       },
       createdAt: {
         allowNull: false,

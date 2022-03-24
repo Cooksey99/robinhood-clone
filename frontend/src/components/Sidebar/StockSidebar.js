@@ -10,18 +10,29 @@ export const StockSideBar = ({ symbol, stockInfo }) => {
     const dispatch = useDispatch();
 
     const [quantity, setQuantity] = useState(0);
+    const [price, setPrice] = useState(0);
     const [addToList, setAddToList] = useState(false);
     const [inList, setInList] = useState(false);
-    const lists = useSelector(state => state?.listReducer?.lists)
+    const [reviewOrder, setReviewOrder] = useState(false);
+    const [share, setShare] = useState('share');
+
+    const lists = useSelector(state => state?.listReducer?.lists);
     const sessionUser = useSelector(state => state?.session?.user);
 
-    // const checkUniqueInList = (list) => {
-    //     if (stock)
-    // }
+    const submitPurchase = async (e) => {
+        e.preventDefault();
+
+        const stock = {
+            asset_id: sessionUser.id,
+            ticker: symbol
+        }
+        
+    }
 
     useEffect(() => {
         dispatch(restoreUser())
         dispatch(fetchLists(sessionUser.id))
+
     }, [dispatch, addToList])
 
     return (
@@ -39,9 +50,13 @@ export const StockSideBar = ({ symbol, stockInfo }) => {
                     <br />
                     <div className="amount">
                         <h3>Shares</h3>
-                        <input type='number'
-                            placeholder="$0.00"
-                            onChange={(e) => setQuantity(e.target.value * stockInfo.c)}></input>
+                        <input type='number' placeholder="0" required
+                            onChange={(e) => {
+                                setPrice(e.target.value * stockInfo.c);
+                                setQuantity(e.target.value);
+                                if (e.target.value > 1) setShare('shares');
+                                else setShare('share');
+                            }}></input>
                     </div>
                     <br />
                     <div className="amount">
@@ -55,10 +70,26 @@ export const StockSideBar = ({ symbol, stockInfo }) => {
                         <h3>Est. Quantity</h3>
                         <h3>${quantity}</h3>
                     </div>
+                    {!reviewOrder && (
+                        <button id="review-order"
+                            onClick={() => setReviewOrder(true)}
+                        >Review Order</button>
+                    )}
+
+                    {/* Purchase stocks */}
+                    {reviewOrder && (
+                        <div>
+                            <p>You're placing an order to buy {quantity} of {symbol} for ${price}</p>
+                            <button onClick={() => submitPurchase}>Buy</button>
+                        </div>
+                    )}
                 </div>
                 <button id='add-to-lists'
                     onClick={() => setAddToList(true)}>Add to Lists</button>
             </div>
+
+
+
             {addToList && (
                 <>
                     <div id="add-to-list-popup">
@@ -72,10 +103,10 @@ export const StockSideBar = ({ symbol, stockInfo }) => {
                         {lists && (
                             lists?.map(list => (
                                 <div key={list.id}
-                                onClick={() => dispatch(addStockToList(list.id, symbol))}>
+                                    onClick={() => dispatch(addStockToList(list.id, symbol))}>
                                     {/* <img src="https://png.pngtree.com/png-vector/20201208/ourmid/pngtree-flat-light-bulb-shine-bright-isolated-vector-png-image_2531330.jpg" alt="lightbulb"/> */}
                                     <br />
-                                    {inList && <input type="checkbox" checked/>}
+                                    {inList && <input type="checkbox" checked />}
                                     {!inList && <input type="checkbox" />}
                                     <h3>{list.list_name}</h3>
                                     <br />

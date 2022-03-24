@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addBankFetch, fetchBanks } from "../../store/banking";
+import { addBankFetch, deleteBankFetch, fetchBanks } from "../../store/banking";
 import './banking.css';
 
 export const Banking = () => {
@@ -26,13 +26,21 @@ export const Banking = () => {
             routing_number,
             nickname
         }
-        dispatch(addBankFetch(bank))
-        dispatch(fetchBanks(sessionUser.id))
+        dispatch(addBankFetch(bank));
+        dispatch(fetchBanks(sessionUser.id));
+        setAddBank(false);
     };
+
+    const handleUnlink = (bankId) => async (e) => {
+        e.preventDefault();
+
+        dispatch(deleteBankFetch(bankId));
+        dispatch(fetchBanks(sessionUser.id));
+    }
 
     useEffect(() => {
         dispatch(fetchBanks(sessionUser.id))
-    }, [dispatch])
+    }, [dispatch, addBank])
 
     return (
         <>
@@ -45,16 +53,19 @@ export const Banking = () => {
                 <br />
                 <hr />
                 {addBank && (
-                    <div>
-                        <form onSubmit={handleSubmit}>
-                            <label>Account Nickname</label>
+                    <div id="add-bank-div">
+                        <form onSubmit={handleSubmit} id='add-bank-form'>
+                            <div className="top-align">
+                                <label>Account Nickname</label>
+                                <button onClick={() => setAddBank(false)}>X</button>
+                            </div>
                             <input placeholder="Nickname" required
                                 onChange={(e) => set_nickname(e.target.value)}></input>
                             <label>Routing Number</label>
-                            <input placeholder="" required
+                            <input placeholder="" type='number' required
                                 onChange={(e) => set_routing_number(e.target.value)}></input>
                             <label>Account Number</label>
-                            <input placeholder="" required
+                            <input placeholder="" type='number' required
                                 onChange={(e) => set_account_number(e.target.value)}></input>
                             <button type="submit">Link Account</button>
                         </form>
@@ -62,9 +73,9 @@ export const Banking = () => {
                 )}
                 {banks.length > 0 && (
                     banks.map(bank => (
-                        <div id="linked-bank">
+                        <div id="linked-bank" key={bank.id}>
                             <h2>{bank.nickname}</h2>
-                            <button>Unlink</button>
+                            <button onClick={handleUnlink(bank.id)}>Unlink</button>
                         </div>
                     ))
                 )}

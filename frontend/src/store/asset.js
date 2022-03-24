@@ -3,9 +3,6 @@ import { csrfFetch } from "./csrf";
 
 const GET_ASSET = 'session/GET_ASSET';
 
-const BASE_URL = 'https://finnhub.io/api/v1';
-const API_KEY = 'c8obubqad3iddfsarfeg';
-
 const get_asset = (asset) => {
     return {
         type: GET_ASSET,
@@ -15,7 +12,7 @@ const get_asset = (asset) => {
 
 export const getAsset = (symbol) => async (dispatch) => {
 
-    const response = await fetch(`${BASE_URL}${symbol}${API_KEY}`);
+    const response = await fetch(`/api/asset`);
     console.log('inside thunk'  , symbol)
 
     if (response.ok) {

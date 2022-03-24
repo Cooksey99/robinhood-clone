@@ -2,15 +2,21 @@ import { csrfFetch } from "./csrf";
 
 const ADD_BANK = 'session/ADD_BANK';
 const GET_BANKS = 'session/GET_BANKS';
+const DELETE_BANK = 'session/DELETE_BANK';
 
 const add_bank = (bank) => ({
     type: ADD_BANK,
     bank
-})
+});
 
 const get_banks = (banks) => ({
     type: GET_BANKS,
     banks
+});
+
+const delete_bank = (bankId) => ({
+    type: DELETE_BANK,
+    bankId
 })
 
 export const addBankFetch = (bank) => async dispatch => {
@@ -33,7 +39,14 @@ export const fetchBanks = (id) => async dispatch => {
         const data = await response.json();
         dispatch(get_banks(data))
     }
+}
 
+export const deleteBankFetch = (bankId) => async dispatch => {
+    await csrfFetch(`/api/banking/removeBank/${bankId}`, {
+        method: 'DELETE'
+    });
+
+    dispatch(delete_bank(bankId));
 }
 
 const initialState = { banks: {} }
@@ -42,10 +55,14 @@ export default function bankingReducer( state = initialState, action ) {
     let newState = initialState;
     switch (action.type) {
         case ADD_BANK:
+            newState = {...state};
             newState.banks[action.bank.id] = action.bank;
             return newState;
         case GET_BANKS:
             newState.banks = action.banks;
+            return newState;
+        case DELETE_BANK:
+            delete newState.banks[action.bankId];
             return newState;
         default:
             return state;

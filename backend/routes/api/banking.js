@@ -12,7 +12,7 @@ router.post('/addBank',
         res.json(bank)
     }));
 
-router.get('/:id', expressAsyncHandler(async(req, res) => {
+router.get('/:id', expressAsyncHandler(async (req, res) => {
     const { id } = req.params;
     const banks = await Linked_bank.findAll({
         where: { user_id: id }
@@ -20,6 +20,12 @@ router.get('/:id', expressAsyncHandler(async(req, res) => {
 
     const data = banks.map(bank => bank);
     res.json(data);
+}));
+
+router.delete('/removeBank/:bankId', expressAsyncHandler(async(req, res) => {
+    const bankId = req.params.bankId;
+    const bank = await Linked_bank.findByPk(bankId);
+    await bank.destroy();
 }))
 
 

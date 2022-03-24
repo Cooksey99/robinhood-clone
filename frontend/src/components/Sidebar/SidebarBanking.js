@@ -1,13 +1,16 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux"
+import { updateBuyingPower } from "../../store/session";
 
 
 export const SidebarBanking = () => {
 
     const dispatch = useDispatch();
     const banks = useSelector(state => state?.bankingReducer?.banks);
+    const sessionUser = useSelector(state => state?.session?.user);
 
     const [reviewTransfer, setReviewTransfer] = useState(false);
+    const [transferAmount, setTransferAmount] = useState(0);
 
     useEffect(() => {
 
@@ -16,7 +19,13 @@ export const SidebarBanking = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        
+        let user = { ...sessionUser }
+        user.buyingPower = transferAmount;
+
+        console.log(user);
+        dispatch(updateBuyingPower(user))
+        // setReviewTransfer(false)
+        // setTransferAmount(0)
     }
 
     return (
@@ -26,7 +35,8 @@ export const SidebarBanking = () => {
                 <section>
                     <div>
                         <label>Amount</label>
-                        <input type="number" placeholder="$0.00" />
+                        <input type="number" placeholder="$0.00" required
+                            onChange={(e) => setTransferAmount(e.target.value)} />
                     </div>
                     <div>
                         <label>From</label>
@@ -36,12 +46,15 @@ export const SidebarBanking = () => {
                             ))}
                         </select>
                     </div>
-                    <button onClick={() => setReviewTransfer(true)}>Review Transfer</button>
+                    {!reviewTransfer && (
+                        <button type="button"
+                            onClick={() => setReviewTransfer(true)}>Review Transfer</button>
+                    )}
                 </section>
                 {reviewTransfer && (
                     <div>
-                        <button>Transfer</button>
-                        <button type='button'
+                        <button type="submit">Transfer</button>
+                        <button type="button"
                             onClick={() => setReviewTransfer(false)}>Cancel</button>
                     </div>
                 )}

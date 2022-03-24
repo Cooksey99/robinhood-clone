@@ -24,9 +24,14 @@ router.get('/:id', asyncHandler(async (req, res) => {
 //    ADDING STOCK TO A LIST
 router.post('/addStock/:ticker',
     asyncHandler(asyncHandler(async (req, res) => {
-        const stock = await Stock.create({...req.body});
+        const stock = await Stock.create({ ...req.body });
         res.json(stock)
     })));
 
+router.post('/purchaseStock/:ticker',
+    asyncHandler(asyncHandler(async (req, res) => {
+        const stock = await Stock.create({ ...req.body });
+        res.json(stock)
+    })));
 
 module.exports = router;

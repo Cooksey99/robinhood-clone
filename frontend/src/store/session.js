@@ -2,6 +2,7 @@ import { csrfFetch } from "./csrf.js";
 
 const SET_USER = 'session/setUser';
 const REMOVE_USER = 'session/removeUser';
+const BUYING_POWER = 'session/BUYING_POWER';
 
 const setUser = (user) => ({
   type: SET_USER,
@@ -11,6 +12,23 @@ const setUser = (user) => ({
 const removeUser = () => ({
   type: REMOVE_USER,
 });
+
+const buying_power = (user) => ({
+  type: BUYING_POWER,
+  user
+})
+
+export const updateBuyingPower = (user) => async dispatch => {
+  const response = await csrfFetch(`/api/users/${user.id}/buyingPower`, {
+    method: 'PUT',
+    headers: { 'Content-Type' : 'application/json' },
+    body: JSON.stringify(user)
+  })
+  if (response.ok) {
+    const user = await response.json();
+    dispatch(buying_power(user))
+  }
+}
 
 export const login = ({ credential, password }) => async dispatch => {
   const response = await csrfFetch("/api/session", {

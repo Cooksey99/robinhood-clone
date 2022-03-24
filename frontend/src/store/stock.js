@@ -2,6 +2,7 @@ import { csrfFetch } from "./csrf";
 
 const GET_STOCKS = 'session/GET_STOCKS';
 const ADD_STOCK = 'session/ADD_STOCK'
+const PURCHASE_STOCK = 'session/PURCHASE_STOCK'
 
 const get_stocks = (stocks) => ({
     type: GET_STOCKS,
@@ -12,6 +13,12 @@ const add_stock = (stock) => ({
     type: ADD_STOCK,
     stock
 });
+
+const purchase_stock = (stock) => ({
+    type: PURCHASE_STOCK,
+    stock
+})
+
 
 export const fetchStocks = (id) => async dispatch => {
     const response = await csrfFetch(`/api/list/${id}`)
@@ -27,6 +34,19 @@ export const addStockToList = (watchlist_id, ticker) => async dispatch => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
             watchlist_id,
+            ticker
+        })
+    });
+    const stock = await response.json();
+    dispatch(add_stock(stock))
+}
+
+export const purchaseStock = (asset_id, ticker) => async dispatch => {
+    const response = await csrfFetch(`/api/list/purchaseStock/${ticker}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            asset_id,
             ticker
         })
     });
