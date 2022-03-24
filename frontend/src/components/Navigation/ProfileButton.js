@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import * as sessionActions from '../../store/session';
 
 function ProfileButton({ user }) {
@@ -42,7 +42,7 @@ function ProfileButton({ user }) {
           <p>{user.first_name} {user.last_name}</p>
           <p>${user.buyingPower}</p>
           <p>{user.username}</p>
-          <p>{user.email}</p>
+          <Link to={`/account`}>Banking</Link>
           <p>
             <button onClick={logout}>Log Out</button>
           </p>

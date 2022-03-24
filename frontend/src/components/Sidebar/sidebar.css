@@ -118,3 +118,24 @@ br {
 #list-select:hover {
     background-color: rgb(84, 93, 97);
 }
+
+
+/* Banking sidebar starts here */
+#bank-sidebar {
+    float: right;
+    width: 274px;
+    height: 400px;
+    border: 1px solid var(--sp-border-color);
+    border-radius: 5px;
+    background: #1e2124;
+}
+#bank-sidebar h2 {
+    border-bottom: 1px solid var(--sp-border-color);
+    padding-bottom: 20px;
+}
+#bank-sidebar section {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    align-items: center;
+}

@@ -13,6 +13,8 @@ import { SplashPage } from './components/SplashPage/SplashPage';
 import { StockPage } from './components/StockPage/StockPage';
 import { Portfolio } from './components/Portfolio/Portfolio';
 import { WatchlistPage } from './components/WatchlistPage/WatchlistPage';
+import { Banking } from './components/Account/Banking';
+import { SidebarBanking } from './components/Sidebar/SidebarBanking';
 function App() {
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);
@@ -53,6 +55,10 @@ function App() {
               <Route path='/list/:id' exact>
                 <WatchlistPage />
                 <Sidebar />
+              </Route>
+              <Route path='/account' exact>
+                <Banking />
+                <SidebarBanking />
               </Route>
             </Switch>
           </div>

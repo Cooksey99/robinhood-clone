@@ -12,7 +12,7 @@ module.exports = {
         type: Sequelize.INTEGER,
         allowNull: false
       },
-      name: {
+      nickname: {
         type: Sequelize.STRING,
         allowNull: false
       },
