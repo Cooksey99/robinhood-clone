@@ -2,9 +2,21 @@
 #nav-component {
   background-color: black;
   color: white;
+
 }
 #nav-component input {
   background-color: black;
+}
+#nav-bar-button{
+  /* all: unset; */
+  background: none;
+  float: right;
+  margin-right: 0;
+}
+.account-divider {
+  /* background-color: coral; */
+  display: flex;
+  justify-content: flex-end;
 }
 .profile-dropdown {
   position: absolute;
@@ -23,9 +35,23 @@
   /* background-color: coral; */
   height:64px;
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .divider {
   width: 25%;
+}
+#logo {
+  fill: white;
+  height: 60px;
+}
+#logo:hover {
+  fill: var(--sp-button-green);
+}
+
+/* Search bar styling starts here */
+#search-component input {
+  height: 36px;
+  width: 200px;
 }

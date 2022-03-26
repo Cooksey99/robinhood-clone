@@ -4,14 +4,15 @@ import { getAsset } from "../../store/asset";
 import { restoreUser } from "../../store/session";
 import { addStockToList, purchaseStock, sellStock } from "../../store/stock";
 import { fetchLists } from "../../store/watchlist";
+import { formatter } from "../finnhubSetup";
 
 
 export const StockSideBar = ({ symbol, stockInfo }) => {
 
     const dispatch = useDispatch();
 
-    const [quantity, setQuantity] = useState(0);
-    const [price, setPrice] = useState(0);
+    const [quantity, setQuantity] = useState(formatter.format(0));
+    const [price, setPrice] = useState(formatter.format(0));
     const [addToList, setAddToList] = useState(false);
     const [inList, setInList] = useState(false);
     const [reviewOrder, setReviewOrder] = useState(false);
@@ -106,77 +107,88 @@ export const StockSideBar = ({ symbol, stockInfo }) => {
     return (
         <>
             <div id="stock-sidebar">
-                <div id="order-tab">
-                    <div id="buy-or-sell">
-                        <h3 onClick={() => setBuying(true)}>Buy {symbol}</h3>
+                <div id="stock-sidebar-background">
+                    <div id="order-tab">
+                        <div id="buy-or-sell">
+                            <h4 onClick={() => setBuying(true)}>Buy {symbol}</h4>
+                            {owned && (
+                                <h4 onClick={() => setBuying(false)}>Sell {symbol}</h4>
+                            )}
+                        </div>
+                        <div className="order-type">
+                            <h4>Order Type</h4>
+                            <h4>Market Order</h4>
+                        </div>
+                        <br />
+                        <div className="amount">
+                            <h4>Shares</h4>
+                            <input type='number' placeholder="0" required
+                                // value={quantity}
+                                onChange={(e) => {
+                                    checkStockInAsset();
+                                    if (e.target.value <= assetObj.amount) {
+                                        setQuantity(e.target.value);
+                                        setPrice(formatter.format(e.target.value * stockInfo.c));
+                                    } else if (e.target.value < 0) {
+                                        e.target.value = 0;
+                                        setQuantity(0)
+                                        setPrice(formatter.format(0));
+                                    } else {
+                                        e.target.value = assetObj.amount;
+                                        setQuantity(e.target.value)
+                                        setPrice(formatter.format(e.target.value * stockInfo.c));
+                                    }
+                                    if (e.target.value > 1) setShare('shares');
+                                    else setShare('share');
+                                }}></input>
+                        </div>
+                        <br />
+                        <div className="amount market-price">
+                            <h4>Market Price</h4>
+                            <h4>{formatter.format(stockInfo.c)}</h4>
+                        </div>
+
+                        <div className="quantity">
+                            <h4>Estimated Cost</h4>
+                            <h4>{price}</h4>
+                        </div>
+                        <div id="review-order-div">
+                            {!reviewOrder && (
+                                <button id="review-order"
+                                    onClick={() => setReviewOrder(true)}
+                                >Review Order</button>
+                            )}
+                        </div>
+
+                        {/* Purchase stocks */}
+                        {reviewOrder && (
+                            <div>
+                                {buying && (
+                                    <>
+                                        <p>You're placing an order to buy {quantity} of {symbol} for ${price}</p>
+                                        <button onClick={submitPurchase}>Buy</button>
+                                    </>
+                                )}
+                                {!buying && (
+                                    <>
+                                        <p>You're placing an order to sell {quantity} of {symbol} for ${price}</p>
+                                        <button onClick={submitSale}>Sell</button>
+                                    </>
+                                )}
+                            </div>
+                        )}
                         {owned && (
-                            <h3 onClick={() => setBuying(false)}>Sell {symbol}</h3>
+                            <div>
+                                <p>{assetObj.amount} shares available</p>
+                            </div>
                         )}
                     </div>
-                    <br />
-                    <hr />
-                    <br />
-                    <div className="order-type">
-                        <h3>Order Type</h3>
-                        <h3>Market Order</h3>
-                    </div>
-                    <br />
-                    <div className="amount">
-                        <h3>Shares</h3>
-                        <input type='number' placeholder="0" required
-                            // value={quantity}
-                            onChange={(e) => {
-                                setPrice(e.target.value * stockInfo.c);
-                                setQuantity(e.target.value);
-                                if (e.target.value > 1) setShare('shares');
-                                else setShare('share');
-                            }}></input>
-                    </div>
-                    <br />
-                    <div className="amount">
-                        <h3>Market Price</h3>
-                        <h3>${stockInfo.c}</h3>
-                    </div>
-                    <br />
-                    <hr />
-                    <br />
-                    <div className="quantity">
-                        <h3>Est. Cost</h3>
-                        <h3>${price}</h3>
-                    </div>
-                    {!reviewOrder && (
-                        <button id="review-order"
-                            onClick={() => setReviewOrder(true)}
-                        >Review Order</button>
-                    )}
-
-                    {/* Purchase stocks */}
-                    {reviewOrder && (
-                        <div>
-                            {buying && (
-                                <>
-                                    <p>You're placing an order to buy {quantity} of {symbol} for ${price}</p>
-                                    <button onClick={submitPurchase}>Buy</button>
-                                </>
-                            )}
-                            {!buying && (
-                                <>
-                                    <p>You're placing an order to sell {quantity} of {symbol} for ${price}</p>
-                                    <button onClick={submitSale}>Sell</button>
-                                </>
-                            )}
-                        </div>
-                    )}
-                    {owned && (
-                        <div>
-                            <p>{assetObj.amount} shares available</p>
-                        </div>
-                    )}
                 </div>
-                <button id='add-to-lists'
-                    onClick={() => setAddToList(true)}>Add to Lists</button>
+                <div id="add-to-lists-div">
+                    <button id='add-to-lists'
+                        onClick={() => setAddToList(true)}>Add to Lists</button>
+                </div>
             </div>
-
 
 
             {addToList && (
@@ -197,7 +209,7 @@ export const StockSideBar = ({ symbol, stockInfo }) => {
                                     <br />
                                     {inList && <input type="checkbox" checked />}
                                     {!inList && <input type="checkbox" />}
-                                    <h3>{list.list_name}</h3>
+                                    <h4>{list.list_name}</h4>
                                     <br />
                                 </div>
                             ))

@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux"
 import { Link } from "react-router-dom";
 import { getAsset } from "../../store/asset";
 // import { finnhubFetch } from "../finnhubSetup";
-import { finnhubClient } from "../finnhubSetup"
+import { finnhubClient, formatter } from "../finnhubSetup"
 
 
 export const SidebarStock = ({ticker}) => {
@@ -30,7 +30,7 @@ export const SidebarStock = ({ticker}) => {
                 </div>
                 <div className="mini-chart"></div>
                 <div className="vertical-pair right-side">
-                    <h4>{stockInfo.c}</h4>
+                    <h4>{formatter.format(stockInfo.c)}</h4>
                     <h4>{stockInfo.dp}%</h4>
                 </div>
             </Link>

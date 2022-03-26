@@ -22,7 +22,7 @@ export const Search = () => {
 
     return (
         <>
-            <div>
+            <div id="search-component">
                 <form>
                     <input placeholder="Search"
                         onChange={(e) => {

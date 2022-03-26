@@ -66,7 +66,7 @@ export const Sidebar = () => {
         dispatch(getAsset(sessionUser.id));
         // let uniqueSet = new Set(unique);
         // console.log(uniqueSet)
-        console.log('==========', allTickers)
+        // console.log('==========', allTickers)
     }, [dispatch])
 
     return (

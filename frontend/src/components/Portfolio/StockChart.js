@@ -84,8 +84,8 @@ export const StockChart = ({ option }) => {
                                 data: stockCandles.c,
                                 fill: false,
                                 borderWidth: 2,
-                                backgroundColor: 'rgb(255, 99, 132)',
-                                borderColor: 'green',
+                                backgroundColor: '#00C805',
+                                borderColor: '#00C805',
                                 pointRadius: 0,
                                 responsive: true
                             }
