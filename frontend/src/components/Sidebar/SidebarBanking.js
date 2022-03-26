@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux"
-import { updateBuyingPower } from "../../store/session";
+import { addBuyingPower } from "../../store/session";
 
 
 export const SidebarBanking = () => {
@@ -20,10 +20,10 @@ export const SidebarBanking = () => {
         e.preventDefault();
 
         let user = { ...sessionUser }
-        user.buyingPower = transferAmount;
+        const buyingPower = transferAmount;
 
         console.log(user);
-        dispatch(updateBuyingPower(user))
+        dispatch(addBuyingPower(user, buyingPower))
         // setReviewTransfer(false)
         // setTransferAmount(0)
     }

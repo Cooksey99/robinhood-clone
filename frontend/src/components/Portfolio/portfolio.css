@@ -6,10 +6,18 @@
     float: left;
 }
 
+.buying-power {
+    display: flex;
+    justify-content: space-between;
+}
+
 /* Chart CSS below here */
 #chart-container {
     width: 100%;
     height: 196px;
-    border: 1px solid white;
+    /* border: 1px solid white; */
     z-index: 2;
+    object-fit: contain;
+    border-bottom: 1px solid var(--sp-border-color);
+    padding-bottom: 20px;
 }

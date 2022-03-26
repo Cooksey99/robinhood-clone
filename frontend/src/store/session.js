@@ -18,11 +18,30 @@ const buying_power = (user) => ({
   user
 })
 
-export const updateBuyingPower = (user) => async dispatch => {
-  const response = await csrfFetch(`/api/users/${user.id}/buyingPower`, {
+export const addBuyingPower = (user, price) => async dispatch => {
+  console.log('lskdajfl;kajsdfl', price)
+  const response = await csrfFetch(`/api/users/${user.id}/addBuyingPower`, {
     method: 'PUT',
     headers: { 'Content-Type' : 'application/json' },
-    body: JSON.stringify(user)
+    body: JSON.stringify({
+      user,
+      price
+    })
+  })
+  if (response.ok) {
+    const user = await response.json();
+    dispatch(buying_power(user))
+  }
+}
+export const removeBuyingPower = (user, price) => async dispatch => {
+  console.log('lskdajfl;kajsdfl', price)
+  const response = await csrfFetch(`/api/users/${user.id}/removeBuyingPower`, {
+    method: 'PUT',
+    headers: { 'Content-Type' : 'application/json' },
+    body: JSON.stringify({
+      user,
+      price
+    })
   })
   if (response.ok) {
     const user = await response.json();

@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { getAsset } from '../../store/asset';
 import { createNewList, deleteList, editList, fetchLists } from '../../store/watchlist';
 
 import './sidebar.css'
@@ -18,6 +19,12 @@ export const Sidebar = () => {
 
     const sessionUser = useSelector(state => state?.session?.user);
     const allLists = useSelector(state => state?.listReducer?.lists);
+    const allAssets = useSelector(state => state?.assetReducer?.asset);
+    const allTickers = useSelector(state => state?.assetReducer?.dataSet)
+    // const allAssets = new Set(Object.entries(assetsObj));
+
+    const [unique, setUnique] = useState([])
+    // const [uniqueSet, setUniqueSet] = useState(new Set(unique));
 
     const user_id = sessionUser.id;
 
@@ -41,7 +48,7 @@ export const Sidebar = () => {
     const submitEdit = async (e) => {
         e.preventDefault();
         list.list_name = listName;
-        // console.log('list data:     ', list)
+        console.log('list data:     ', list)
         dispatch(editList(list));
         setEdit(false);
     }
@@ -53,40 +60,54 @@ export const Sidebar = () => {
     }
 
     useEffect(() => {
+        // console.log('12345678901234567890: ', assetsObj)
+
         dispatch(fetchLists(sessionUser.id));
-        // console.log(allLists)
+        dispatch(getAsset(sessionUser.id));
+        // let uniqueSet = new Set(unique);
+        // console.log(uniqueSet)
+        console.log('==========', allTickers)
     }, [dispatch])
 
     return (
         <>
             <div id="sidebar">
                 <h2 className='stock-header'>Stocks</h2>
-                <SidebarStock />
+                {/* {allTickers.length > 0 && allTickers.forEach(ticker => (
+                        <SidebarStock ticker={ticker}/>
+                    ))} */}
                 <div className='new-list'>
-                    <h2>Lists</h2>
-                    <button onClick={() => setNewList(true)}>+</button>
+                    <h2 id='list-header'>Lists</h2>
+                    <button id='add-list-button'
+                        onClick={() => setNewList(true)}>+</button>
                 </div>
 
                 {/* watchlist function */}
                 {newList && (
-                    <form onSubmit={handleSubmit}>
-                        <input value={listName}
-                            required
-                            onChange={(e) => setListName(e.target.value)}
-                            placeholder='List Name'></input>
-                        <button type='button' onClick={() => setNewList(false)}>Cancel</button>
-                        <button type='submit'>Create List</button>
+                    <form id='new-list-form' onSubmit={handleSubmit}>
+                        <section>
+                            <img src="https://image.similarpng.com/very-thumbnail/2020/10/Illustration-of-light-bulb-on-transparent-background-PNG.png" alt='list-icon' />
+                            <input value={listName}
+                                className='list-input' required
+                                onChange={(e) => setListName(e.target.value)}
+                                placeholder='List Name'></input>
+                        </section>
+                        <div className='list-options'>
+                            <button type='button' className='cancel-list'
+                                onClick={() => setNewList(false)}>Cancel</button>
+                            <button type='submit' className='create-list'>Create List</button>
+                        </div>
                     </form>
                 )}
                 {allLists.length > 0 && (
                     allLists.map(list => (
-                            <Link key={list.id}
+                        <Link key={list.id}
                             to={`/list/${list.id}`}
                             id='list-select'>
-                                <h2>{list.list_name}</h2>
-                                <button onClick={editForm(list)}>edit</button>
-                                <button onClick={submitDelete(list.id)}>delete</button>
-                            </Link>
+                            <h2>{list.list_name}</h2>
+                            <button onClick={editForm(list)}>edit</button>
+                            <button onClick={submitDelete(list.id)}>delete</button>
+                        </Link>
 
                     ))
                 )}

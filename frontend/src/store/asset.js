@@ -1,43 +1,42 @@
 import { CompanyNewsStatistics } from "finnhub";
 import { csrfFetch } from "./csrf";
 
-const GET_ASSET = 'session/GET_ASSET';
+const GET_ASSETS = 'session/GET_ASSETS';
 
 const get_asset = (asset) => {
     return {
-        type: GET_ASSET,
+        type: GET_ASSETS,
         asset
     }
 }
 
-export const getAsset = (symbol) => async (dispatch) => {
+export const getAsset = (id) => async (dispatch) => {
 
-    const response = await fetch(`/api/asset`);
-    console.log('inside thunk'  , symbol)
+    const response = await fetch(`/api/asset/${id}`);
+    // console.log('inside thunk'  , symbol)
 
     if (response.ok) {
         const data = await response.json();
+
+        console.log('should be working', data)
         dispatch(get_asset(data))
     }
 
-    // const response = await csrfFetch(`/api/asset/${symbol}`)
-
-    // if (response.ok) {
-    //     const asset = await response.json();
-    //     dispatch(get_asset(asset));
-    //     return asset;
-    // }
 }
 
+let dataSet = new Set();
 const initialState = { asset: {} }
 
-export default function assetReducer( state = initialState, action ) {
+export default function assetReducer(state = initialState, action) {
     let newState = initialState;
     switch (action.type) {
-        case GET_ASSET:
-            console.log('inside of reducer')
-            newState = {...state};
-            newState.asset = action.asset;
+        case GET_ASSETS:
+            let data = action.asset;
+            newState = { ...state };
+            newState.asset = data;
+            data.forEach(stock => (dataSet.add(stock.ticker)));
+            newState.dataSet = dataSet;
+            // newState.set = action.asset.dataSet
             return newState;
         default:
             return state;

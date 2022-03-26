@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux";
+import { getAsset } from "../../store/asset";
 import { restoreUser } from "../../store/session";
-import { addStockToList } from "../../store/stock";
+import { addStockToList, purchaseStock, sellStock } from "../../store/stock";
 import { fetchLists } from "../../store/watchlist";
 
 
@@ -15,31 +16,103 @@ export const StockSideBar = ({ symbol, stockInfo }) => {
     const [inList, setInList] = useState(false);
     const [reviewOrder, setReviewOrder] = useState(false);
     const [share, setShare] = useState('share');
+    const [buying, setBuying] = useState(true);
 
     const lists = useSelector(state => state?.listReducer?.lists);
     const sessionUser = useSelector(state => state?.session?.user);
+    const assets = useSelector(state => state?.assetReducer?.asset);
+    const [assetObj, setAssetObj] = useState({});
+    const [owned, setOwned] = useState(false);
 
     const submitPurchase = async (e) => {
         e.preventDefault();
-
-        const stock = {
-            asset_id: sessionUser.id,
-            ticker: symbol
+        // console.log('=-=-=-=-=-=-=-=-=', symbol)
+        let asset_id = sessionUser.id;
+        let ticker = symbol;
+        for (let i = 0; i < quantity; i++) {
+            dispatch(purchaseStock(asset_id, ticker, price, quantity, sessionUser));
         }
-        
+        dispatch(getAsset(sessionUser.id));
+        checkStockInAsset();
+
+        // reset data
+        // assetObj.amount += quantity;
+        // setQuantity(0);
+        // setPrice(0);
+    }
+
+    const submitSale = async (e) => {
+        e.preventDefault();
+        console.log('TRYING TO SELL')
+
+        // let assetId = stockInfo.asset_id;
+        // let stockId = stockInfo.id;
+        for (let i = 0; i < quantity; i++) {
+            let stockIdArray = assetObj.stockId;
+            let stockId = stockIdArray[i];
+            // console.log('stockId:       ', stockId);
+            let assetId = assetObj.assetId;
+
+            dispatch(sellStock(assetId, stockId, price, quantity, sessionUser));
+        }
+        dispatch(getAsset(sessionUser.id));
+        dispatch(fetchLists(sessionUser.id));
+        checkStockInAsset();
+
+        // reset data
+        // assetObj.amount -= quantity;
+        // console.log(assetObj.amount)
+        // setQuantity(0);
+        // setPrice(0);
+
+    }
+
+    const checkStockInAsset = () => {
+
+        let stockObj = {};
+        let amount = 0;
+        let assetId = 0;
+        let stockId = [];
+
+        if (assets.length > 0) {
+            assets?.forEach(asset => {
+                if (asset.ticker === symbol) {
+                    setOwned(true)
+                    stockObj = { symbol: symbol };
+                    amount += 1;
+                    assetId = asset.asset_id;
+                    stockId.push(asset.id)
+                }
+            });
+            stockObj.amount = amount
+            stockObj.assetId = assetId;
+            stockObj.stockId = stockId;
+
+            // console.log(stockObj)
+            setAssetObj(stockObj)
+        }
     }
 
     useEffect(() => {
-        dispatch(restoreUser())
-        dispatch(fetchLists(sessionUser.id))
+        dispatch(restoreUser());
+        dispatch(getAsset(sessionUser.id));
+        dispatch(fetchLists(sessionUser.id));
+        checkStockInAsset();
+        // checkStockInAsset();
+        // console.log(assetObj)
 
-    }, [dispatch, addToList])
+    }, [dispatch, addToList]);
 
     return (
         <>
             <div id="stock-sidebar">
                 <div id="order-tab">
-                    <h2>Buy {symbol}</h2>
+                    <div id="buy-or-sell">
+                        <h3 onClick={() => setBuying(true)}>Buy {symbol}</h3>
+                        {owned && (
+                            <h3 onClick={() => setBuying(false)}>Sell {symbol}</h3>
+                        )}
+                    </div>
                     <br />
                     <hr />
                     <br />
@@ -51,6 +124,7 @@ export const StockSideBar = ({ symbol, stockInfo }) => {
                     <div className="amount">
                         <h3>Shares</h3>
                         <input type='number' placeholder="0" required
+                            // value={quantity}
                             onChange={(e) => {
                                 setPrice(e.target.value * stockInfo.c);
                                 setQuantity(e.target.value);
@@ -61,14 +135,14 @@ export const StockSideBar = ({ symbol, stockInfo }) => {
                     <br />
                     <div className="amount">
                         <h3>Market Price</h3>
-                        <h3>{stockInfo.c}</h3>
+                        <h3>${stockInfo.c}</h3>
                     </div>
                     <br />
                     <hr />
                     <br />
                     <div className="quantity">
-                        <h3>Est. Quantity</h3>
-                        <h3>${quantity}</h3>
+                        <h3>Est. Cost</h3>
+                        <h3>${price}</h3>
                     </div>
                     {!reviewOrder && (
                         <button id="review-order"
@@ -79,8 +153,23 @@ export const StockSideBar = ({ symbol, stockInfo }) => {
                     {/* Purchase stocks */}
                     {reviewOrder && (
                         <div>
-                            <p>You're placing an order to buy {quantity} of {symbol} for ${price}</p>
-                            <button onClick={() => submitPurchase}>Buy</button>
+                            {buying && (
+                                <>
+                                    <p>You're placing an order to buy {quantity} of {symbol} for ${price}</p>
+                                    <button onClick={submitPurchase}>Buy</button>
+                                </>
+                            )}
+                            {!buying && (
+                                <>
+                                    <p>You're placing an order to sell {quantity} of {symbol} for ${price}</p>
+                                    <button onClick={submitSale}>Sell</button>
+                                </>
+                            )}
+                        </div>
+                    )}
+                    {owned && (
+                        <div>
+                            <p>{assetObj.amount} shares available</p>
                         </div>
                     )}
                 </div>

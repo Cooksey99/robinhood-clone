@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom'
 import { getAsset } from '../../store/asset';
+import { restoreUser } from '../../store/session';
 import { finnhubFetch, finnhubClient} from '../finnhubSetup';
 import { StockChart } from '../Portfolio/StockChart';
 import { StockSideBar } from '../Sidebar/StockSidebar';
@@ -12,13 +13,12 @@ export const StockPage = () => {
 
     const { symbol } = useParams();
     const dispatch = useDispatch();
-    const stock = useSelector(state => state.assetReducer);
+    const stock = useSelector(state => state?.assetReducer);
+    const sessionUser = useSelector(state => state?.session?.user);
     const [stockInfo, setStockInfo] = useState({});
 
 
     useEffect(() => {
-        dispatch(getAsset(symbol));
-
         finnhubClient.quote(symbol, (error, data, response) => {
             // console.log(data)
             setStockInfo(data)

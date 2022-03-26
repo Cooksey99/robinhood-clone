@@ -3,13 +3,19 @@
     height: 692px;
     background: #1e2124;
     border: 1px solid var(--sp-border-color);
-    border-radius: 10px;
+    border-radius: 5px;
     float: right;
     overflow-y: scroll;
+    padding: 0;
+}
+input {
+    background: #30363A;
+}
+input:hover {
+    background: none;
 }
 .stock-header {
-    border-bottom: 1px solid var(--sp-border-color);
-    padding-bottom: 20px;
+    padding: 0 20px;
 }
 .stock-tab {
     display: flex;
@@ -31,12 +37,64 @@
     float: right;
 }
 
+
+/* List header */
+#list-header {
+}
+/* New list section */
 .new-list {
     display: flex;
     justify-content: space-between;
+    align-items: center;
+    padding: 2px 20px;
+    height: 50px;
+    border-bottom: 1px solid var(--sp-border-color);
+    border-top: 1px solid var(--sp-border-color);
 }
 .new-list:hover {
     background: rgb(84, 93, 97);
+}
+#add-list-button {
+    all: unset;
+    font-size: large;
+}
+#add-list-button:hover {
+    color: var(--sp-button-red);
+}
+.list-options {
+    display: flex;
+    justify-content: space-around;
+}
+.list-options button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 25px;
+    border: 1px solid var(--sp-button-red);
+    width: 100px;
+    cursor: pointer;
+}
+#new-list-form img {
+    background: transparent;
+    height: 30px;
+    width: 30px;
+    object-fit: cover;
+    border-radius: 5px;
+}
+#new-list-form section {
+    display: flex;
+    justify-content: center;
+}
+.list-input {
+    height: 30px;
+    margin: auto;
+}
+.cancel-list {
+    background: none;
+    color: var(--sp-button-red);
+}
+.create-list {
+    background: var(--sp-button-red);
 }
 
 .editList {
@@ -115,15 +173,16 @@ br {
     /* background-color: rgb(30, 33, 36); */
 }
 #list-select {
+    height: 40px;
     padding: 10px 2px;
     background-color: rgb(30, 33, 36);
     display: flex;
     justify-content: space-around;
+    align-items: center;
 }
 #list-select:hover {
     background-color: rgb(84, 93, 97);
 }
-
 
 /* Banking sidebar starts here */
 #bank-sidebar {
@@ -143,4 +202,7 @@ br {
     flex-direction: column;
     gap: 30px;
     align-items: center;
+}
+.amount input{
+    background: none;
 }

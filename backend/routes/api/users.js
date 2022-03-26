@@ -19,7 +19,7 @@ const validateSignup = [
     .withMessage('Please enter your first name.'),
   check('last_name')
     .exists({ checkFalsy: true })
-    .isLength({ min: 2})
+    .isLength({ min: 2 })
     .withMessage('Please enter your last name.'),
   check('password')
     .exists({ checkFalsy: true })
@@ -51,12 +51,29 @@ router.post(
   }),
 );
 
-router.put('/:id/buyingPower', asyncHandler(async (req, res) => {
+router.put('/:id/addBuyingPower', asyncHandler(async (req, res) => {
   const id = req.params.id;
   let user = await User.findByPk(id);
-  let { buyingPower } = req.body;
+  let { price } = req.body;
+  // console.log('\n\n\n' + buyingPower + '\n\n\n')
 
-  user.buyingPower = parseInt(buyingPower) + parseInt(user.buyingPower);
+  user.buyingPower = parseInt(price) + parseInt(user.buyingPower);
+
+  user.set(user);
+  await user.save();
+  res.json(user)
+  // console.log('\n\n\n' + buyingPower + '\n\n\n')
+
+}));
+
+router.put('/:id/removeBuyingPower', asyncHandler(async (req, res) => {
+  const id = req.params.id;
+  let user = await User.findByPk(id);
+  let { price } = req.body;
+  console.log('\n\n\n' + price + '\n\n\n')
+
+  user.buyingPower = parseInt(user.buyingPower) - parseInt(price);
+
   user.set(user);
   await user.save();
   res.json(user)

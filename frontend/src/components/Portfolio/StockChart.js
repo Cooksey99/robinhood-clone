@@ -14,11 +14,21 @@ export const StockChart = ({ option }) => {
     const [stockCandles, setStockCandles] = useState({});
     const [unixTimes, setUnixTimes] = useState({});
     const [currentTime, setCurrentTime] = useState(Math.round(new Date()));
+    const [yesterdayTime, setYesterdayTime] = useState(new Date().getTime() - 840000000)
 
     const getUnixTime = () => {
         let timeObj = {};
         timeObj.now = Math.round((new Date()));
-        timeObj.yesterday = Math.round((new Date()))
+
+        // let date = new Date();
+        // date.setDate(date.getDate() - 1);
+        // date.setHours(9)
+        // date.setMinutes(30)
+
+        // // let time = (new Date().getDate() - 1).setHours(9);
+        console.log(yesterdayTime)
+        // timeObj.yesterday = date.getTime();
+
         setUnixTimes(timeObj)
     }
 
@@ -26,9 +36,8 @@ export const StockChart = ({ option }) => {
     useEffect(() => {
 
         getUnixTime();
-
         if (setUnixTimes.length > 0 && option === 'asset') {
-            finnhubClient.stockCandles(symbol, "D", 1590988249, currentTime, (error, data, response) => {
+            finnhubClient.stockCandles(symbol, "D", 1645846200, currentTime, (error, data, response) => {
                 setStockCandles(data)
             });
         }
@@ -36,19 +45,30 @@ export const StockChart = ({ option }) => {
 
     const options = {
         responsive: true,
+        maintainAspectRatio: false,
         plugins: {
             legend: {
                 display: false
-            },
-            title: {
+            }
+        },
+        datalabels: {
+            display: false
+        },
+        title: {
+            display: false
+        },
+        title: {
+            display: false
+        },
+        scales: {
+            y: {
                 display: false
             },
-            scales: {
-                y: {
-                    display: false
-                }
+            x: {
+                display: false
             }
-        }
+        },
+
     }
 
     return (
@@ -71,6 +91,7 @@ export const StockChart = ({ option }) => {
                             }
                         ]
                     }}
+                    width={"30%"}
                     options={options}
                 />
             </div>

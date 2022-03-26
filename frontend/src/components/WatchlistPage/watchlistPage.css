@@ -1,9 +1,22 @@
 .heart {
     width: 60px;
+    background-color: coral;
 }
 
 .stock-tab {
     display: flex;
     justify-content: space-around;
+    border-bottom: 1px solid var(--sp-border-color);
+
 }
 
+.header-line {
+    display: flex;
+    justify-content: space-around;
+    border-bottom: 1px solid var(--sp-border-color);
+}
+
+#buy-or-sell {
+    display: flex;
+    justify-content: space-around;
+}

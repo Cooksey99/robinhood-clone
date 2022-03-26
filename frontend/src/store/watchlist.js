@@ -36,6 +36,7 @@ const delete_list = (listId) => {
 export const fetchLists = (id) => async (dispatch) => {
     const response = await csrfFetch(`/api/portfolio/lists/${id}`)
     const data = await response.json();
+    // console.log('--------', data)
     dispatch(get_list(data));
 }
 
@@ -59,7 +60,7 @@ export const editList = (list) => async (dispatch) => {
     let id = list.id;
     console.log('testing the thunk', id);
     const response = await csrfFetch(`/api/portfolio/list/${id}`, {
-        method: 'put',
+        method: 'PUT',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify(list)
     });
@@ -71,7 +72,7 @@ export const editList = (list) => async (dispatch) => {
 
 export const deleteList = (listId) => async (dispatch) => {
     let id = listId;
-    console.log('listId:        ', id)
+    // console.log('listId:        ', id)
     const response = await csrfFetch(`/api/portfolio/list/${id}`, {
         method: 'delete'
     });
@@ -92,7 +93,6 @@ export default function listReducer( state = initialState, action) {
             newState.lists[action.data.id] = action.data;
             return newState;
         case EDIT_LIST:
-            newState = {...state};
             newState.lists[action.list.id] = action.list;
             return newState;
         case DELETE_LIST:

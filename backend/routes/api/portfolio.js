@@ -37,6 +37,7 @@ router.delete('/list/:id',
     expressAsyncHandler(async (req, res) => {
         const id = req.params.id;
         const list = await Watchlist.findByPk(id);
+        // console.log('\n\n\n ' + list + ' \n\n\n')
         await list.destroy();
     }));
 

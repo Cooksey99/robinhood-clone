@@ -1,6 +1,8 @@
 /* TODO Add site wide styles */
 * {
     text-decoration: none;
+    color: white;
+    --sp-button-red: rgb(255,80,0);
 }
 html {
     margin: 0;
@@ -20,6 +22,9 @@ html {
 }
 #logged-out-app {
     background-color: white;
+}
+button {
+    color: black;
 }
 input {
     border: 1px solid white;
