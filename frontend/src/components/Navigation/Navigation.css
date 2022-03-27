@@ -23,13 +23,36 @@
   background-color: rgb(30,33,36);
   display: flex;
   justify-content: space-around;
+  align-items: center;
   flex-direction: column;
-  width: 150px;
-  height: 150px;
+  width: 200px;
+  height: 250px;
+  border: 1px solid var(--sp-border-color);
+  border-radius: 5px;
+  overflow: scroll;
 }
-.profile-dropdown li {
-  margin: auto;
+.profile-dropdown li, .profile-dropdown a{
+  /* margin: auto; */
   background-color: none;
+  height: 20px;
+  padding: 0;
+  margin: 0;
+  float: left;
+}
+.money-info {
+  display: flex;
+  flex-direction: column;
+}
+.money-info p {
+  margin: 0;
+}
+.money-amount {
+  font-weight: bold;
+}
+.profile-dropdown section {
+  display: flex;
+  justify-content: space-around;
+  gap: 20px;
 }
 #nav {
   /* background-color: coral; */
@@ -54,4 +77,28 @@
 #search-component input {
   height: 36px;
   width: 200px;
+}
+#search-component input:hover {
+  background-color: rgb(30,33,36);
+
+}
+#search-result-div {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  background-color: rgb(30,33,36);
+  border-radius: 5px;
+  border: 1px solid var(--sp-border-color);
+  /* padding: 0 10px; */
+  height: 300px;
+  width: 200px;
+  overflow: hidden;
+}
+.search-result {
+  width: 100%;
+  margin: 0;
+  padding: 10px 5px;
+}
+.search-result:hover {
+  background: #30363a;
 }

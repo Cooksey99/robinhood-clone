@@ -9,15 +9,22 @@
     position: absolute;
     transform: translateX(-50%);
     left: 50%;
-    width: 500px;
-    height: 300px;
-    background-color: coral;
+    width: 400px;
+    height: 350px;
+    background: #1e2124;
+    border: 1px solid var(--sp-border-color);
+    border-radius: 5px;
 }
 #add-bank-form {
     display: flex;
     flex-direction: column;
     gap: 10px;
     padding: 0 20px;
+    width: 80%;
+    margin: auto;
+}
+#add-bank-form input{
+    height: 36px;
 }
 .top-align{
     display: flex;
@@ -33,4 +40,6 @@
 .top-align button {
     all:unset;
     font-size: large;
+    font-weight: bolder;
+    cursor: pointer;
 }

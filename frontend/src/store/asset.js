@@ -1,7 +1,7 @@
-import { CompanyNewsStatistics } from "finnhub";
 import { csrfFetch } from "./csrf";
 
 const GET_ASSETS = 'session/GET_ASSETS';
+const GET_TRANSACTIONS = 'session/GET_TRANSACTIONS';
 
 const get_asset = (asset) => {
     return {
@@ -10,9 +10,9 @@ const get_asset = (asset) => {
     }
 }
 
-export const getAsset = (id) => async (dispatch) => {
+export const getAsset = (id) => async dispatch => {
 
-    const response = await fetch(`/api/asset/${id}`);
+    const response = await csrfFetch(`/api/asset/${id}`);
     // console.log('inside thunk'  , symbol)
 
     if (response.ok) {
@@ -21,6 +21,11 @@ export const getAsset = (id) => async (dispatch) => {
         console.log('should be working', data)
         dispatch(get_asset(data))
     }
+
+}
+export const getTransactions = (id) => async dispatch => {
+    const response = await csrfFetch(`/api/asset/transactions/${id}`);
+
 
 }
 

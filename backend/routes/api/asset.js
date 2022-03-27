@@ -19,6 +19,18 @@ router.get('/:id', asyncHandler(async (req, res) => {
     res.json(data);
 }));
 
+router.get('/transactions/:id', asyncHandler(async (req, res) => {
+    const { id } = req.params;
+
+    const transactions = await Transaction.findAll({
+        where: { user_id: id }
+    });
+
+    const data = transactions.map(transaction => transaction);
+    
+    res.json(data)
+}))
+
 router.post('/purchaseStock/:userId',
     asyncHandler(async (req, res) => {
         const userId = req.params.userId;
@@ -43,5 +55,6 @@ router.delete('/sellStock', asyncHandler(async (req, res) => {
 
     await currStock.destroy();
 }))
+
 
 module.exports = router;

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom'
+import { useLocation, useParams } from 'react-router-dom'
 import { getAsset } from '../../store/asset';
 import { restoreUser } from '../../store/session';
 import { finnhubFetch, finnhubClient, formatter} from '../finnhubSetup';
@@ -10,6 +10,7 @@ import './stockPage.css'
 
 export const StockPage = () => {
 
+    const location = useLocation();
     const { symbol } = useParams();
     const dispatch = useDispatch();
     const stock = useSelector(state => state?.assetReducer);
@@ -22,7 +23,7 @@ export const StockPage = () => {
             setStockInfo(data)
         });
 
-    }, [dispatch])
+    }, [dispatch, location])
 
     return (
         <>
