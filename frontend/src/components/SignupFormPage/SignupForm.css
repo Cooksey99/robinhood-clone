@@ -1,0 +1,87 @@
+#signup-page {
+
+}
+#signup-container {
+    /* width: 100vh;
+    height: 100vh; */
+}
+.signup-left {
+    width: 50%;
+    height: 100vh;
+    float: left;
+    background: rgb(130, 200, 210);
+    margin: 0;
+    padding: 0;
+    margin: auto;
+}
+.filler {
+    height: 150px;
+}
+.signup-left-contents {
+    width: 65%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    margin: auto;
+}
+.signup-left h1, .signup-left p {
+    color: black;
+}
+.signup-left h1 {
+    font-weight: 900;
+    font-size: 40px;
+    width: 100%;
+    float: left;
+}
+.signup-left img {
+    height: 50%;
+}
+
+.signup-right {
+    width: 50%;
+    height: 100vh;
+    float: right;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: black;
+    background-color: white;
+}
+.signup-right h1, .signup-right p, .signup-right a {
+    color: black;
+}
+.signup-right a {
+    text-decoration: underline;
+}
+#signup-form button {
+    color: white;
+}
+#signup-form ul {
+    color: red;
+}
+#signup-form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 20px;
+    width: 80%;
+}
+
+#signup-form input {
+    height: 60px;
+    border-radius: 0;
+    color: black;
+    background: none;
+}
+
+.signup-names {
+    display: flex;
+    justify-content: space-between;
+}
+
+.signup-names input {
+    width: 46%;
+}

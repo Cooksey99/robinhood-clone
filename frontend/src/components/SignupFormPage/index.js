@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Redirect } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import * as sessionActions from "../../store/session";
 import './SignupForm.css';
 
@@ -34,58 +34,69 @@ function SignupFormPage() {
 
   return (
     <>
-      <h1>Sign Up</h1>
-      <form onSubmit={handleSubmit}>
-        <ul>
-          {errors.map((error, idx) => <li key={idx}>{error}</li>)}
-        </ul>
-        <label>
-          Email
-          <input
-            type="text"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
-        </label>
-        <label>
-          First name
-          <input
-            type="text"
-            value={firstName}
-            onChange={(e) => setFirstName(e.target.value)}
-            required
-          />
-        </label>
-        <label>
-          Last name
-          <input
-            type="text"
-            value={lastName}
-            onChange={(e) => setLastName(e.target.value)}
-            required
-          />
-        </label>
-        <label>
-          Password
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-        </label>
-        <label>
-          Confirm Password
-          <input
-            type="password"
-            value={confirmPassword}
-            onChange={(e) => setConfirmPassword(e.target.value)}
-            required
-          />
-        </label>
-        <button type="submit">Sign Up</button>
-      </form>
+      <section id="signup-container">
+        <div id="signup-page">
+
+          <div className="signup-left">
+            <div className="signup-left-contents">
+              <div className="filler"></div>
+              <h1>Create your login</h1>
+              <p>We'll need your name, email address, and a unique password. You'll use this login to access Robbinghood next time.</p>
+              <img src="https://cdn.robinhood.com/app_assets/odyssey/rockets.png" alt="rockets" />
+            </div>
+          </div>
+
+          <div className="signup-right">
+            <h1>Sign Up</h1>
+            <form onSubmit={handleSubmit} id='signup-form'>
+              <ul>
+                {errors.map((error, idx) => <li key={idx}>{error}</li>)}
+              </ul>
+              <div className="signup-names">
+                <input
+                  placeholder="First name"
+                  type="text"
+                  value={firstName}
+                  onChange={(e) => setFirstName(e.target.value)}
+                  required
+                />
+                <input
+                  placeholder="Last name"
+                  type="text"
+                  value={lastName}
+                  onChange={(e) => setLastName(e.target.value)}
+                  required
+                />
+              </div>
+              <input
+                placeholder="Email"
+                type="text"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+              />
+              <input
+                placeholder="Password"
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+              />
+              <input
+                placeholder="Confirm password"
+                type="password"
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                required
+              />
+
+              <button type="submit">Sign Up</button>          </form>
+              <p>Already have an account?</p>
+              <Link to={'/login'}>Log in</Link>
+          </div>
+
+        </div>
+      </section>
     </>
   );
 }

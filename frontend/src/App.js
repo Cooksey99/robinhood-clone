@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
-import { Route, Switch } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { Redirect, Route, Switch } from 'react-router-dom';
 import SignupFormPage from './components/SignupFormPage';
 // import LoginFormPage from "./components/LoginFormPage";
 import * as sessionActions from './store/session';
@@ -18,9 +18,14 @@ import { SidebarBanking } from './components/Sidebar/SidebarBanking';
 function App() {
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);
+  const [loggedIn, setLoggedIn] = useState(false);
   // const [showModal, setShowModal] = useState(false);
+  // const user = useSelector(state => state?.session?.user)
+
   useEffect(() => {
     dispatch(sessionActions.restoreUser()).then(() => setIsLoaded(true));
+    // console.log('user:  ', user)
+    // if (user) setLoggedIn(true)
   }, [dispatch]);
 
   return (
@@ -32,9 +37,9 @@ function App() {
           <h1>Hello I am a Modal</h1>
         </Modal>
       )} */}
-      <Route path='/' exact>
-        <SplashPage />
-      </Route>
+      {/* <Route path='/' exact>
+            <Redirect to={'/portfolio'} />
+      </Route> */}
       {isLoaded && (
         <>
           <div id='app'>

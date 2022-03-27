@@ -39,7 +39,7 @@ function Navigation({ isLoaded }) {
       <div id='nav-component'>
         {!sessionUser && !hideNav && (
           <div id='nav'>
-            <Link to='/'>
+            <Link to='/login'>
               Robbinghood
             </Link>
             {sessionLinks}

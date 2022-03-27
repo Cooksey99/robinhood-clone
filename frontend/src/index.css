@@ -5,6 +5,9 @@
     --sp-button-red: rgb(255,80,0);
     --sp-button-green: #00C805;
 }
+/* #root {
+    width: 100%;
+} */
 html {
     margin: 0;
     padding: 0;
