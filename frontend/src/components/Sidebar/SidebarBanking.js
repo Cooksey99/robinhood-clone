@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux"
+import { fetchBanks } from "../../store/banking";
 import { addBuyingPower } from "../../store/session";
 import { formatter } from "../finnhubSetup";
 
@@ -13,6 +14,8 @@ export const SidebarBanking = () => {
     const [reviewTransfer, setReviewTransfer] = useState(false);
     const [transferAmount, setTransferAmount] = useState(0);
 
+    const [error, setError] = useState('');
+
     useEffect(() => {
 
     }, [dispatch])
@@ -20,13 +23,19 @@ export const SidebarBanking = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        let user = { ...sessionUser }
-        const buyingPower = transferAmount;
+        if (transferAmount !== 0) {
+            let user = { ...sessionUser }
+            const buyingPower = transferAmount;
 
-        console.log(user);
-        dispatch(addBuyingPower(user, buyingPower))
-        // setReviewTransfer(false)
-        // setTransferAmount(0)
+            console.log(user);
+            dispatch(addBuyingPower(user, buyingPower))
+            dispatch(fetchBanks(user.id))
+            // setReviewTransfer(false)
+            // setTransferAmount(0)
+        } else {
+            if (banks.lengh <= 0) setError('You must add a bank to transfer funds.')
+            else if (transferAmount <= 0) setError('You must select an amount to transfer.');
+        }
     }
 
     return (
@@ -38,7 +47,15 @@ export const SidebarBanking = () => {
                         <label>Amount</label>
                         <input type="number" placeholder="$0.00" required
                             className="bank-amount-input"
-                            onChange={(e) => setTransferAmount(e.target.value)} />
+                            onChange={(e) => {
+                                if (e.target.value < 0) {
+                                    e.target.value = 0;
+                                    setTransferAmount(e.target.value)
+                                } else if (e.target.value > 200000) {
+                                    e.target.value = 200000;
+                                    setTransferAmount(e.target.value)
+                                }
+                            }} />
                     </div>
                     {/* <div>
                         <label>From</label>
@@ -58,6 +75,11 @@ export const SidebarBanking = () => {
                         <button type="submit">Transfer</button>
                         <button type="button"
                             onClick={() => setReviewTransfer(false)}>Cancel</button>
+                    </div>
+                )}
+                {error && (
+                    <div>
+                        <p>{error}</p>
                     </div>
                 )}
             </form>

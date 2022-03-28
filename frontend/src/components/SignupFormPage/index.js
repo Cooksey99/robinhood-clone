@@ -15,7 +15,7 @@ function SignupFormPage() {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [errors, setErrors] = useState([]);
 
-  if (sessionUser) return <Redirect to="/" />;
+  if (sessionUser) return <Redirect to="/portfolio" />;
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -30,6 +30,7 @@ function SignupFormPage() {
         });
     }
     return setErrors(['Confirm Password field must be the same as the Password field']);
+
   };
 
   return (
