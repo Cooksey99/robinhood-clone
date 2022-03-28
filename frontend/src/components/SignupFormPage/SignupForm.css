@@ -5,6 +5,7 @@
     /* width: 100vh;
     height: 100vh; */
 }
+
 .signup-left {
     width: 50%;
     height: 100vh;
@@ -59,7 +60,7 @@
 #signup-form button {
     color: white;
 }
-#signup-form ul {
+#signup-form ul, #signup-form li {
     color: red;
 }
 #signup-form {

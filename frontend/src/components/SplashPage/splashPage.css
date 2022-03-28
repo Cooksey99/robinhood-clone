@@ -17,6 +17,10 @@
 }
 .splash-right-vertical {
     /* width: 60%; */
+    color: black;
+}
+.splash-right-vertical p, .splash-right-vertical ul, .splash-right-verticalli {
+    color: black;
 }
 .splash-signup {
     width: 120px;
