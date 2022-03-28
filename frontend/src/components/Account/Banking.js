@@ -64,6 +64,7 @@ export const Banking = () => {
         dispatch(fetchBanks(sessionUser.id));
         // setEditBankButton(true)
         setBankName(null)
+        setAddBank(true)
     }
 
     useEffect(() => {
@@ -123,6 +124,7 @@ export const Banking = () => {
                 {banks.length > 0 && (
                     // banks.map(bank => (
                         <div id="linked-bank" >
+
                             <h2>{banks[0].nickname}</h2>
                             <button onClick={handleUnlink(banks[0].id)} className='banking-edit-button'>Unlink</button>
                             <button className='banking-edit-button'
@@ -136,7 +138,7 @@ export const Banking = () => {
                 )}
                 <br />
                 <br />
-                {!bankName && (
+                {!banks.length > 0 && (
                     <button
                         onClick={() => setAddBank(true)}
                         className='add-new-account-button'

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux"
 import { addBuyingPower } from "../../store/session";
+import { formatter } from "../finnhubSetup";
 
 
 export const SidebarBanking = () => {

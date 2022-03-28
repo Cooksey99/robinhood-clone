@@ -11,7 +11,6 @@ function Navigation({ isLoaded }) {
   const sessionUser = useSelector(state => state.session.user);
   // const assetsSelector = useSelector(state => state?.assetReducer);
   const [hideNav, setHideNav] = useState(false);
-
   const dispatch = useDispatch();
 
   const url = useLocation();
