@@ -11,6 +11,7 @@ import { SidebarStock } from './SidebarStock'
 export const Sidebar = ({ assets }) => {
 
     const location = useLocation();
+    const history = useHistory();
 
     const [newList, setNewList] = useState(false);
     const [list, setList] = useState({});
@@ -61,6 +62,8 @@ export const Sidebar = ({ assets }) => {
         e.preventDefault();
         dispatch(deleteList(listId))
         dispatch(fetchLists(sessionUser.id));
+
+        history.push('/portfolio')
     }
 
     useEffect(() => {
@@ -126,7 +129,7 @@ export const Sidebar = ({ assets }) => {
                         <div className='editList'>
                             <form onSubmit={submitEdit}>
                                 <div className='top-bar-edit'>
-                                    <h2>Edit List</h2>
+                                    <h2 className='edit-list-header'>Edit List</h2>
                                     <button type='button' className='edit-exit-button'
                                         onClick={() => setEdit(false)}>X</button>
                                 </div>
@@ -135,7 +138,7 @@ export const Sidebar = ({ assets }) => {
                                     value={listName}
                                     className='save-edit-button'
                                     onChange={(e) => setListName(e.target.value)}></input>
-                                <button type='submit'>Save</button>
+                                <button type='submit' className='save-edit-list'>Save</button>
                             </form>
                         </div>
                     </>

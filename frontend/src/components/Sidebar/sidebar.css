@@ -116,6 +116,8 @@ input:hover {
     height: 250px;
     display: flex;
     justify-content: center;
+    text-align: center;
+    margin: auto;
 }
 .top-bar-edit {
     display: flex;
@@ -123,8 +125,16 @@ input:hover {
     margin: auto;
     text-align: center;
 }
+.edit-exit-button {
+    width: 40%;
+    float: right;
+}
 .edit-exit-button button{
     float: right;
+    z-index: 2;
+}
+.edit-list-header {
+    width: 60%;
 }
 .editList input {
     height: 36px;
@@ -333,4 +343,9 @@ br {
 }
 #exit-button:hover {
     background-color: #30363A ;
+}
+
+.save-edit-list {
+    margin-top: 8px;
+    border: 1px solid var(--sp-border-color);
 }
