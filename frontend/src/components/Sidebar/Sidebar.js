@@ -44,6 +44,7 @@ export const Sidebar = ({ assets }) => {
         setList(list);
         setListName(list.list_name);
         // console.log(list)
+        dispatch(fetchLists(sessionUser.id))
 
     }
 
@@ -66,6 +67,7 @@ export const Sidebar = ({ assets }) => {
 
         dispatch(getAsset(sessionUser.id));
         dispatch(fetchLists(sessionUser.id));
+
         // let uniqueSet = new Set(unique);
         // console.log(uniqueSet)
         // console.log('==========', allTickers)

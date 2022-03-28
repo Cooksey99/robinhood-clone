@@ -28,7 +28,7 @@ export const WatchlistPage = () => {
                 if (parseInt(list.id) === parseInt(id)) setList(list);
             });
         }
-        console.log(ticker)
+        // console.log(ticker)
     }, [dispatch, location])
 
     return (
@@ -45,7 +45,7 @@ export const WatchlistPage = () => {
                 </div>
                 {stocks.length > 0 && (
                     stocks.map(stock => (
-                        <SingleStockTab stock={stock} key={stock.id}/>
+                        <SingleStockTab stock={stock} key={stock.id} />
                     ))
                 )}
             </div>
