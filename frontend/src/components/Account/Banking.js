@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addBankFetch, deleteBankFetch, fetchBanks } from "../../store/banking";
+import { addBankFetch, deleteBankFetch, editBank, fetchBanks } from "../../store/banking";
 import './banking.css';
 
 export const Banking = () => {
@@ -14,6 +14,7 @@ export const Banking = () => {
     const [account_number, set_account_number] = useState('');
     const [routing_number, set_routing_number] = useState('');
     const [nickname, set_nickname] = useState('');
+    const [editForm, setEditForm] = useState(false);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -29,6 +30,22 @@ export const Banking = () => {
         dispatch(addBankFetch(bank));
         dispatch(fetchBanks(sessionUser.id));
         setAddBank(false);
+    };
+
+    const handleEdit = async (e) => {
+        e.preventDefault();
+
+        const user_id = sessionUser.id;
+
+        const bank = {
+            user_id,
+            account_number,
+            routing_number,
+            nickname
+        }
+        dispatch(editBank(bank));
+        dispatch(fetchBanks(sessionUser.id));
+        setEditForm(false);
     };
 
     const handleUnlink = (bankId) => async (e) => {
@@ -71,11 +88,31 @@ export const Banking = () => {
                         </form>
                     </div>
                 )}
+                {editForm && (
+                    <div id="add-bank-div">
+                        <form onSubmit={handleEdit} id='add-bank-form'>
+                            <div className="top-align">
+                                <label>Account Nickname</label>
+                                <button onClick={() => setAddBank(false)}>X</button>
+                            </div>
+                            <input placeholder="Nickname" required
+                                onChange={(e) => set_nickname(e.target.value)}></input>
+                            <label>Routing Number</label>
+                            <input placeholder="" type='number' required
+                                onChange={(e) => set_routing_number(e.target.value)}></input>
+                            <label>Account Number</label>
+                            <input placeholder="" type='number' required
+                                onChange={(e) => set_account_number(e.target.value)}></input>
+                            <button type="submit">Link Account</button>
+                        </form>
+                    </div>
+                )}
                 {banks.length > 0 && (
                     banks.map(bank => (
                         <div id="linked-bank" key={bank.id}>
                             <h2>{bank.nickname}</h2>
                             <button onClick={handleUnlink(bank.id)}>Unlink</button>
+                            <button onClick={() => setEditForm(true)}>Edit</button>
                         </div>
                     ))
                 )}

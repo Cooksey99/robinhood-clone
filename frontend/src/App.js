@@ -16,6 +16,7 @@ import { WatchlistPage } from './components/WatchlistPage/WatchlistPage';
 import { Banking } from './components/Account/Banking';
 import { SidebarBanking } from './components/Sidebar/SidebarBanking';
 import { getAsset } from './store/asset';
+import { PortfolioParent } from './components/Portfolio/PortfolioParent';
 function App() {
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);
@@ -52,8 +53,7 @@ function App() {
                 <SignupFormPage />
               </Route>
               <Route path='/portfolio' exact>
-                <Portfolio />
-                <Sidebar />
+                <PortfolioParent />
               </Route>
               <Route path='/asset/:symbol' exact>
                 <StockPage />

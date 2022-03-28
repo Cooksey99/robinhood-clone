@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Link, useParams } from 'react-router-dom';
+import { Link, useLocation, useParams } from 'react-router-dom';
 import { fetchStocks } from '../../store/stock';
 import { fetchLists } from '../../store/watchlist';
 import { finnhubClient } from '../finnhubSetup';
@@ -9,6 +9,8 @@ import { SingleStockTab } from './SingleStockTab';
 import './watchlistPage.css'
 
 export const WatchlistPage = () => {
+
+    const location = useLocation();
 
     const dispatch = useDispatch();
     const { id } = useParams();
@@ -27,7 +29,7 @@ export const WatchlistPage = () => {
             });
         }
         console.log(ticker)
-    }, [dispatch])
+    }, [dispatch, location])
 
     return (
         <>

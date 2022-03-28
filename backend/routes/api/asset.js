@@ -43,14 +43,13 @@ router.get('/:id', asyncHandler(async (req, res) => {
 
 router.get('/transactions/:id', asyncHandler(async (req, res) => {
     const { id } = req.params;
-
-    const transactions = await Transaction.findAll({
+    const stocks = await Transaction.findAll({
         where: { user_id: id }
-    });
+    })
 
-    console.log('\n\n\n' + transactions + '\n\n\n')
-    const data = transactions.map(transaction => transaction);
-    res.json(data)
+    const data = stocks.map(stock => stock);
+
+    res.json(data);
 }))
 
 router.post('/purchaseStock/:userId',

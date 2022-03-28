@@ -122,18 +122,19 @@ export const StockChart = ({ option, stock }) => {
                         options={options}
                     />
                 )}
-                {/* {option === 'portfolio' && stock.dp < 0 && (
+                {option === 'portfolio' && (
                     <Line
                         data={{
-                            labels: [],
+                            labels: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
                             datasets: [
                                 {
                                     label: '',
-                                    data: [],
+                                    data: [30, 28, 31, 40, 38, 35, 36, 40, 48, 49, 42,
+                                        38, 35, 36, 28, 31, 40, 38],
                                     fill: false,
                                     borderWidth: 2,
-                                    backgroundColor: '#FF5000',
-                                    borderColor: '#FF5000',
+                                    backgroundColor: '#00C805',
+                                    borderColor: '#00C805',
                                     pointRadius: 0,
                                     responsive: true
                                 }
@@ -142,7 +143,7 @@ export const StockChart = ({ option, stock }) => {
                         width={"30%"}
                         options={options}
                     />
-                )} */}
+                )}
 
 
             </div>

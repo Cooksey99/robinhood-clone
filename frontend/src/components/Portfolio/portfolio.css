@@ -21,3 +21,13 @@
     border-bottom: 1px solid var(--sp-border-color);
     padding-bottom: 20px;
 }
+
+#chart-select {
+    width: 100%;
+    border-bottom: 1px solid var(--sp-border-color);
+    display: flex;
+}
+#chart-select ul {
+    font-size: small;
+    text-align: left;
+}

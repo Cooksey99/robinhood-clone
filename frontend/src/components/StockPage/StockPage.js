@@ -37,6 +37,13 @@ export const StockPage = () => {
                 <h3>daily change: {stockInfo.dp}%</h3>
                 <h3>current: {formatter.format(stockInfo.c)}</h3>
                 <StockChart option='asset' stock={stockInfo}/>
+                <div id='chart-select'>
+                    <ul>1D</ul>
+                    <ul>1W</ul>
+                    <ul>1M</ul>
+                    <ul>1Y</ul>
+                    <ul>ALL</ul>
+                </div>
                 <div className='buying-power-stock'>
                     <h4>Buying Power</h4>
                     <h4>{formatter.format(sessionUser.buyingPower)}</h4>

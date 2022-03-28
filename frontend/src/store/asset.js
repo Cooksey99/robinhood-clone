@@ -20,21 +20,20 @@ const get_transactions = (transactions) => {
 export const getAsset = (id) => async dispatch => {
 
     const response = await csrfFetch(`/api/asset/${id}`);
-    // console.log('inside thunk'  , symbol)
 
     if (response.ok) {
-        const data = await response.json();
+        const asset = await response.json();
 
-        // console.log('should be working', data)
-        dispatch(get_asset(data))
+
+        dispatch(get_asset(asset))
     }
 
 }
 export const getTransactions = (id) => async dispatch => {
     const response = await csrfFetch(`/api/asset/transactions/${id}`);
-
     if (response.ok) {
         const transactions = await response.json();
+
         dispatch(get_transactions(transactions))
     }
 
@@ -69,7 +68,9 @@ export default function assetReducer(state = initialState, action) {
             // newState.set = action.asset.dataSet
             return newState;
         case GET_TRANSACTIONS:
-            newState.transactions = action.transactions;
+            let info = action.transactions;
+            newState = { ...state };
+            newState.transactions = info;
 
             let tranObj = {};
             action.transactions.forEach(tran => {

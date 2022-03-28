@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useHistory, useLocation } from 'react-router-dom';
 import { getAsset } from '../../store/asset';
 import { createNewList, deleteList, editList, fetchLists } from '../../store/watchlist';
 
@@ -8,7 +8,9 @@ import './sidebar.css'
 import { SidebarStock } from './SidebarStock'
 
 
-export const Sidebar = () => {
+export const Sidebar = ({assets}) => {
+
+    const location = useLocation();
 
     const [newList, setNewList] = useState(false);
     const [list, setList] = useState({});
@@ -19,7 +21,7 @@ export const Sidebar = () => {
 
     const sessionUser = useSelector(state => state?.session?.user);
     const allLists = useSelector(state => state?.listReducer?.lists);
-    const allAssets = useSelector(state => state?.assetReducer?.asset);
+    // const assets = useSelector(state => state?.assetReducer?.assetsArray);
     const allTickers = useSelector(state => state?.assetReducer?.dataSet)
     // const allAssets = new Set(Object.entries(assetsObj));
 
@@ -51,6 +53,7 @@ export const Sidebar = () => {
         console.log('list data:     ', list)
         dispatch(editList(list));
         setEdit(false);
+        dispatch(fetchLists(sessionUser.id))
     }
 
     const submitDelete = (listId) => async (e) => {
@@ -60,22 +63,27 @@ export const Sidebar = () => {
     }
 
     useEffect(() => {
-        // console.log('12345678901234567890: ', assetsObj)
 
-        dispatch(fetchLists(sessionUser.id));
         dispatch(getAsset(sessionUser.id));
+        dispatch(fetchLists(sessionUser.id));
         // let uniqueSet = new Set(unique);
         // console.log(uniqueSet)
         // console.log('==========', allTickers)
-    }, [dispatch])
+        console.log('12345678901234567890: ', assets)
+    }, [dispatch, location])
 
     return (
         <>
             <div id="sidebar">
-                <h2 className='stock-header'>Stocks</h2>
+                {/* <h2 className='stock-header'>Stocks</h2> */}
                 {/* {allTickers.length > 0 && allTickers.forEach(ticker => (
                         <SidebarStock ticker={ticker}/>
                     ))} */}
+                {/* {assets.length > 0 && assets.forEach(stock => (
+                    <div>
+                        <SidebarStock ticker={stock} />
+                    </div>
+                ))} */}
                 <div className='new-list'>
                     <h2 id='list-header'>Lists</h2>
                     <button id='add-list-button'

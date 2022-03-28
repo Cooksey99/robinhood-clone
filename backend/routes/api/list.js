@@ -20,6 +20,15 @@ router.get('/:id', asyncHandler(async (req, res) => {
 
 }));
 
+// router.get('/find/:id', asyncHandler(async (req, res) => {
+//     const { id } = req.params;
+//     const watchlist = await Watchlist.findByPk(id)
+
+//     res.json(watchlist)
+
+// }));
+
+
 
 //    /list/:listId/addStock/:symbol
 //    ADDING STOCK TO A LIST
