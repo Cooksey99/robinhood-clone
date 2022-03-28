@@ -2,6 +2,7 @@ import { csrfFetch } from "./csrf.js";
 
 const SET_USER = 'session/setUser';
 const REMOVE_USER = 'session/removeUser';
+const BUYING_POWER = 'session/BUYING_POWER';
 
 const setUser = (user) => ({
   type: SET_USER,
@@ -11,6 +12,42 @@ const setUser = (user) => ({
 const removeUser = () => ({
   type: REMOVE_USER,
 });
+
+const buying_power = (user) => ({
+  type: BUYING_POWER,
+  user
+})
+
+export const addBuyingPower = (user, price) => async dispatch => {
+  console.log('lskdajfl;kajsdfl', price)
+  const response = await csrfFetch(`/api/users/${user.id}/addBuyingPower`, {
+    method: 'PUT',
+    headers: { 'Content-Type' : 'application/json' },
+    body: JSON.stringify({
+      user,
+      price
+    })
+  })
+  if (response.ok) {
+    const user = await response.json();
+    dispatch(buying_power(user))
+  }
+}
+export const removeBuyingPower = (user, price) => async dispatch => {
+  console.log('lskdajfl;kajsdfl', price)
+  const response = await csrfFetch(`/api/users/${user.id}/removeBuyingPower`, {
+    method: 'PUT',
+    headers: { 'Content-Type' : 'application/json' },
+    body: JSON.stringify({
+      user,
+      price
+    })
+  })
+  if (response.ok) {
+    const user = await response.json();
+    dispatch(buying_power(user))
+  }
+}
 
 export const login = ({ credential, password }) => async dispatch => {
   const response = await csrfFetch("/api/session", {
@@ -25,6 +62,7 @@ export const login = ({ credential, password }) => async dispatch => {
 export const restoreUser = () => async dispatch => {
   const response = await csrfFetch("/api/session");
   const data = await response.json();
+  // console.log('==============', data)
   dispatch(setUser(data.user));
   return response;
 };

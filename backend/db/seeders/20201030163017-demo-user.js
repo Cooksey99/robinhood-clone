@@ -10,18 +10,21 @@ module.exports = {
         first_name: 'demo',
         last_name: 'user',
         hashedPassword: bcrypt.hashSync('password'),
+        buyingPower: 200000
       },
       {
         email: 'fake@user.io',
         first_name: 'Fake',
         last_name: 'User',
         hashedPassword: bcrypt.hashSync(faker.internet.password()),
+        buyingPower: 200000
       },
       {
         email: 'anotherfake@user.io',
         first_name: 'Fake',
         last_name: 'User',
         hashedPassword: bcrypt.hashSync(faker.internet.password()),
+        buyingPower: 200000
       },
     ], {});
   },

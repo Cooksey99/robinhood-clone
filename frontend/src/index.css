@@ -1,5 +1,14 @@
 /* TODO Add site wide styles */
 * {
+    text-decoration: none;
+    color: white;
+    --sp-button-red: rgb(255,80,0);
+    --sp-button-green: #00C805;
+}
+/* #root {
+    width: 100%;
+} */
+html {
     margin: 0;
     padding: 0;
     /* height: 100%; */
@@ -18,8 +27,25 @@
 #logged-out-app {
     background-color: white;
 }
+button {
+    color: black;
+}
 input {
     border: 1px solid white;
     border-radius: 5px;
     border: 1px solid var(--sp-border-color);
 }
+/* .negative {
+    border: 1px solid #fa5000 !important;
+}
+.positive {
+    border: 1px solid #00C805 !important;
+}
+
+.negative .main-button {
+    background: #fa5000 !important;
+}
+.positive .main-button {
+    background: #00C805 !important;
+
+} */

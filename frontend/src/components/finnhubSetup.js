@@ -9,3 +9,8 @@ export const finnhubClient = new finnhub.DefaultApi()
 
 const BASE_URL = 'finnhub.io/api/v1';
 const API_KEY = 'c8obubqad3iddfsarfeg';
+
+export const formatter = new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'USD',
+  });

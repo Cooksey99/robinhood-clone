@@ -1,0 +1,35 @@
+.heart {
+    width: 60px;
+    background-color: coral;
+}
+
+.stock-tab {
+    display: flex;
+    justify-content: space-around;
+    border-bottom: 1px solid var(--sp-border-color);
+    align-items: center;
+}
+
+.header-line {
+    display: flex;
+    justify-content: space-around;
+    border-bottom: 1px solid var(--sp-border-color);
+}
+
+#buy-or-sell {
+    display: flex;
+    justify-content: space-around;
+}
+.stock-tab-div {
+    display: flex;
+    gap: 35px;
+    width: 120px;
+    justify-self: flex-end;
+    align-items: center;
+}
+.stock-tab:hover {
+    background: #30363A;
+}
+.stock-gap {
+    width: 30px;
+}

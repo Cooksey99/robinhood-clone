@@ -4,6 +4,7 @@ const CREATE_LIST = 'session/CREATE_LIST';
 const GET_LISTS = 'session/GET_LISTS';
 const EDIT_LIST = 'session/EDIT_LIST';
 const DELETE_LIST = 'session/DELETE_LIST';
+const GET_SINGLE_LIST = 'session/GET_SINGLE_LIST';
 
 const create_list = (data) => {
     return {
@@ -32,10 +33,24 @@ const delete_list = (listId) => {
         listId
     }
 }
+const get_single_list = (stocks) => {
+    return {
+        type: DELETE_LIST,
+        stocks
+    }
+}
 
-export const fetchLists = () => async (dispatch) => {
-    const response = await csrfFetch('/api/portfolio/lists')
+export const getSingleList = (id) => async (dispatch) => {
+    const response = await csrfFetch(`/api/portfolio/list/${id}`)
     const data = await response.json();
+    // console.log('--------', data)
+    dispatch(get_list(data));
+}
+
+export const fetchLists = (id) => async (dispatch) => {
+    const response = await csrfFetch(`/api/portfolio/lists/${id}`)
+    const data = await response.json();
+    // console.log('--------', data)
     dispatch(get_list(data));
 }
 
@@ -59,7 +74,7 @@ export const editList = (list) => async (dispatch) => {
     let id = list.id;
     console.log('testing the thunk', id);
     const response = await csrfFetch(`/api/portfolio/list/${id}`, {
-        method: 'put',
+        method: 'PUT',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify(list)
     });
@@ -71,7 +86,7 @@ export const editList = (list) => async (dispatch) => {
 
 export const deleteList = (listId) => async (dispatch) => {
     let id = listId;
-    console.log('listId:        ', id)
+    // console.log('listId:        ', id)
     const response = await csrfFetch(`/api/portfolio/list/${id}`, {
         method: 'delete'
     });
@@ -87,16 +102,19 @@ export default function listReducer( state = initialState, action) {
             newState = {...state};
             newState.lists = action.lists;
             return newState;
+        case GET_SINGLE_LIST:
+            newState = {...state};
+            newState.stocks = action.stocks
         case CREATE_LIST:
+            newState = {...state};
             newState.lists[action.data.id] = action.data;
             return newState;
         case EDIT_LIST:
-            newState = {...state};
+            newState = { ...state }
             newState.lists[action.list.id] = action.list;
             return newState;
         case DELETE_LIST:
             newState = {...state};
-            console.log('newState:      ', newState);
             delete newState.lists[action.id];
             return newState;
         default:

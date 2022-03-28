@@ -1,15 +1,172 @@
-.profile-dropdown {
-  position: absolute;
+/* Account menu styling starts here */
+#nav-component {
+  background-color: black;
+  color: white;
 
 }
+#nav-component input {
+  background-color: black;
+}
+#nav-bar-button{
+  /* all: unset; */
+  background: none;
+  float: right;
+  margin-right: 40px;
+  cursor: pointer;
+}
 
+.account-divider {
+  /* background-color: coral; */
+  display: flex;
+  justify-content: flex-end;
+}
+.profile-dropdown {
+  position: absolute;
+  background-color: rgb(30,33,36);
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  flex-direction: column;
+  width: 200px;
+  height: 250px;
+  border: 1px solid var(--sp-border-color);
+  border-radius: 5px;
+  overflow: scroll;
+}
+.profile-dropdown li, .profile-dropdown a{
+  /* margin: auto; */
+  background-color: none;
+  height: 20px;
+  padding: 0;
+  margin: 0;
+  float: left;
+}
+.money-info {
+  display: flex;
+  flex-direction: column;
+}
+.money-info p {
+  margin: 0;
+}
+.money-amount {
+  font-weight: bold;
+}
+.profile-dropdown section {
+  display: flex;
+  justify-content: space-around;
+  gap: 20px;
+}
 #nav {
   /* background-color: coral; */
   height:64px;
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .divider {
   width: 25%;
+}
+#logo {
+  fill: white;
+  height: 60px;
+}
+#logo:hover {
+  fill: var(--sp-button-green);
+}
+
+/* Search bar styling starts here */
+#search-component input {
+  border: none;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+}
+/* #search-component input:hover {
+  background: none;
+  background-color: #30363a;
+} */
+#search {
+  outline: none;
+}
+#search-input {
+  height: 36px;
+  width: 230px;
+  display: flex;
+  align-items: center;
+  border: 1px solid var(--sp-border-color);
+  border-radius: 5px;
+  z-index: 3;
+  overflow-y: hidden;
+}
+#search-input:hover {
+  background-color: #1e2124;
+}
+#search-component input:hover {
+  background-color: rgb(30,33,36);
+
+}
+#search-result-div {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  background-color: rgb(30,33,36);
+  border-radius: 5px;
+  border: 1px solid var(--sp-border-color);
+  /* padding: 0 10px; */
+  height: 300px;
+  width: 200px;
+  overflow: hidden;
+}
+.search-result {
+  width: 100%;
+  margin: 0;
+  padding: 10px 5px;
+}
+.search-result:hover {
+  background: #30363a;
+}
+
+/* Logged out */
+#nav-logged-out {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-left: 15px;
+  padding-right: 15px;
+  background-color: white;
+  height: 50px;
+}
+#nav-logged-out a {
+  color: black;
+}
+#session-links {
+  display: flex;
+  width: 20%;
+  justify-content: space-between;
+  align-items: center;
+}
+#session-links button {
+  border-radius: 50px;
+  border: 1px solid black;
+  text-align: center;
+  font-size: medium;
+  padding: 5px;
+  width: 80px;
+  height: 36px;
+}
+#session-links a {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50px;
+  border: 1px solid black;
+  font-size: medium;
+  padding: 5px;
+  width: 70px;
+  height: 24px;
+}
+
+.banking-button:hover {
+  color: var(--sp-button-green);
 }

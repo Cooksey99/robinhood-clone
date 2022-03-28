@@ -11,8 +11,11 @@ module.exports = {
       user_id: {
         type: Sequelize.INTEGER
       },
-      stock_id: {
-        type: Sequelize.INTEGER
+      // stock_id: {
+      //   type: Sequelize.INTEGER
+      // },
+      ticker: {
+        type: Sequelize.STRING
       },
       price: {
         type: Sequelize.DECIMAL

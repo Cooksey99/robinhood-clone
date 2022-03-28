@@ -8,17 +8,18 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
+      watchlist_id: {
+        type: Sequelize.INTEGER
+      },
+      asset_id: {
+        type: Sequelize.INTEGER
+      },
       ticker: {
         type: Sequelize.STRING(5),
         allowNull: false
       },
-      company_name: {
-        type: Sequelize.STRING(50),
-        allowNull: false
-      },
-      market_price: {
-        type: Sequelize.DECIMAL,
-        allowNull: false
+      quantity: {
+        type: Sequelize.INTEGER
       },
       createdAt: {
         allowNull: false,

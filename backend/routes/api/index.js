@@ -4,6 +4,7 @@ const usersRouter = require("./users.js");
 const assetRouter = require("./asset.js");
 const listRouter = require("./list.js");
 const portfolioRouter = require("./portfolio.js");
+const bankingRouter = require("./banking.js")
 
 // // GET /api/set-token-cookie
 // const asyncHandler = require('express-async-handler');
@@ -48,5 +49,6 @@ router.use("/asset", assetRouter);
 router.use("/users", usersRouter);
 router.use("/list", listRouter);
 router.use("/portfolio", portfolioRouter);
+router.use("/banking", bankingRouter);
 
 module.exports = router;

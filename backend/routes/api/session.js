@@ -5,6 +5,7 @@ const asyncHandler = require("express-async-handler");
 const { handleValidationErrors } = require("../../utils/validation");
 const { setTokenCookie, restoreUser } = require("../../utils/auth");
 const { User } = require("../../db/models");
+const { response } = require("express");
 
 const router = express.Router();
 
@@ -18,6 +19,7 @@ const validateLogin = [
     .withMessage("Please provide a password."),
   handleValidationErrors,
 ];
+
 
 // Log in
 router.post(
@@ -66,5 +68,6 @@ router.get(
     } else return res.json({});
   }
 );
+
 
 module.exports = router;

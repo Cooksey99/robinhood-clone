@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
-import { Route, Switch } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { Redirect, Route, Switch } from 'react-router-dom';
 import SignupFormPage from './components/SignupFormPage';
 // import LoginFormPage from "./components/LoginFormPage";
 import * as sessionActions from './store/session';
@@ -12,12 +12,24 @@ import LoginFormPage from './components/LoginFormPage';
 import { SplashPage } from './components/SplashPage/SplashPage';
 import { StockPage } from './components/StockPage/StockPage';
 import { Portfolio } from './components/Portfolio/Portfolio';
+import { WatchlistPage } from './components/WatchlistPage/WatchlistPage';
+import { Banking } from './components/Account/Banking';
+import { SidebarBanking } from './components/Sidebar/SidebarBanking';
+import { getAsset } from './store/asset';
+import { PortfolioParent } from './components/Portfolio/PortfolioParent';
 function App() {
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);
+  const [loggedIn, setLoggedIn] = useState(false);
   // const [showModal, setShowModal] = useState(false);
+  const user = useSelector(state => state?.session?.user)
+
   useEffect(() => {
     dispatch(sessionActions.restoreUser()).then(() => setIsLoaded(true));
+    // dispatch(getAsset(user.id))
+    // console.log('user:  ', user)
+    // if (user) setLoggedIn(true)
+    // console.log(user)
   }, [dispatch]);
 
   return (
@@ -32,10 +44,14 @@ function App() {
       <Route path='/' exact>
         <SplashPage />
       </Route>
+      {/* {!isLoaded && <Redirect to='/login' />} */}
       {isLoaded && (
         <>
           <div id='app'>
             <Switch>
+            {/* <Route path='/' exact>
+                  <Redirect to='/portfolio' />
+            </Route> */}
               <Route path="/login" exact>
                 <LoginFormPage />
               </Route>
@@ -43,11 +59,18 @@ function App() {
                 <SignupFormPage />
               </Route>
               <Route path='/portfolio' exact>
-                <Portfolio />
-                <Sidebar />
+                <PortfolioParent />
               </Route>
               <Route path='/asset/:symbol' exact>
                 <StockPage />
+              </Route>
+              <Route path='/list/:id' exact>
+                <WatchlistPage />
+                <Sidebar />
+              </Route>
+              <Route path='/account' exact>
+                <Banking />
+                <SidebarBanking />
               </Route>
             </Switch>
           </div>

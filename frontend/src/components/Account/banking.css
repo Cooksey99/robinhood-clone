@@ -1,0 +1,64 @@
+#linked-bank {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding-bottom: 5px;
+    border-bottom: 1px solid var(--sp-border-color);
+}
+
+
+/* Add bank form starts here */
+#add-bank-div {
+    position: absolute;
+    transform: translateX(-50%);
+    left: 50%;
+    width: 400px;
+    height: 350px;
+    background: #1e2124;
+    border: 1px solid var(--sp-border-color);
+    border-radius: 5px;
+    padding: 8px;
+}
+#add-bank-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 0 20px;
+    width: 80%;
+    margin: auto;
+}
+#add-bank-form input{
+    height: 36px;
+}
+
+.top-align{
+    display: flex;
+    justify-content: space-between;
+    padding-top: 5px;
+}
+.top-align label {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: flex-end;
+}
+.top-align button {
+    all:unset;
+    font-size: large;
+    font-weight: bolder;
+    cursor: pointer;
+}
+.banking-edit-button button {
+    width: 120px;
+    height: 40px;
+    border-radius: 50px;
+    background-color: var(--sp-button-green);
+}
+
+.add-new-account-button, .banking-edit-button{
+    width: 120px;
+    height: 40px;
+    border-radius: 50px;
+    border: none;
+    background-color: var(--sp-button-green);
+}
