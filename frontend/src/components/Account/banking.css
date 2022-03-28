@@ -1,6 +1,9 @@
 #linked-bank {
     display: flex;
     justify-content: space-around;
+    align-items: center;
+    padding-bottom: 5px;
+    border-bottom: 1px solid var(--sp-border-color);
 }
 
 
@@ -44,4 +47,18 @@
     font-size: large;
     font-weight: bolder;
     cursor: pointer;
+}
+.banking-edit-button button {
+    width: 120px;
+    height: 40px;
+    border-radius: 50px;
+    background-color: var(--sp-button-green);
+}
+
+.add-new-account-button, .banking-edit-button{
+    width: 120px;
+    height: 40px;
+    border-radius: 50px;
+    border: none;
+    background-color: var(--sp-button-green);
 }

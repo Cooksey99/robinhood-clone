@@ -1,0 +1,28 @@
+#splash-page-container {
+    width: 100vh;
+    background-color: rgb(194, 246, 40);
+}
+
+.splash-left-vertical {
+    width: 40%;
+    height: 80vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 30px;
+    margin-left: 20px;
+}
+.splash-left-vertical h1, .splash-left-vertical h2 {
+    color: black;
+}
+.splash-right-vertical {
+    /* width: 60%; */
+}
+.splash-signup {
+    width: 120px;
+    height: 40px;
+    border-radius: 50px;
+    border: none;
+    background-color: black;
+    color: white;
+}

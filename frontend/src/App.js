@@ -26,8 +26,10 @@ function App() {
 
   useEffect(() => {
     dispatch(sessionActions.restoreUser()).then(() => setIsLoaded(true));
+    // dispatch(getAsset(user.id))
     // console.log('user:  ', user)
     // if (user) setLoggedIn(true)
+    // console.log(user)
   }, [dispatch]);
 
   return (
@@ -39,13 +41,17 @@ function App() {
           <h1>Hello I am a Modal</h1>
         </Modal>
       )} */}
-      {/* <Route path='/' exact>
-            <Redirect to={'/portfolio'} />
-      </Route> */}
+      <Route path='/' exact>
+        <SplashPage />
+      </Route>
+      {/* {!isLoaded && <Redirect to='/login' />} */}
       {isLoaded && (
         <>
           <div id='app'>
             <Switch>
+            {/* <Route path='/' exact>
+                  <Redirect to='/portfolio' />
+            </Route> */}
               <Route path="/login" exact>
                 <LoginFormPage />
               </Route>

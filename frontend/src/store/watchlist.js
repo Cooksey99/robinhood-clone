@@ -110,6 +110,7 @@ export default function listReducer( state = initialState, action) {
             newState.lists[action.data.id] = action.data;
             return newState;
         case EDIT_LIST:
+            newState = { ...state }
             newState.lists[action.list.id] = action.list;
             return newState;
         case DELETE_LIST:

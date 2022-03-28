@@ -19,8 +19,8 @@ export const Portfolio = () => {
     return (
         <>
             <div className="main-info-container">
-                <h2>{formatter.format(user.buyingPower)}</h2>
-                <StockChart option='portfolio'/>
+                {user && <h2>{formatter.format(user?.buyingPower)}</h2>}
+                <StockChart option='portfolio' />
                 <div id='chart-select'>
                     <ul>1D</ul>
                     <ul>1W</ul>
@@ -30,7 +30,8 @@ export const Portfolio = () => {
                 </div>
                 <div className='buying-power'>
                     <h3>Buying Power</h3>
-                    <h3>{formatter.format(user.buyingPower)}</h3>
+                    {user && (<h3>{formatter.format(user.buyingPower)}</h3>
+                    )}
                 </div>
             </div>
         </>

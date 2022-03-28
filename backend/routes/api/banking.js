@@ -31,6 +31,7 @@ router.get('/:id', expressAsyncHandler(async (req, res) => {
     });
 
     const data = banks.map(bank => bank);
+    console.log('\n\n\n' + data + '\n\n\n')
     res.json(data);
 }));
 

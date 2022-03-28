@@ -1,14 +1,17 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
 import { addBankFetch, deleteBankFetch, editBank, fetchBanks } from "../../store/banking";
 import './banking.css';
 
 export const Banking = () => {
 
     const dispatch = useDispatch();
+    const history = useHistory();
 
     const sessionUser = useSelector(state => state?.session?.user);
     const banks = useSelector(state => state?.bankingReducer?.banks);
+    const newBank = useSelector(state => state?.bankingReducer?.newBank);
 
     const [addBank, setAddBank] = useState(false);
     const [account_number, set_account_number] = useState('');
@@ -35,7 +38,7 @@ export const Banking = () => {
 
     const handleEdit = async (e) => {
         e.preventDefault();
-
+        history.push('/portfolio')
         const user_id = sessionUser.id;
 
         const bank = {
@@ -44,10 +47,10 @@ export const Banking = () => {
             routing_number,
             nickname
         }
-        console.log('here is your id:   ', bankId)
+        // console.log('here is your id:   ', bankId)
         dispatch(editBank(bank, bankId));
-        dispatch(fetchBanks(sessionUser.id));
         setEditForm(false);
+        dispatch(fetchBanks(sessionUser.id));
 
     };
 
@@ -77,7 +80,7 @@ export const Banking = () => {
                         <form onSubmit={handleSubmit} id='add-bank-form'>
                             <div className="top-align">
                                 <label>Account Nickname</label>
-                                <button onClick={() => setAddBank(false)} >X</button>
+                                <button type='button' onClick={() => setAddBank(false)} >X</button>
                             </div>
                             <input placeholder="Nickname" required
                                 onChange={(e) => set_nickname(e.target.value)}></input>
@@ -114,19 +117,24 @@ export const Banking = () => {
                     banks.map(bank => (
                         <div id="linked-bank" key={bank.id}>
                             <h2>{bank.nickname}</h2>
-                            <button onClick={handleUnlink(bank.id)}>Unlink</button>
-                            <button onClick={() => {
-                                setEditForm(true);
-                                setBankId(bank.id);
-                            }}>Edit</button>
+                            <button onClick={handleUnlink(bank.id)} className='banking-edit-button'>Unlink</button>
+                            <button className='banking-edit-button'
+                                onClick={() => {
+                                    setEditForm(true);
+                                    setBankId(bank.id);
+                                }}>Edit</button>
                         </div>
                     ))
                 )}
                 <br />
                 <br />
-                <button
-                    onClick={() => setAddBank(true)}
-                >Add New Account</button>
+                {banks.length < 1 && (
+                    <button
+                        onClick={() => setAddBank(true)}
+                        className='add-new-account-button'
+                    >Add New Account</button>
+
+                )}
             </div>
         </>
     )

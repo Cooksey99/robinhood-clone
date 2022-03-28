@@ -74,16 +74,23 @@ input:hover {
     width: 100px;
     cursor: pointer;
 }
+#new-list-form {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
 #new-list-form img {
     background: transparent;
     height: 30px;
     width: 30px;
     object-fit: cover;
     border-radius: 5px;
+    margin-left: 20px;
 }
 #new-list-form section {
     display: flex;
     justify-content: center;
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
 .list-input {
     height: 30px;
@@ -100,16 +107,35 @@ input:hover {
 .editList {
     position: absolute;
     transform: translateX(-50%);
-    left: 50%;
+    left: 40%;
     transform: translateY(-50%);
-    bottom: 50%;
+    bottom: 20%;
     background: black;
     border: 1px white solid;
     width: 300px;
     height: 250px;
+    display: flex;
+    justify-content: center;
 }
-
-
+.top-bar-edit {
+    display: flex;
+    justify-content: center;
+    margin: auto;
+    text-align: center;
+}
+.edit-exit-button button{
+    float: right;
+}
+.editList input {
+    height: 36px;
+    width: 70%;
+}
+.save-edit-button button{
+    width: 70%;
+    height: 40px;
+    background-color: white;
+    border-radius: 50px;
+}
 /* StockSidebar starts here */
 
 #stock-sidebar {
@@ -234,9 +260,16 @@ br {
     border-radius: 5px;
     background: #1e2124;
 }
+
 #bank-sidebar h2 {
     border-bottom: 1px solid var(--sp-border-color);
     padding-bottom: 20px;
+    text-align: center;
+}
+.bank-amount-input {
+    width: 60%;
+    height: 40px;
+    margin: 5px;
 }
 #bank-sidebar section {
     display: flex;
@@ -247,7 +280,12 @@ br {
 .amount input{
     background: none;
 }
-
+.review-button-section {
+    margin-top: 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
 .review-order-message {
     width: 80%;
     display: flex;
@@ -274,4 +312,25 @@ br {
 }
 .green-color {
     color: var(--sp-button-green);
+}
+
+.list-add-div {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    border-bottom: 1px solid var(--sp-border-color);
+}
+.list-add-div:hover {
+    background-color: #30363A ;
+}
+
+#exit-button {
+    all: unset;
+    width: 50px;
+    height: 50px;
+    text-align: center;
+    border-radius: 5px;
+}
+#exit-button:hover {
+    background-color: #30363A ;
 }

@@ -8,7 +8,7 @@ import './sidebar.css'
 import { SidebarStock } from './SidebarStock'
 
 
-export const Sidebar = ({assets}) => {
+export const Sidebar = ({ assets }) => {
 
     const location = useLocation();
 
@@ -123,14 +123,17 @@ export const Sidebar = ({assets}) => {
                     <>
                         <div className='editList'>
                             <form onSubmit={submitEdit}>
-                                <h2>Edit List</h2>
+                                <div className='top-bar-edit'>
+                                    <h2>Edit List</h2>
+                                    <button type='button' className='edit-exit-button'
+                                        onClick={() => setEdit(false)}>X</button>
+                                </div>
                                 <input
                                     required
                                     value={listName}
+                                    className='save-edit-button'
                                     onChange={(e) => setListName(e.target.value)}></input>
                                 <button type='submit'>Save</button>
-                                <button type='button'
-                                    onClick={() => setEdit(false)}>X</button>
                             </form>
                         </div>
                     </>

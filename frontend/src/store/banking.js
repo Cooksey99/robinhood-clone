@@ -40,9 +40,9 @@ export const addBankFetch = (bank) => async dispatch => {
 
 export const fetchBanks = (id) => async dispatch => {
     const response = await csrfFetch(`/api/banking/${id}`);
-
     if (response.ok) {
         const data = await response.json();
+        console.log('here is the response:  ', data)
         dispatch(get_banks(data))
     }
 }
@@ -68,7 +68,7 @@ export const editBank = (bank, bankId) => async dispatch => {
     }
 }
 
-const initialState = { banks: {} }
+const initialState = { banks: {}, newBank: {} }
 
 export default function bankingReducer(state = initialState, action) {
     let newState = initialState;
@@ -78,14 +78,19 @@ export default function bankingReducer(state = initialState, action) {
             newState.banks[action.bank.id] = action.bank;
             return newState;
         case GET_BANKS:
+            newState = { ...state }
             newState.banks = action.banks;
             return newState;
         case DELETE_BANK:
             delete newState.banks[action.bankId];
             return newState;
         case EDIT_BANK:
-            newState = { ...state };
-            newState.banks[action.bank.id] = action.bank;
+            newState = {...state}
+            let newBank = action.bank;
+            let banks = newBank;
+            newState[banks] = banks
+            // newState.banks[newBank.id] = newBank;
+            // newState.banks = action.bank;
             return newState;
         default:
             return state;

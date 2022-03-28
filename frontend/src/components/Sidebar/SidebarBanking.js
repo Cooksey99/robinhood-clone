@@ -36,23 +36,24 @@ export const SidebarBanking = () => {
                     <div>
                         <label>Amount</label>
                         <input type="number" placeholder="$0.00" required
+                            className="bank-amount-input"
                             onChange={(e) => setTransferAmount(e.target.value)} />
                     </div>
-                    <div>
+                    {/* <div>
                         <label>From</label>
                         <select>
                             {banks.length > 0 && banks?.map(bank => (
                                 <option key={bank.id} value={bank.nickname}>{bank.nickname}</option>
                             ))}
                         </select>
-                    </div>
+                    </div> */}
                     {!reviewTransfer && (
                         <button type="button"
                             onClick={() => setReviewTransfer(true)}>Review Transfer</button>
                     )}
                 </section>
                 {reviewTransfer && (
-                    <div>
+                    <div className="review-button-section">
                         <button type="submit">Transfer</button>
                         <button type="button"
                             onClick={() => setReviewTransfer(false)}>Cancel</button>

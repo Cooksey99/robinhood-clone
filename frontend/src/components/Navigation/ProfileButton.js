@@ -36,17 +36,17 @@ function ProfileButton({ user }) {
 
   return (
     <>
-      <button onClick={openMenu} className='nav-bar-button'>
+      <h3 onClick={openMenu} className='nav-bar-button'>
         {/* <i className="fas fa-user-circle" /> */}
         Account
-      </button>
+      </h3>
       {showMenu && (
         <ul className="profile-dropdown">
           <p>{user.first_name} {user.last_name}</p>
           <section>
             <div className="money-info">
-              <p className="money-amount">sample</p>
-              <p>Portfolio Value</p>
+              {/* <p className="money-amount">sample</p>
+              <p>Portfolio Value</p> */}
             </div>
             <div className="money-info">
               <p className="money-amount">{formatter.format(user.buyingPower)}</p>
@@ -54,7 +54,7 @@ function ProfileButton({ user }) {
             </div>
           </section>
           <p>{user.username}</p>
-          <Link to={`/account`}>Banking</Link>
+          <Link to={`/account`} className='banking-button'>Banking</Link>
           <p>
             <button onClick={logout}>Log Out</button>
           </p>

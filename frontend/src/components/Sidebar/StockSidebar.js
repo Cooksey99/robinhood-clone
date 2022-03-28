@@ -89,12 +89,12 @@ export const StockSideBar = ({ symbol, stockInfo }) => {
 
             // console.log('==============', ticker, price, quantity)
             dispatch(sellStock(assetId, stockId, ticker, price, quantity, sessionUser));
-            dispatch(getAsset(sessionUser.id));
             // dispatch(fetchLists(sessionUser.id));
             dispatch(checkOwned(symbol, sessionUser.id));
 
             checkStockInAsset();
             setQuantity(0);
+            dispatch(getAsset(sessionUser.id));
 
             // }
 
@@ -171,7 +171,8 @@ export const StockSideBar = ({ symbol, stockInfo }) => {
                             }} className={`buy-tab ${greenLeft}`}>Buy {symbol}</h4>
                             {/* {owned && ( */}
                             <h4 onClick={() => {
-                                dispatch(checkOwned(symbol, sessionUser.id))
+                                dispatch(checkOwned(symbol, sessionUser.id));
+                                dispatch(getAsset(sessionUser.id))
                                 checkStockInAsset();
                                 setBuying(false);
                                 setGreenRight('green-color');
@@ -328,11 +329,12 @@ export const StockSideBar = ({ symbol, stockInfo }) => {
                         {lists && (
                             lists?.map(list => (
                                 <div key={list.id}
+                                    className='list-add-div'
                                     onClick={() => dispatch(addStockToList(list.id, symbol))}>
                                     {/* <img src="https://png.pngtree.com/png-vector/20201208/ourmid/pngtree-flat-light-bulb-shine-bright-isolated-vector-png-image_2531330.jpg" alt="lightbulb"/> */}
                                     <br />
-                                    {inList && <input type="checkbox" checked />}
-                                    {!inList && <input type="checkbox" />}
+                                    {/* {inList && <input type="checkbox" checked />}
+                                    {!inList && <input type="checkbox" />} */}
                                     <h4>{list.list_name}</h4>
                                     <br />
                                 </div>
