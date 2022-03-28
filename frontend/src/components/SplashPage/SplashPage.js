@@ -1,8 +1,9 @@
+import { useHistory } from 'react-router-dom'
 import './splashPage.css'
 
 export const SplashPage = () => {
 
-
+    const history = useHistory();
 
     return (
         <>
@@ -10,7 +11,8 @@ export const SplashPage = () => {
                 <div className="splash-left-vertical">
                     <h1>Investing for Everyone</h1>
                     <h2>Commission-free investing, plus the tools you need to put your money in motion. Sign up and get your first stock for free. Certain limitations and fees apply.</h2>
-                    <button className="splash-signup">Sign Up</button>
+                    <button className="splash-signup"
+                        onClick={() => history.push('/signup')}>Sign Up</button>
                 </div>
                 <div className='splash-right-vertical'>
                     <video autoplay="" controlslist="nodownload nofullscreen noremoteplayback" loop="" muted="" playsinline="" preload="auto" class="css-2jf4lk">
