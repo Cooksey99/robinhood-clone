@@ -14,6 +14,7 @@
     background: #1e2124;
     border: 1px solid var(--sp-border-color);
     border-radius: 5px;
+    padding: 8px;
 }
 #add-bank-form {
     display: flex;
@@ -26,6 +27,7 @@
 #add-bank-form input{
     height: 36px;
 }
+
 .top-align{
     display: flex;
     justify-content: space-between;

@@ -20,9 +20,9 @@ const delete_bank = (bankId) => ({
     bankId
 })
 
-const edit_bank = (bankId) => ({
+const edit_bank = (bank) => ({
     type: EDIT_BANK,
-    bankId
+    bank
 })
 
 export const addBankFetch = (bank) => async dispatch => {
@@ -55,8 +55,8 @@ export const deleteBankFetch = (bankId) => async dispatch => {
     dispatch(delete_bank(bankId));
 }
 
-export const editBank = (bank) => async dispatch => {
-    const response = await csrfFetch(`/api/banking/editBank/${bank.id}`, {
+export const editBank = (bank, bankId) => async dispatch => {
+    const response = await csrfFetch(`/api/banking/editBank/${bankId}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(bank)

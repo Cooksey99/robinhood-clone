@@ -15,6 +15,7 @@ export const Banking = () => {
     const [routing_number, set_routing_number] = useState('');
     const [nickname, set_nickname] = useState('');
     const [editForm, setEditForm] = useState(false);
+    const [bankId, setBankId] = useState(null);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -43,9 +44,11 @@ export const Banking = () => {
             routing_number,
             nickname
         }
-        dispatch(editBank(bank));
+        console.log('here is your id:   ', bankId)
+        dispatch(editBank(bank, bankId));
         dispatch(fetchBanks(sessionUser.id));
         setEditForm(false);
+
     };
 
     const handleUnlink = (bankId) => async (e) => {
@@ -74,7 +77,7 @@ export const Banking = () => {
                         <form onSubmit={handleSubmit} id='add-bank-form'>
                             <div className="top-align">
                                 <label>Account Nickname</label>
-                                <button onClick={() => setAddBank(false)}>X</button>
+                                <button onClick={() => setAddBank(false)} >X</button>
                             </div>
                             <input placeholder="Nickname" required
                                 onChange={(e) => set_nickname(e.target.value)}></input>
@@ -93,7 +96,7 @@ export const Banking = () => {
                         <form onSubmit={handleEdit} id='add-bank-form'>
                             <div className="top-align">
                                 <label>Account Nickname</label>
-                                <button onClick={() => setAddBank(false)}>X</button>
+                                <button onClick={() => setEditForm(false)}>X</button>
                             </div>
                             <input placeholder="Nickname" required
                                 onChange={(e) => set_nickname(e.target.value)}></input>
@@ -112,7 +115,10 @@ export const Banking = () => {
                         <div id="linked-bank" key={bank.id}>
                             <h2>{bank.nickname}</h2>
                             <button onClick={handleUnlink(bank.id)}>Unlink</button>
-                            <button onClick={() => setEditForm(true)}>Edit</button>
+                            <button onClick={() => {
+                                setEditForm(true);
+                                setBankId(bank.id);
+                            }}>Edit</button>
                         </div>
                     ))
                 )}
