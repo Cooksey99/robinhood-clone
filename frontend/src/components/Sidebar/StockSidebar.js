@@ -55,6 +55,7 @@ export const StockSideBar = ({ symbol, stockInfo }) => {
 
             setPurchased(true);
             setQuantity(0);
+            dispatch(restoreUser())
             // reset data
             // assetObj.amount += quantity;
             // setQuantity(0);
@@ -95,6 +96,8 @@ export const StockSideBar = ({ symbol, stockInfo }) => {
             checkStockInAsset();
             setQuantity(0);
             dispatch(getAsset(sessionUser.id));
+            dispatch(restoreUser())
+
 
             // }
 
@@ -277,14 +280,14 @@ export const StockSideBar = ({ symbol, stockInfo }) => {
                             <div className="review-order-message">
                                 {buying && (
                                     <>
-                                        <p>You're placing an order to buy {quantity} of {symbol} for {formatter.format(price)}</p>
+                                        <p>You're placing an order to buy {quantity} of {symbol} for {formatter.format(quantity * stockInfo.c)}</p>
                                         <button onClick={submitPurchase} className={buttonColor}>Buy</button>
                                         <button className={buttonColor} onClick={() => setReviewOrder(false)}>Edit</button>
                                     </>
                                 )}
                                 {!buying && (
                                     <>
-                                        <p>You're placing an order to sell {quantity} of {symbol} for {formatter.format(price)}</p>
+                                        <p>You're placing an order to sell {quantity} of {symbol} for {formatter.format(quantity * stockInfo.c)}</p>
                                         <button onClick={submitSale} className={buttonColor}>Sell</button>
                                         <button className={buttonColor} onClick={() => setReviewOrder(false)}>Edit</button>
                                     </>
