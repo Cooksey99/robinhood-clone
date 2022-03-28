@@ -1,24 +1,29 @@
 import React, { useEffect, useState } from 'react';
 import { Link, NavLink, useHistory, useLocation } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import ProfileButton from './ProfileButton';
 import LoginFormModal from '../LoginFormModal';
 import './Navigation.css';
 import { Search } from './Search';
+import { getAsset } from '../../store/asset';
 
 function Navigation({ isLoaded }) {
   const sessionUser = useSelector(state => state.session.user);
+  // const assetsSelector = useSelector(state => state?.assetReducer);
   const [hideNav, setHideNav] = useState(false);
+
+  const dispatch = useDispatch();
 
   const url = useLocation();
   const path = url.pathname;
 
   useEffect(() => {
-    console.log(path)
+    // dispatch(getAsset(sessionUser.id))
+    // console.log(path)
     if (path === '/login' || path === '/signup') setHideNav(true);
     else setHideNav(false);
 
-  })
+  }, [])
 
   let sessionLinks;
   if (sessionUser) {

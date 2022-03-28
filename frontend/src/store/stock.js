@@ -5,6 +5,7 @@ const GET_STOCKS = 'session/GET_STOCKS';
 const ADD_STOCK = 'session/ADD_STOCK';
 const PURCHASE_STOCK = 'session/PURCHASE_STOCK';
 const SELL_STOCK = 'session/PURHCASE_STOCK';
+const CHECK_AMOUNT = 'session/CHECK_AMOUNT';
 
 const get_stocks = (stocks) => ({
     type: GET_STOCKS,
@@ -18,11 +19,22 @@ const purchase_stock = (stock) => ({
     type: PURCHASE_STOCK,
     stock
 });
-const sell_stock = (stock) => ({
+const sell_stock = (id) => ({
     type: SELL_STOCK,
-    stock
+    id
 });
+const check_owned = (stocks) => ({
+    type: CHECK_AMOUNT,
+    stocks
+})
 
+export const checkOwned = (ticker, id) => async dispatch => {
+    const response = await csrfFetch(`/api/asset/${ticker}/${id}`)
+
+    const stocks = await response.json();
+
+    dispatch(check_owned(stocks))
+}
 
 export const fetchStocks = (id) => async dispatch => {
     const response = await csrfFetch(`/api/list/${id}`)
@@ -66,20 +78,22 @@ export const purchaseStock = (asset_id, ticker, price, quantity, sessionUser) =>
     }
 }
 
-export const sellStock = (assetId, stockId, price, quantity, sessionUser) => async dispatch => {
-
+export const sellStock = (assetId, stockId, ticker, price, quantity, sessionUser) => async dispatch => {
+    console.log('hello from the thunk:  ', price, quantity, ticker)
     const response = await csrfFetch(`/api/asset/sellStock`, {
         method: 'DELETE',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
             assetId,
             stockId,
+            ticker,
             price,
             quantity
         })
     });
     if (response.ok) {
-        dispatch(sell_stock(response));
+        // console.log('\n\n\n', response)
+        dispatch(sell_stock(stockId));
         dispatch(addBuyingPower(sessionUser, price));
     }
 
@@ -101,7 +115,10 @@ export default function stocksReducer(state = initialState, action) {
             newState.assets[action.stock.id] = action.assets;
             return newState;
         case SELL_STOCK:
-            delete newState.assets[action.stock.id];
+            // action.stock.id ? delete newState.assets[action.stock.id] : newState = state;
+            return newState;
+        case CHECK_AMOUNT:
+            newState.assets = action.stocks;
             return newState;
         default:
             return state;

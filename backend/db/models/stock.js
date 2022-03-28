@@ -4,6 +4,7 @@ module.exports = (sequelize, DataTypes) => {
     watchlist_id: DataTypes.INTEGER,
     asset_id: DataTypes.INTEGER,
     ticker: DataTypes.STRING,
+    quantity: DataTypes.INTEGER
   }, {});
   Stock.associate = function(models) {
     // associations can be defined here

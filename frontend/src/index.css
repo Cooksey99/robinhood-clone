@@ -35,3 +35,17 @@ input {
     border-radius: 5px;
     border: 1px solid var(--sp-border-color);
 }
+/* .negative {
+    border: 1px solid #fa5000 !important;
+}
+.positive {
+    border: 1px solid #00C805 !important;
+}
+
+.negative .main-button {
+    background: #fa5000 !important;
+}
+.positive .main-button {
+    background: #00C805 !important;
+
+} */

@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux";
-import { getAsset } from "../../store/asset";
+import { getAsset, getTransactions } from "../../store/asset";
 import { restoreUser } from "../../store/session";
-import { addStockToList, purchaseStock, sellStock } from "../../store/stock";
+import { addStockToList, checkOwned, fetchStocks, purchaseStock, sellStock } from "../../store/stock";
 import { fetchLists } from "../../store/watchlist";
 import { formatter } from "../finnhubSetup";
 
@@ -11,98 +11,150 @@ export const StockSideBar = ({ symbol, stockInfo }) => {
 
     const dispatch = useDispatch();
 
-    const [quantity, setQuantity] = useState(formatter.format(0));
-    const [price, setPrice] = useState(formatter.format(0));
+    const [quantity, setQuantity] = useState(0);
+    const [price, setPrice] = useState(0);
     const [addToList, setAddToList] = useState(false);
     const [inList, setInList] = useState(false);
     const [reviewOrder, setReviewOrder] = useState(false);
-    const [share, setShare] = useState('share');
+    // const [share, setShare] = useState('share');
     const [buying, setBuying] = useState(true);
 
+    const transactions = useSelector(state => state?.assetReducer);
     const lists = useSelector(state => state?.listReducer?.lists);
     const sessionUser = useSelector(state => state?.session?.user);
-    const assets = useSelector(state => state?.assetReducer?.asset);
-    const [assetObj, setAssetObj] = useState({});
+    const assets = useSelector(state => state?.stocksReducer?.assets);
+    // const assets = useState(assetsSelector);
+
+    const [assetObj, setAssetObj] = useState(assets?.assetsArray);
     const [owned, setOwned] = useState(false);
 
-    const submitPurchase = async (e) => {
+    const [purchased, setPurchased] = useState(false);
+    const [buttonColor, setButtonColor] = useState(stockInfo.c >= 0 ? 'positive' : 'negative');
+    const [greenLeft, setGreenLeft] = useState(null)
+    const [greenRight, setGreenRight] = useState(null)
+    const [error, setError] = useState(false)
+
+    const submitPurchase = (e) => {
         e.preventDefault();
-        // console.log('=-=-=-=-=-=-=-=-=', symbol)
-        let asset_id = sessionUser.id;
-        let ticker = symbol;
-        for (let i = 0; i < quantity; i++) {
+
+        // error handle
+        if (quantity <= 0 || (quantity * price) > sessionUser.buyingPower) {
+            setError(true);
+        } else {
+
+            // console.log('=-=-=-=-=-=-=-=-=', symbol)
+            let asset_id = sessionUser.id;
+            let ticker = symbol;
+            // for (let i = 0; i < quantity; i++) {
             dispatch(purchaseStock(asset_id, ticker, price, quantity, sessionUser));
-        }
-        dispatch(getAsset(sessionUser.id));
-        checkStockInAsset();
+            dispatch(getAsset(sessionUser.id));
+            // dispatch(fetchLists(sessionUser.id));
+            dispatch(checkOwned(symbol, sessionUser.id));
 
-        // reset data
-        // assetObj.amount += quantity;
-        // setQuantity(0);
-        // setPrice(0);
+            checkStockInAsset();
+
+            setPurchased(true);
+            setQuantity(0);
+            // reset data
+            // assetObj.amount += quantity;
+            // setQuantity(0);
+            // setPrice(0);
+        }
+
     }
 
-    const submitSale = async (e) => {
+    const submitSale = (e) => {
+        checkStockInAsset();
+
         e.preventDefault();
-        console.log('TRYING TO SELL')
 
-        // let assetId = stockInfo.asset_id;
-        // let stockId = stockInfo.id;
-        for (let i = 0; i < quantity; i++) {
-            let stockIdArray = assetObj.stockId;
-            let stockId = stockIdArray[i];
+        if (quantity <= 0 || quantity > assets.length) {
+            setError(true);
+
+        } else {
+            // console.log('TRYING TO SELL')
+
+            // let assetId = stockInfo.asset_id;
+            // let stockId = stockInfo.id;
+            // for (let i = 0; i < quantity; i++) {
+            // let stockId = assets[0].id
+            let stockId = [];
+            for (let i = 0; i < quantity; i++) {
+                stockId.push(assets[i].id);
+            }
+            // let stockId = stockIdArray[i];
             // console.log('stockId:       ', stockId);
-            let assetId = assetObj.assetId;
+            let assetId = assets[0].asset_id;
+            let ticker = symbol;
 
-            dispatch(sellStock(assetId, stockId, price, quantity, sessionUser));
+            // console.log('==============', ticker, price, quantity)
+            dispatch(sellStock(assetId, stockId, ticker, price, quantity, sessionUser));
+            dispatch(getAsset(sessionUser.id));
+            // dispatch(fetchLists(sessionUser.id));
+            dispatch(checkOwned(symbol, sessionUser.id));
+
+            checkStockInAsset();
+            setQuantity(0);
+
+            // }
+
+            // reset data
+            // assetObj.amount -= quantity;
+            // console.log(assetObj.amount)
+            // setQuantity(0);
+            // setPrice(0);
+
         }
-        dispatch(getAsset(sessionUser.id));
-        dispatch(fetchLists(sessionUser.id));
-        checkStockInAsset();
-
-        // reset data
-        // assetObj.amount -= quantity;
-        // console.log(assetObj.amount)
-        // setQuantity(0);
-        // setPrice(0);
 
     }
 
-    const checkStockInAsset = () => {
+    const checkStockInAsset = async () => {
 
-        let stockObj = {};
-        let amount = 0;
-        let assetId = 0;
-        let stockId = [];
+        // let stockObj = {};
+        // let amount = 0;
+        // let assetId = 0;
+        // let stockId = [];
 
-        if (assets.length > 0) {
-            assets?.forEach(asset => {
-                if (asset.ticker === symbol) {
-                    setOwned(true)
-                    stockObj = { symbol: symbol };
-                    amount += 1;
-                    assetId = asset.asset_id;
-                    stockId.push(asset.id)
-                }
-            });
-            stockObj.amount = amount
-            stockObj.assetId = assetId;
-            stockObj.stockId = stockId;
+        // dispatch(getTransactions(sessionUser.id))
 
-            // console.log(stockObj)
-            setAssetObj(stockObj)
-        }
+        // if (assets.length > 0) {
+        //     assets?.forEach(asset => {
+        //         if (asset.ticker === symbol) {
+        //             setOwned(true)
+        //             stockObj = { symbol: symbol };
+        //             amount += 1;
+        //             assetId = asset.asset_id;
+        //             stockId.push(asset.id)
+        //         }
+        //     });
+        //     stockObj.amount = amount
+        //     stockObj.assetId = assetId;
+        //     stockObj.stockId = stockId;
+
+        //     // console.log(stockObj)
+        //     setAssetObj(stockObj)
+        // }
     }
 
     useEffect(() => {
-        dispatch(restoreUser());
-        dispatch(getAsset(sessionUser.id));
-        dispatch(fetchLists(sessionUser.id));
-        checkStockInAsset();
         // checkStockInAsset();
-        // console.log(assetObj)
+        console.log('TRYING TO GET THIS TO WORK', assetObj)
+    }, []);
 
-    }, [dispatch, addToList]);
+    useEffect(() => {
+        dispatch(getAsset(sessionUser.id));
+        dispatch(checkOwned(symbol, sessionUser.id))
+        dispatch(fetchStocks(sessionUser.id))
+        dispatch(restoreUser());
+        // dispatch(getTransactions(sessionUser.id));
+        dispatch(fetchLists(sessionUser.id));
+        // checkStockInAsset();
+        // if (assets.assetsArray.length > 0) setAssetsArray(assets.)
+        if (stockInfo.c >= 0) setButtonColor('positive');
+        else setButtonColor('negative');
+
+        console.log('testing that is works: ', assetObj)
+    }, [dispatch, addToList, owned]);
 
     return (
         <>
@@ -110,10 +162,22 @@ export const StockSideBar = ({ symbol, stockInfo }) => {
                 <div id="stock-sidebar-background">
                     <div id="order-tab">
                         <div id="buy-or-sell">
-                            <h4 onClick={() => setBuying(true)}>Buy {symbol}</h4>
-                            {owned && (
-                                <h4 onClick={() => setBuying(false)}>Sell {symbol}</h4>
-                            )}
+                            <h4 onClick={() => {
+                                dispatch(checkOwned(symbol, sessionUser.id))
+                                checkStockInAsset();
+                                setBuying(true);
+                                setGreenLeft('green-color');
+                                setGreenRight(null);
+                            }} className={`buy-tab ${greenLeft}`}>Buy {symbol}</h4>
+                            {/* {owned && ( */}
+                            <h4 onClick={() => {
+                                dispatch(checkOwned(symbol, sessionUser.id))
+                                checkStockInAsset();
+                                setBuying(false);
+                                setGreenRight('green-color');
+                                setGreenLeft(null);
+                            }} className={`sell-tab ${greenRight}`}>Sell {symbol}</h4>
+                            {/* )} */}
                         </div>
                         <div className="order-type">
                             <h4>Order Type</h4>
@@ -122,25 +186,72 @@ export const StockSideBar = ({ symbol, stockInfo }) => {
                         <br />
                         <div className="amount">
                             <h4>Shares</h4>
-                            <input type='number' placeholder="0" required
-                                // value={quantity}
-                                onChange={(e) => {
-                                    checkStockInAsset();
-                                    if (e.target.value <= assetObj.amount) {
-                                        setQuantity(e.target.value);
-                                        setPrice(formatter.format(e.target.value * stockInfo.c));
-                                    } else if (e.target.value < 0) {
-                                        e.target.value = 0;
-                                        setQuantity(0)
-                                        setPrice(formatter.format(0));
-                                    } else {
-                                        e.target.value = assetObj.amount;
-                                        setQuantity(e.target.value)
-                                        setPrice(formatter.format(e.target.value * stockInfo.c));
-                                    }
-                                    if (e.target.value > 1) setShare('shares');
-                                    else setShare('share');
-                                }}></input>
+                            {buying && (
+                                <input type='number' placeholder="0" required
+                                    // value={quantity}
+                                    onClick={() => setError(false)}
+                                    onChange={(e) => {
+                                        setError(false);
+                                        checkStockInAsset();
+
+                                        if (e.target.value < 0) {
+                                            e.target.value = 0;
+                                            setQuantity(0)
+                                            setPrice(0);
+                                        }
+                                        else if ((e.target.value * stockInfo.c) > sessionUser.buyingPower) {
+                                            e.target.value = e.target.value - 1;
+                                            setPrice(e.target.value * stockInfo.c);
+                                            setQuantity(e.target.value)
+                                        }
+                                        else {
+                                            setPrice(e.target.value * stockInfo.c);
+                                            setQuantity(e.target.value)
+                                        }
+                                    }}></input>
+                            )}
+                            {!buying && (
+                                <input type='number' placeholder="0" required
+                                    // value={quantity}
+                                    onClick={() => setError(false)}
+                                    onChange={(e) => {
+                                        setError(false);
+                                        checkStockInAsset();
+                                        if (e.target.value < 0) {
+                                            let max = 0;
+                                            e.target.value = 0;
+                                            setQuantity(0)
+                                            setPrice(0);
+                                        }
+                                        else if (e.target.value > assets.length) { ////////
+                                            e.target.value = assets.length;
+                                            setQuantity(assets.length);
+                                            setPrice(assets.length * stockInfo.c);
+                                        }
+                                        else {
+                                            setQuantity(e.target.value);
+                                            setPrice(e.target.value * stockInfo.c)
+                                        }
+                                        // else if ((quantity * price) < sessionUser.buyingPower) {
+                                        //     let temp = e.target.value;
+                                        //     // e.target.value
+                                        //     setPrice(temp * price);
+                                        //     setQuantity(temp)
+                                        // }
+                                        // else if ((quantity * price <= sessionUser.buyingPower)) {
+                                        //     setPrice(e.target.value * stockInfo.c);
+                                        //     setQuantity(e.target.value)
+                                        // }
+
+                                        // else {
+                                        //     e.target.value = assetObj.amount;
+                                        //     setQuantity(e.target.value)
+                                        //     setPrice(e.target.value * stockInfo.c);
+                                        // }
+                                        // if (e.target.value > 1) setShare('shares');
+                                        // else setShare('share');
+                                    }}></input>
+                            )}
                         </div>
                         <br />
                         <div className="amount market-price">
@@ -150,42 +261,55 @@ export const StockSideBar = ({ symbol, stockInfo }) => {
 
                         <div className="quantity">
                             <h4>Estimated Cost</h4>
-                            <h4>{price}</h4>
+                            <h4>{formatter.format(price)}</h4>
                         </div>
                         <div id="review-order-div">
                             {!reviewOrder && (
-                                <button id="review-order"
+                                <button id="review-order" className={`main-button ${buttonColor}`}
                                     onClick={() => setReviewOrder(true)}
                                 >Review Order</button>
                             )}
                         </div>
 
                         {/* Purchase stocks */}
-                        {reviewOrder && (
-                            <div>
+                        {reviewOrder && !purchased && (
+                            <div className="review-order-message">
                                 {buying && (
                                     <>
-                                        <p>You're placing an order to buy {quantity} of {symbol} for ${price}</p>
-                                        <button onClick={submitPurchase}>Buy</button>
+                                        <p>You're placing an order to buy {quantity} of {symbol} for {formatter.format(price)}</p>
+                                        <button onClick={submitPurchase} className={buttonColor}>Buy</button>
+                                        <button className={buttonColor} onClick={() => setReviewOrder(false)}>Edit</button>
                                     </>
                                 )}
                                 {!buying && (
                                     <>
-                                        <p>You're placing an order to sell {quantity} of {symbol} for ${price}</p>
-                                        <button onClick={submitSale}>Sell</button>
+                                        <p>You're placing an order to sell {quantity} of {symbol} for {formatter.format(price)}</p>
+                                        <button onClick={submitSale} className={buttonColor}>Sell</button>
+                                        <button className={buttonColor} onClick={() => setReviewOrder(false)}>Edit</button>
                                     </>
                                 )}
                             </div>
                         )}
-                        {owned && (
-                            <div>
-                                <p>{assetObj.amount} shares available</p>
+                        {!reviewOrder && !buying && (
+                            <div className="available-shares-message">
+                                {assets.length > 0 && (<p>{assets.length} shares available</p>)}
+                            </div>
+                        )}
+                        {error && (
+                            <div className="available-shares-message">
+                                <p>You must enter a valid quantity.</p>
                             </div>
                         )}
                     </div>
+                    {purchased && (
+                        <div className="review-order-message">
+                            <p>You have successfully purchased {symbol}!</p>
+                            <button className="buy-more" onClick={() => setPurchased(false)}>Buy more</button>
+                        </div>
+                    )}
                 </div>
                 <div id="add-to-lists-div">
-                    <button id='add-to-lists'
+                    <button id='add-to-lists' className={buttonColor}
                         onClick={() => setAddToList(true)}>Add to Lists</button>
                 </div>
             </div>
@@ -197,7 +321,7 @@ export const StockSideBar = ({ symbol, stockInfo }) => {
                         <div id="list-popup-top">
                             <h2>Add {symbol} to Your Lists</h2>
                             <button
-                                className="exit-button"
+                                id="exit-button" className={buttonColor}
                                 onClick={() => setAddToList(false)}>X</button>
                         </div>
                         <br />

@@ -9,6 +9,13 @@ const get_asset = (asset) => {
         asset
     }
 }
+const get_transactions = (transactions) => {
+    return {
+        type: GET_TRANSACTIONS,
+        transactions
+    }
+}
+
 
 export const getAsset = (id) => async dispatch => {
 
@@ -18,7 +25,7 @@ export const getAsset = (id) => async dispatch => {
     if (response.ok) {
         const data = await response.json();
 
-        console.log('should be working', data)
+        // console.log('should be working', data)
         dispatch(get_asset(data))
     }
 
@@ -26,11 +33,15 @@ export const getAsset = (id) => async dispatch => {
 export const getTransactions = (id) => async dispatch => {
     const response = await csrfFetch(`/api/asset/transactions/${id}`);
 
+    if (response.ok) {
+        const transactions = await response.json();
+        dispatch(get_transactions(transactions))
+    }
 
 }
 
 let dataSet = new Set();
-const initialState = { asset: {} }
+const initialState = { asset: {}, transactions: {} }
 
 export default function assetReducer(state = initialState, action) {
     let newState = initialState;
@@ -40,8 +51,43 @@ export default function assetReducer(state = initialState, action) {
             newState = { ...state };
             newState.asset = data;
             data.forEach(stock => (dataSet.add(stock.ticker)));
+
+            let dataObj = {};
+
+            data.forEach(stock => {
+                stock = stock.ticker;
+                console.log(stock)
+                if (dataObj[stock]) {
+                    let num = dataObj[stock];
+                    dataObj[stock] = num + 1;
+                } else {
+                    dataObj[stock] = 1;
+                }
+            })
+            newState.assetsArray = dataObj;
             newState.dataSet = dataSet;
             // newState.set = action.asset.dataSet
+            return newState;
+        case GET_TRANSACTIONS:
+            newState.transactions = action.transactions;
+
+            let tranObj = {};
+            action.transactions.forEach(tran => {
+                let ticker = tran.ticker;
+                let count = tran.quantity;
+
+                if (tranObj[ticker]) {
+                    tranObj[ticker] = tranObj[ticker].quantity + count;
+                }
+                else {
+                    tranObj[ticker] = count
+                }
+
+                // tranObj = { [ticker]: count }
+            })
+
+
+            newState.tranObj = tranObj;
             return newState;
         default:
             return state;

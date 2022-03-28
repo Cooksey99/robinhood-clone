@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation, useParams } from 'react-router-dom'
-import { getAsset } from '../../store/asset';
+import { getAsset, getTransactions } from '../../store/asset';
 import { restoreUser } from '../../store/session';
+import { checkOwned } from '../../store/stock';
 import { finnhubFetch, finnhubClient, formatter} from '../finnhubSetup';
 import { StockChart } from '../Portfolio/StockChart';
 import { StockSideBar } from '../Sidebar/StockSidebar';
@@ -15,6 +16,7 @@ export const StockPage = () => {
     const dispatch = useDispatch();
     const stock = useSelector(state => state?.assetReducer);
     const sessionUser = useSelector(state => state?.session?.user);
+    const assets = useSelector(state => state?.stocksReducer?.assets)
     const [stockInfo, setStockInfo] = useState({});
 
     useEffect(() => {
@@ -22,7 +24,10 @@ export const StockPage = () => {
             // console.log(data)
             setStockInfo(data)
         });
-
+        dispatch(checkOwned(symbol, sessionUser.id))
+        // dispatch(getAsset(sessionUser.id))
+        dispatch(getTransactions(sessionUser.id))
+        // console.log('TRYING TO GET THIS TO WORK', assets)
     }, [dispatch, location])
 
     return (
@@ -31,7 +36,7 @@ export const StockPage = () => {
                 <h1>{symbol}</h1>
                 <h3>daily change: {stockInfo.dp}%</h3>
                 <h3>current: {formatter.format(stockInfo.c)}</h3>
-                <StockChart option='asset'/>
+                <StockChart option='asset' stock={stockInfo}/>
                 <div className='buying-power-stock'>
                     <h4>Buying Power</h4>
                     <h4>{formatter.format(sessionUser.buyingPower)}</h4>

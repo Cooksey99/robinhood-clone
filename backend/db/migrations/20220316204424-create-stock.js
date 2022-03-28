@@ -18,6 +18,9 @@ module.exports = {
         type: Sequelize.STRING(5),
         allowNull: false
       },
+      quantity: {
+        type: Sequelize.INTEGER
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

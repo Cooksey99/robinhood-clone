@@ -14,6 +14,9 @@ module.exports = {
       // stock_id: {
       //   type: Sequelize.INTEGER
       // },
+      ticker: {
+        type: Sequelize.STRING
+      },
       price: {
         type: Sequelize.DECIMAL
       },

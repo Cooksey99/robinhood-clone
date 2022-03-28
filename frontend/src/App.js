@@ -15,12 +15,13 @@ import { Portfolio } from './components/Portfolio/Portfolio';
 import { WatchlistPage } from './components/WatchlistPage/WatchlistPage';
 import { Banking } from './components/Account/Banking';
 import { SidebarBanking } from './components/Sidebar/SidebarBanking';
+import { getAsset } from './store/asset';
 function App() {
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);
   const [loggedIn, setLoggedIn] = useState(false);
   // const [showModal, setShowModal] = useState(false);
-  // const user = useSelector(state => state?.session?.user)
+  const user = useSelector(state => state?.session?.user)
 
   useEffect(() => {
     dispatch(sessionActions.restoreUser()).then(() => setIsLoaded(true));

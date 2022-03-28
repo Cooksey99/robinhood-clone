@@ -1,10 +1,12 @@
 import './portfolio.css'
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Line } from "react-chartjs-2";
 import { Chart as ChartJS } from 'chart.js/auto';
 
 export const Chart = () => {
 
+
+   
 
     const options = {
         responsive: true,

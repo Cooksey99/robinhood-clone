@@ -43,7 +43,7 @@ export const WatchlistPage = () => {
                 </div>
                 {stocks.length > 0 && (
                     stocks.map(stock => (
-                        <SingleStockTab stock={stock}/>
+                        <SingleStockTab stock={stock} key={stock.id}/>
                     ))
                 )}
             </div>

@@ -3,6 +3,7 @@ module.exports = (sequelize, DataTypes) => {
   const Transaction = sequelize.define('Transaction', {
     user_id: DataTypes.INTEGER,
     // stock_id: DataTypes.INTEGER,
+    ticker: DataTypes.STRING,
     price: DataTypes.DECIMAL,
     quantity: DataTypes.DECIMAL
   }, {});

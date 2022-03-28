@@ -3,6 +3,7 @@ import './portfolio.css'
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { formatter } from '../finnhubSetup';
+import { getTransactions } from '../../store/asset';
 
 export const Portfolio = () => {
 
@@ -11,6 +12,7 @@ export const Portfolio = () => {
 
     useEffect(() => {
         // console.log('showing user:  ', user)
+        dispatch(getTransactions(user.id));
     }, [dispatch])
 
 

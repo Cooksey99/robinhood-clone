@@ -55,9 +55,9 @@ router.put('/:id/addBuyingPower', asyncHandler(async (req, res) => {
   const id = req.params.id;
   let user = await User.findByPk(id);
   let { price } = req.body;
-  // console.log('\n\n\n' + buyingPower + '\n\n\n')
+  console.log('\n\n\n' + price + '\n\n\n')
 
-  user.buyingPower = parseInt(price) + parseInt(user.buyingPower);
+  user.buyingPower = parseInt(user.buyingPower) + parseInt(price);
 
   user.set(user);
   await user.save();

@@ -126,7 +126,7 @@ input:hover {
 }
 #order-tab {
     width: 276px;
-    height: 450px;
+    height: 550px;
 }
 
 .order-type, .amount, .quantity {
@@ -163,6 +163,7 @@ input:hover {
 }
 
 #add-to-lists {
+    margin-top: 10px;
     background: none;
     border: 1px solid var(--sp-button-green);
     color: var(--sp-button-green);
@@ -245,4 +246,32 @@ br {
 }
 .amount input{
     background: none;
+}
+
+.review-order-message {
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: auto;
+}
+
+.review-order-message button {
+    margin: 10px 0;
+    width: 100px;
+    height: 40px;
+    border-radius: 50px;
+}
+
+.available-shares-message {
+    margin: auto;
+    text-align: center;
+}
+
+.buy-tab:active {
+    color: var(--sp-button-green)
+}
+.green-color {
+    color: var(--sp-button-green);
 }

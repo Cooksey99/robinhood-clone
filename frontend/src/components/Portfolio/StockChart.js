@@ -4,11 +4,14 @@ import { Line } from "react-chartjs-2";
 import { Chart as ChartJS } from 'chart.js/auto';
 import { useLocation, useParams } from 'react-router-dom';
 import { finnhubClient } from '../finnhubSetup';
+import { useSelector } from 'react-redux';
 
-export const StockChart = ({ option }) => {
+export const StockChart = ({ option, stock }) => {
 
     const location = useLocation();
     const url = location.pathname;
+
+    const transactions = useSelector(state => state?.assetReducer);
 
     const { symbol } = useParams();
     const [stockCandles, setStockCandles] = useState({});
@@ -41,7 +44,9 @@ export const StockChart = ({ option }) => {
                 setStockCandles(data)
             });
         }
-    }, [])
+        console.log('=========================', transactions.tranObj)
+
+    }, [location])
 
     const options = {
         responsive: true,
@@ -75,25 +80,71 @@ export const StockChart = ({ option }) => {
         <>
             <div id="chart-container">
                 {/* <h2>{JSON.stringify(stockInfo)}</h2> */}
-                <Line
-                    data={{
-                        labels: stockCandles.t,
-                        datasets: [
-                            {
-                                label: '',
-                                data: stockCandles.c,
-                                fill: false,
-                                borderWidth: 2,
-                                backgroundColor: '#00C805',
-                                borderColor: '#00C805',
-                                pointRadius: 0,
-                                responsive: true
-                            }
-                        ]
-                    }}
-                    width={"30%"}
-                    options={options}
-                />
+                {option === 'asset' && stock.dp >= 0 && (
+                    <Line
+                        data={{
+                            labels: stockCandles.t,
+                            datasets: [
+                                {
+                                    label: '',
+                                    data: stockCandles.c,
+                                    fill: false,
+                                    borderWidth: 2,
+                                    backgroundColor: '#00C805',
+                                    borderColor: '#00C805',
+                                    pointRadius: 0,
+                                    responsive: true
+                                }
+                            ]
+                        }}
+                        width={"30%"}
+                        options={options}
+                    />
+                )}
+                {option === 'asset' && stock.dp < 0 && (
+                    <Line
+                        data={{
+                            labels: stockCandles.t,
+                            datasets: [
+                                {
+                                    label: '',
+                                    data: stockCandles.c,
+                                    fill: false,
+                                    borderWidth: 2,
+                                    backgroundColor: '#FF5000',
+                                    borderColor: '#FF5000',
+                                    pointRadius: 0,
+                                    responsive: true
+                                }
+                            ]
+                        }}
+                        width={"30%"}
+                        options={options}
+                    />
+                )}
+                {/* {option === 'portfolio' && stock.dp < 0 && (
+                    <Line
+                        data={{
+                            labels: [],
+                            datasets: [
+                                {
+                                    label: '',
+                                    data: [],
+                                    fill: false,
+                                    borderWidth: 2,
+                                    backgroundColor: '#FF5000',
+                                    borderColor: '#FF5000',
+                                    pointRadius: 0,
+                                    responsive: true
+                                }
+                            ]
+                        }}
+                        width={"30%"}
+                        options={options}
+                    />
+                )} */}
+
+
             </div>
         </>
     )

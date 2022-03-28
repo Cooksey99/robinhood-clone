@@ -26,6 +26,8 @@ router.delete('/removeBank/:bankId', expressAsyncHandler(async(req, res) => {
     const bankId = req.params.bankId;
     const bank = await Linked_bank.findByPk(bankId);
     await bank.destroy();
+
+    res.json(bankId)
 }))
 
 

@@ -20,6 +20,7 @@ router.get('/:id', asyncHandler(async (req, res) => {
 
 }));
 
+
 //    /list/:listId/addStock/:symbol
 //    ADDING STOCK TO A LIST
 router.post('/addStock/:ticker',
