@@ -13,12 +13,14 @@ export const Banking = () => {
     const banks = useSelector(state => state?.bankingReducer?.banks);
     const newBank = useSelector(state => state?.bankingReducer?.newBank);
 
+    // const [editBankButton, setEditBankButton] = useState(false);
     const [addBank, setAddBank] = useState(false);
     const [account_number, set_account_number] = useState('');
     const [routing_number, set_routing_number] = useState('');
     const [nickname, set_nickname] = useState('');
     const [editForm, setEditForm] = useState(false);
     const [bankId, setBankId] = useState(null);
+    const [bankName, setBankName] = useState(null);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -38,7 +40,7 @@ export const Banking = () => {
 
     const handleEdit = async (e) => {
         e.preventDefault();
-        history.push('/portfolio')
+        // history.push('/portfolio')
         const user_id = sessionUser.id;
 
         const bank = {
@@ -51,6 +53,7 @@ export const Banking = () => {
         dispatch(editBank(bank, bankId));
         setEditForm(false);
         dispatch(fetchBanks(sessionUser.id));
+        setBankName(nickname);
 
     };
 
@@ -59,11 +62,14 @@ export const Banking = () => {
 
         dispatch(deleteBankFetch(bankId));
         dispatch(fetchBanks(sessionUser.id));
+        // setEditBankButton(true)
     }
 
     useEffect(() => {
         dispatch(fetchBanks(sessionUser.id))
-    }, [dispatch, addBank])
+        setBankName(banks[0].nickname)
+        console.log('testing nickname', bankName)
+    }, [dispatch, addBank, bankName])
 
     return (
         <>
@@ -114,17 +120,18 @@ export const Banking = () => {
                     </div>
                 )}
                 {banks.length > 0 && (
-                    banks.map(bank => (
-                        <div id="linked-bank" key={bank.id}>
-                            <h2>{bank.nickname}</h2>
-                            <button onClick={handleUnlink(bank.id)} className='banking-edit-button'>Unlink</button>
+                    // banks.map(bank => (
+                        <div id="linked-bank" >
+                            <h2>{banks[0].nickname}</h2>
+                            <button onClick={handleUnlink(banks[0].id)} className='banking-edit-button'>Unlink</button>
                             <button className='banking-edit-button'
-                                onClick={() => {
+                                onClick={(e) => {
                                     setEditForm(true);
-                                    setBankId(bank.id);
+                                    setBankId(banks[0].id);
+                                    setBankName(e.target.value)
                                 }}>Edit</button>
                         </div>
-                    ))
+                    // ))
                 )}
                 <br />
                 <br />
