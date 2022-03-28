@@ -23,19 +23,29 @@ export const SidebarBanking = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        if (transferAmount !== 0) {
+        if (banks.length < 1) setError('You must add a bank to transfer funds.');
+        if (banks.length > 0) {
+            setError(null)
             let user = { ...sessionUser }
             const buyingPower = transferAmount;
+            console.log('testing here', buyingPower)
 
             console.log(user);
             dispatch(addBuyingPower(user, buyingPower))
             dispatch(fetchBanks(user.id))
-            // setReviewTransfer(false)
-            // setTransferAmount(0)
-        } else {
-            if (banks.lengh <= 0) setError('You must add a bank to transfer funds.')
-            else if (transferAmount <= 0) setError('You must select an amount to transfer.');
+            setReviewTransfer(false)
+            setTransferAmount(0)
         }
+        // else {
+
+        // }
+        // if (transferAmount !== 0) {
+        // }
+        // else {
+        //     if (banks.lengh <= 0) setError('You must add a bank to transfer funds.')
+        //     else if (transferAmount <= 0) setError('You must select an amount to transfer.');
+        // }
+
     }
 
     return (
@@ -54,7 +64,7 @@ export const SidebarBanking = () => {
                                 } else if (e.target.value > 200000) {
                                     e.target.value = 200000;
                                     setTransferAmount(e.target.value)
-                                }
+                                } else setTransferAmount(e.target.value)
                             }} />
                     </div>
                     {/* <div>
