@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
 import { getAsset, getTransactions } from "../../store/asset";
 import { restoreUser } from "../../store/session";
 import { addStockToList, checkOwned, fetchStocks, purchaseStock, sellStock } from "../../store/stock";
@@ -10,6 +11,7 @@ import { formatter } from "../finnhubSetup";
 export const StockSideBar = ({ symbol, stockInfo }) => {
 
     const dispatch = useDispatch();
+    const history = useHistory();
 
     const [quantity, setQuantity] = useState(0);
     const [price, setPrice] = useState(0);
@@ -333,7 +335,10 @@ export const StockSideBar = ({ symbol, stockInfo }) => {
                             lists?.map(list => (
                                 <div key={list.id}
                                     className='list-add-div'
-                                    onClick={() => dispatch(addStockToList(list.id, symbol))}>
+                                    onClick={() => {
+                                        dispatch(addStockToList(list.id, symbol));
+                                        history.push(`/list/${list.id}`)
+                                    }}>
                                     {/* <img src="https://png.pngtree.com/png-vector/20201208/ourmid/pngtree-flat-light-bulb-shine-bright-isolated-vector-png-image_2531330.jpg" alt="lightbulb"/> */}
                                     <br />
                                     {/* {inList && <input type="checkbox" checked />}
