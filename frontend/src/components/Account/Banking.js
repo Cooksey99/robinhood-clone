@@ -63,11 +63,12 @@ export const Banking = () => {
         dispatch(deleteBankFetch(bankId));
         dispatch(fetchBanks(sessionUser.id));
         // setEditBankButton(true)
+        setBankName(null)
     }
 
     useEffect(() => {
         dispatch(fetchBanks(sessionUser.id))
-        setBankName(banks[0].nickname)
+        if (banks.length > 0) setBankName(banks[0].nickname);
         console.log('testing nickname', bankName)
     }, [dispatch, addBank, bankName])
 
@@ -135,7 +136,7 @@ export const Banking = () => {
                 )}
                 <br />
                 <br />
-                {banks.length < 1 && (
+                {!bankName && (
                     <button
                         onClick={() => setAddBank(true)}
                         className='add-new-account-button'
